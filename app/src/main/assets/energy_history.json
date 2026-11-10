@@ -1,0 +1,4088 @@
+[
+  {
+    "meterType": "ACS",
+    "timestamp": 1393588800000,
+    "meterValue": 4.0,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1393588800000,
+    "meterValue": 0.0,
+    "consumption": 7.547,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2014"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1393675200000,
+    "meterValue": 0.0,
+    "consumption": 0.0,
+    "cost": null,
+    "unit": "m³",
+    "note": "Marzo 2014"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1395748800000,
+    "meterValue": 60.0,
+    "consumption": 60.0,
+    "cost": 46.49,
+    "unit": "kWh",
+    "note": "Marzo 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1396267200000,
+    "meterValue": 8.0,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1396267200000,
+    "meterValue": 5.001,
+    "consumption": 5.001,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2014"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1396872000000,
+    "meterValue": 0.0,
+    "consumption": 0.0,
+    "cost": 32.0,
+    "unit": "m³",
+    "note": "Abril 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1398859200000,
+    "meterValue": 13.0,
+    "consumption": 5.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1398859200000,
+    "meterValue": 7.013,
+    "consumption": 2.012,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2014"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1401105600000,
+    "meterValue": 180.0,
+    "consumption": 120.0,
+    "cost": 71.44,
+    "unit": "kWh",
+    "note": "Mayo 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1401537600000,
+    "meterValue": 17.0,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1401537600000,
+    "meterValue": 8.363,
+    "consumption": 1.35,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2014"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1402488000000,
+    "meterValue": 1.0,
+    "consumption": 1.0,
+    "cost": 32.0,
+    "unit": "m³",
+    "note": "Junio 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1404129600000,
+    "meterValue": 21.0,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1404129600000,
+    "meterValue": 9.863,
+    "consumption": 1.5,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2014"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1406116800000,
+    "meterValue": 310.0,
+    "consumption": 130.0,
+    "cost": 73.29,
+    "unit": "kWh",
+    "note": "Julio 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1406808000000,
+    "meterValue": 24.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1406808000000,
+    "meterValue": 10.864,
+    "consumption": 1.001,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2014"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1407844800000,
+    "meterValue": 2.0,
+    "consumption": 1.0,
+    "cost": 32.0,
+    "unit": "m³",
+    "note": "Agosto 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1409486400000,
+    "meterValue": 30.0,
+    "consumption": 6.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1409486400000,
+    "meterValue": 18.003,
+    "consumption": 7.139,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2014"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1411560000000,
+    "meterValue": 444.0,
+    "consumption": 134.0,
+    "cost": 76.61,
+    "unit": "kWh",
+    "note": "Septiembre 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1412078400000,
+    "meterValue": 34.0,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1412078400000,
+    "meterValue": 28.003,
+    "consumption": 10.0,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2014"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1412856000000,
+    "meterValue": 3.0,
+    "consumption": 1.0,
+    "cost": 32.0,
+    "unit": "m³",
+    "note": "Octubre 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1414756800000,
+    "meterValue": 39.0,
+    "consumption": 5.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1414756800000,
+    "meterValue": 40.004,
+    "consumption": 12.001,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2014"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1416830400000,
+    "meterValue": 573.0,
+    "consumption": 129.0,
+    "cost": 74.91,
+    "unit": "kWh",
+    "note": "Noviembre 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1417348800000,
+    "meterValue": 43.0,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1417348800000,
+    "meterValue": 55.004,
+    "consumption": 15.0,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2014"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1418126400000,
+    "meterValue": 4.0,
+    "consumption": 1.0,
+    "cost": 32.0,
+    "unit": "m³",
+    "note": "Diciembre 2014"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1420027200000,
+    "meterValue": 50.0,
+    "consumption": 7.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2014"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1420027200000,
+    "meterValue": 100.005,
+    "consumption": 45.001,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2014"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1422360000000,
+    "meterValue": 690.0,
+    "consumption": 117.0,
+    "cost": 74.03,
+    "unit": "kWh",
+    "note": "Enero 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1422705600000,
+    "meterValue": 55.0,
+    "consumption": 5.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1422705600000,
+    "meterValue": 115.66,
+    "consumption": 15.655,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2015"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1423224000000,
+    "meterValue": 6.0,
+    "consumption": 2.0,
+    "cost": 29.31,
+    "unit": "m³",
+    "note": "Febrero 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1425124800000,
+    "meterValue": 61.0,
+    "consumption": 6.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1425124800000,
+    "meterValue": 140.484,
+    "consumption": 24.824,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2015"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1427284800000,
+    "meterValue": 793.0,
+    "consumption": 103.0,
+    "cost": 64.94,
+    "unit": "kWh",
+    "note": "Marzo 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1427803200000,
+    "meterValue": 64.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1427803200000,
+    "meterValue": 165.474,
+    "consumption": 24.99,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2015"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1428667200000,
+    "meterValue": 7.0,
+    "consumption": 1.0,
+    "cost": 29.31,
+    "unit": "m³",
+    "note": "Abril 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1430395200000,
+    "meterValue": 68.0,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1430395200000,
+    "meterValue": 167.716,
+    "consumption": 2.242,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2015"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1432728000000,
+    "meterValue": 914.0,
+    "consumption": 121.0,
+    "cost": 74.9,
+    "unit": "kWh",
+    "note": "Mayo 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1433073600000,
+    "meterValue": 71.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1433073600000,
+    "meterValue": 172.726,
+    "consumption": 5.01,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2015"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1433937600000,
+    "meterValue": 8.0,
+    "consumption": 1.0,
+    "cost": 29.31,
+    "unit": "m³",
+    "note": "Junio 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1435665600000,
+    "meterValue": 75.0,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1435665600000,
+    "meterValue": 177.331,
+    "consumption": 4.605,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2015"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1437739200000,
+    "meterValue": 1040.0,
+    "consumption": 126.0,
+    "cost": 71.32,
+    "unit": "kWh",
+    "note": "Julio 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1438344000000,
+    "meterValue": 78.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1438344000000,
+    "meterValue": 181.396,
+    "consumption": 4.065,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2015"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1439294400000,
+    "meterValue": 9.0,
+    "consumption": 1.0,
+    "cost": 29.31,
+    "unit": "m³",
+    "note": "Agosto 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1441022400000,
+    "meterValue": 81.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1441022400000,
+    "meterValue": 186.002,
+    "consumption": 4.606,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2015"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1443528000000,
+    "meterValue": 1174.0,
+    "consumption": 134.0,
+    "cost": 91.04,
+    "unit": "kWh",
+    "note": "Septiembre 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1443614400000,
+    "meterValue": 84.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1443614400000,
+    "meterValue": 187.678,
+    "consumption": 1.676,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2015"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1444305600000,
+    "meterValue": 10.0,
+    "consumption": 1.0,
+    "cost": 29.31,
+    "unit": "m³",
+    "note": "Octubre 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1446292800000,
+    "meterValue": 87.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1446292800000,
+    "meterValue": 189.54,
+    "consumption": 1.862,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2015"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1448625600000,
+    "meterValue": 1294.0,
+    "consumption": 120.0,
+    "cost": 52.41,
+    "unit": "kWh",
+    "note": "Noviembre 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1448884800000,
+    "meterValue": 90.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1448884800000,
+    "meterValue": 197.986,
+    "consumption": 8.446,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2015"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1449662400000,
+    "meterValue": 11.0,
+    "consumption": 1.0,
+    "cost": 29.31,
+    "unit": "m³",
+    "note": "Diciembre 2015"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1451563200000,
+    "meterValue": 93.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2015"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1451563200000,
+    "meterValue": 215.158,
+    "consumption": 17.172,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2015"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1453809600000,
+    "meterValue": 1410.0,
+    "consumption": 116.0,
+    "cost": 52.61,
+    "unit": "kWh",
+    "note": "Enero 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1454241600000,
+    "meterValue": 96.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1454241600000,
+    "meterValue": 220.682,
+    "consumption": 5.524,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2016"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1454932800000,
+    "meterValue": 12.0,
+    "consumption": 1.0,
+    "cost": 29.31,
+    "unit": "m³",
+    "note": "Febrero 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1456747200000,
+    "meterValue": 99.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1456747200000,
+    "meterValue": 233.477,
+    "consumption": 12.795,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2016"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1458734400000,
+    "meterValue": 1512.0,
+    "consumption": 102.0,
+    "cost": 46.89,
+    "unit": "kWh",
+    "note": "Marzo 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1459425600000,
+    "meterValue": 102.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1459425600000,
+    "meterValue": 239.49,
+    "consumption": 6.013,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2016"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1460116800000,
+    "meterValue": 13.0,
+    "consumption": 1.0,
+    "cost": 29.31,
+    "unit": "m³",
+    "note": "Abril 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1462017600000,
+    "meterValue": 105.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1462017600000,
+    "meterValue": 245.467,
+    "consumption": 5.977,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2016"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1464004800000,
+    "meterValue": 1612.0,
+    "consumption": 100.0,
+    "cost": 49.62,
+    "unit": "kWh",
+    "note": "Mayo 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1464696000000,
+    "meterValue": 108.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1464696000000,
+    "meterValue": 247.553,
+    "consumption": 2.086,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2016"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1465473600000,
+    "meterValue": 14.0,
+    "consumption": 1.0,
+    "cost": 29.31,
+    "unit": "m³",
+    "note": "Junio 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1467288000000,
+    "meterValue": 111.0,
+    "consumption": 3.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1467288000000,
+    "meterValue": 249.772,
+    "consumption": 2.219,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2016"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1469448000000,
+    "meterValue": 1720.0,
+    "consumption": 108.0,
+    "cost": 48.94,
+    "unit": "kWh",
+    "note": "Julio 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1469966400000,
+    "meterValue": 115.0,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1469966400000,
+    "meterValue": 254.78,
+    "consumption": 5.008,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2016"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1470744000000,
+    "meterValue": 16.0,
+    "consumption": 2.0,
+    "cost": 30.01,
+    "unit": "m³",
+    "note": "Agosto 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1472644800000,
+    "meterValue": 120.0,
+    "consumption": 5.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1472644800000,
+    "meterValue": 259.421,
+    "consumption": 4.641,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2016"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1474632000000,
+    "meterValue": 1842.0,
+    "consumption": 122.0,
+    "cost": 52.93,
+    "unit": "kWh",
+    "note": "Septiembre 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1475236800000,
+    "meterValue": 129.0,
+    "consumption": 9.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1475236800000,
+    "meterValue": 264.52,
+    "consumption": 5.099,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2016"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1476187200000,
+    "meterValue": 18.0,
+    "consumption": 2.0,
+    "cost": 30.01,
+    "unit": "m³",
+    "note": "Octubre 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1477915200000,
+    "meterValue": 144.0,
+    "consumption": 15.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1477915200000,
+    "meterValue": 266.318,
+    "consumption": 1.798,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2016"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1480334400000,
+    "meterValue": 1958.0,
+    "consumption": 116.0,
+    "cost": 52.41,
+    "unit": "kWh",
+    "note": "Noviembre 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1480507200000,
+    "meterValue": 161.0,
+    "consumption": 17.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1480507200000,
+    "meterValue": 272.728,
+    "consumption": 6.41,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2016"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1481112000000,
+    "meterValue": 21.0,
+    "consumption": 3.0,
+    "cost": 30.5,
+    "unit": "m³",
+    "note": "Diciembre 2016"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1483185600000,
+    "meterValue": 186.0,
+    "consumption": 25.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2016"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1483185600000,
+    "meterValue": 314.581,
+    "consumption": 41.853,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2016"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1485086400000,
+    "meterValue": 2072.0,
+    "consumption": 114.0,
+    "cost": 51.2,
+    "unit": "kWh",
+    "note": "Enero 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1485864000000,
+    "meterValue": 222.0,
+    "consumption": 36.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1485864000000,
+    "meterValue": 412.746,
+    "consumption": 98.165,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2017"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1486382400000,
+    "meterValue": 24.0,
+    "consumption": 3.0,
+    "cost": 30.25,
+    "unit": "m³",
+    "note": "Febrero 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1488283200000,
+    "meterValue": 250.0,
+    "consumption": 28.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1488283200000,
+    "meterValue": 438.503,
+    "consumption": 25.757,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2017"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1490011200000,
+    "meterValue": 2171.0,
+    "consumption": 99.0,
+    "cost": 46.27,
+    "unit": "kWh",
+    "note": "Marzo 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1490961600000,
+    "meterValue": 281.0,
+    "consumption": 31.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1490961600000,
+    "meterValue": 442.23,
+    "consumption": 3.727,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2017"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1491825600000,
+    "meterValue": 28.0,
+    "consumption": 4.0,
+    "cost": 30.95,
+    "unit": "m³",
+    "note": "Abril 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1493553600000,
+    "meterValue": 305.0,
+    "consumption": 24.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1493553600000,
+    "meterValue": 444.439,
+    "consumption": 2.209,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2017"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1495627200000,
+    "meterValue": 2281.0,
+    "consumption": 110.0,
+    "cost": 51.8,
+    "unit": "kWh",
+    "note": "Mayo 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1496232000000,
+    "meterValue": 322.0,
+    "consumption": 17.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1496232000000,
+    "meterValue": 446.562,
+    "consumption": 2.123,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2017"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1497268800000,
+    "meterValue": 32.0,
+    "consumption": 4.0,
+    "cost": 31.02,
+    "unit": "m³",
+    "note": "Junio 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1498824000000,
+    "meterValue": 337.0,
+    "consumption": 15.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1498824000000,
+    "meterValue": 451.614,
+    "consumption": 5.052,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2017"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1500811200000,
+    "meterValue": 2407.0,
+    "consumption": 126.0,
+    "cost": 56.75,
+    "unit": "kWh",
+    "note": "Julio 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1501502400000,
+    "meterValue": 346.0,
+    "consumption": 9.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1501502400000,
+    "meterValue": 459.303,
+    "consumption": 7.689,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2017"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1502193600000,
+    "meterValue": 35.0,
+    "consumption": 3.0,
+    "cost": 28.98,
+    "unit": "m³",
+    "note": "Agosto 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1504180800000,
+    "meterValue": 358.0,
+    "consumption": 12.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1504180800000,
+    "meterValue": 463.774,
+    "consumption": 4.471,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2017"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1506340800000,
+    "meterValue": 2525.0,
+    "consumption": 118.0,
+    "cost": 55.95,
+    "unit": "kWh",
+    "note": "Septiembre 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1506772800000,
+    "meterValue": 373.0,
+    "consumption": 15.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1506772800000,
+    "meterValue": 465.589,
+    "consumption": 1.815,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2017"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1507896000000,
+    "meterValue": 39.0,
+    "consumption": 4.0,
+    "cost": 32.38,
+    "unit": "m³",
+    "note": "Octubre 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1509451200000,
+    "meterValue": 391.0,
+    "consumption": 18.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1509451200000,
+    "meterValue": 467.052,
+    "consumption": 1.463,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2017"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1511524800000,
+    "meterValue": 2640.0,
+    "consumption": 115.0,
+    "cost": 56.56,
+    "unit": "kWh",
+    "note": "Noviembre 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1511956800000,
+    "meterValue": 474.424,
+    "consumption": 7.372,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1512043200000,
+    "meterValue": 422.0,
+    "consumption": 31.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2017"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1512648000000,
+    "meterValue": 44.0,
+    "consumption": 5.0,
+    "cost": 31.7,
+    "unit": "m³",
+    "note": "Diciembre 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1514462400000,
+    "meterValue": 501.786,
+    "consumption": 27.362,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2017"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1514721600000,
+    "meterValue": 458.0,
+    "consumption": 36.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2017"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1515412800000,
+    "meterValue": 526.32,
+    "consumption": 24.534,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2018"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1516881600000,
+    "meterValue": 2751.0,
+    "consumption": 111.0,
+    "cost": 55.54,
+    "unit": "kWh",
+    "note": "Enero 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1517400000000,
+    "meterValue": 495.0,
+    "consumption": 37.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2018"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1517918400000,
+    "meterValue": 51.0,
+    "consumption": 7.0,
+    "cost": 32.63,
+    "unit": "m³",
+    "note": "Febrero 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1519819200000,
+    "meterValue": 540.0,
+    "consumption": 45.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1519819200000,
+    "meterValue": 609.038,
+    "consumption": 82.718,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2018"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1521720000000,
+    "meterValue": 2871.0,
+    "consumption": 120.0,
+    "cost": 55.37,
+    "unit": "kWh",
+    "note": "Marzo 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1522497600000,
+    "meterValue": 590.0,
+    "consumption": 50.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1522497600000,
+    "meterValue": 630.589,
+    "consumption": 21.551,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2018"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1523448000000,
+    "meterValue": 58.0,
+    "consumption": 7.0,
+    "cost": 32.63,
+    "unit": "m³",
+    "note": "Abril 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1525089600000,
+    "meterValue": 630.0,
+    "consumption": 40.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1525089600000,
+    "meterValue": 633.517,
+    "consumption": 2.928,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2018"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1527076800000,
+    "meterValue": 3003.0,
+    "consumption": 132.0,
+    "cost": 61.69,
+    "unit": "kWh",
+    "note": "Mayo 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1527768000000,
+    "meterValue": 669.0,
+    "consumption": 39.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1527768000000,
+    "meterValue": 635.512,
+    "consumption": 1.995,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2018"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1528977600000,
+    "meterValue": 66.0,
+    "consumption": 8.0,
+    "cost": 33.11,
+    "unit": "m³",
+    "note": "Junio 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1530360000000,
+    "meterValue": 700.0,
+    "consumption": 31.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1530360000000,
+    "meterValue": 638.462,
+    "consumption": 2.95,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2018"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1532347200000,
+    "meterValue": 3139.0,
+    "consumption": 136.0,
+    "cost": 60.58,
+    "unit": "kWh",
+    "note": "Julio 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1533038400000,
+    "meterValue": 707.0,
+    "consumption": 7.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1533038400000,
+    "meterValue": 642.842,
+    "consumption": 4.38,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2018"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1534161600000,
+    "meterValue": 71.0,
+    "consumption": 5.0,
+    "cost": 30.92,
+    "unit": "m³",
+    "note": "Agosto 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1535716800000,
+    "meterValue": 732.0,
+    "consumption": 25.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1535716800000,
+    "meterValue": 648.503,
+    "consumption": 5.661,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2018"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1537963200000,
+    "meterValue": 3303.0,
+    "consumption": 164.0,
+    "cost": 67.84,
+    "unit": "kWh",
+    "note": "Septiembre 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1538308800000,
+    "meterValue": 756.0,
+    "consumption": 24.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1538308800000,
+    "meterValue": 651.529,
+    "consumption": 3.026,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2018"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1539604800000,
+    "meterValue": 81.0,
+    "consumption": 10.0,
+    "cost": 34.28,
+    "unit": "m³",
+    "note": "Octubre 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1540987200000,
+    "meterValue": 786.0,
+    "consumption": 30.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1540987200000,
+    "meterValue": 653.701,
+    "consumption": 2.172,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2018"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1543492800000,
+    "meterValue": 3457.0,
+    "consumption": 154.0,
+    "cost": 69.67,
+    "unit": "kWh",
+    "note": "Noviembre 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1543579200000,
+    "meterValue": 839.0,
+    "consumption": 53.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1543579200000,
+    "meterValue": 670.833,
+    "consumption": 17.132,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2018"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1544616000000,
+    "meterValue": 90.0,
+    "consumption": 9.0,
+    "cost": 33.61,
+    "unit": "m³",
+    "note": "Diciembre 2018"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1546257600000,
+    "meterValue": 889.0,
+    "consumption": 50.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2018"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1546257600000,
+    "meterValue": 743.047,
+    "consumption": 72.214,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2018"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1548072000000,
+    "meterValue": 3575.0,
+    "consumption": 118.0,
+    "cost": 55.2,
+    "unit": "kWh",
+    "note": "Enero 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1548936000000,
+    "meterValue": 958.0,
+    "consumption": 69.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1548936000000,
+    "meterValue": 860.593,
+    "consumption": 117.546,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2019"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1550059200000,
+    "meterValue": 98.0,
+    "consumption": 8.0,
+    "cost": 33.08,
+    "unit": "m³",
+    "note": "Febrero 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1551355200000,
+    "meterValue": 1027.0,
+    "consumption": 69.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1551355200000,
+    "meterValue": 931.951,
+    "consumption": 71.358,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2019"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1553342400000,
+    "meterValue": 3697.0,
+    "consumption": 122.0,
+    "cost": 58.98,
+    "unit": "kWh",
+    "note": "Marzo 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1554033600000,
+    "meterValue": 1102.0,
+    "consumption": 75.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1554033600000,
+    "meterValue": 935.43,
+    "consumption": 3.479,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2019"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1555416000000,
+    "meterValue": 109.0,
+    "consumption": 11.0,
+    "cost": 35.09,
+    "unit": "m³",
+    "note": "Abril 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1556625600000,
+    "meterValue": 1159.0,
+    "consumption": 57.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1556625600000,
+    "meterValue": 938.141,
+    "consumption": 2.711,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2019"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1558612800000,
+    "meterValue": 3835.0,
+    "consumption": 138.0,
+    "cost": 65.13,
+    "unit": "kWh",
+    "note": "Mayo 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1559304000000,
+    "meterValue": 1216.0,
+    "consumption": 57.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1559304000000,
+    "meterValue": 941.872,
+    "consumption": 3.731,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2019"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1560254400000,
+    "meterValue": 3877.0,
+    "consumption": 42.0,
+    "cost": 19.13,
+    "unit": "kWh",
+    "note": "Junio 2019"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1560859200000,
+    "meterValue": 119.0,
+    "consumption": 10.0,
+    "cost": 34.42,
+    "unit": "m³",
+    "note": "Junio 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1561896000000,
+    "meterValue": 1251.0,
+    "consumption": 35.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1561896000000,
+    "meterValue": 944.573,
+    "consumption": 2.701,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1564574400000,
+    "meterValue": 1280.0,
+    "consumption": 29.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1564574400000,
+    "meterValue": 951.035,
+    "consumption": 6.462,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2019"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1565956800000,
+    "meterValue": 128.0,
+    "consumption": 9.0,
+    "cost": 33.75,
+    "unit": "m³",
+    "note": "Agosto 2019"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1566302400000,
+    "meterValue": 4058.0,
+    "consumption": 181.0,
+    "cost": 79.33,
+    "unit": "kWh",
+    "note": "Agosto 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1567252800000,
+    "meterValue": 1293.0,
+    "consumption": 13.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1567252800000,
+    "meterValue": 959.646,
+    "consumption": 8.611,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1569844800000,
+    "meterValue": 1322.0,
+    "consumption": 29.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1569844800000,
+    "meterValue": 964.144,
+    "consumption": 4.498,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2019"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1571400000000,
+    "meterValue": 137.0,
+    "consumption": 9.0,
+    "cost": 33.75,
+    "unit": "m³",
+    "note": "Octubre 2019"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1571486400000,
+    "meterValue": 4238.0,
+    "consumption": 180.0,
+    "cost": 70.65,
+    "unit": "kWh",
+    "note": "Octubre 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1572523200000,
+    "meterValue": 1363.0,
+    "consumption": 41.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1572523200000,
+    "meterValue": 966.454,
+    "consumption": 2.31,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2019"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1574683200000,
+    "meterValue": 4246.0,
+    "consumption": 8.0,
+    "cost": 3.34,
+    "unit": "kWh",
+    "note": "Noviembre 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1575115200000,
+    "meterValue": 1426.0,
+    "consumption": 63.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1575115200000,
+    "meterValue": 983.258,
+    "consumption": 16.804,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2019"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1577361600000,
+    "meterValue": 4420.0,
+    "consumption": 174.0,
+    "cost": 58.69,
+    "unit": "kWh",
+    "note": "Diciembre 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1577793600000,
+    "meterValue": 1472.0,
+    "consumption": 46.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2019"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1577793600000,
+    "meterValue": 1012.374,
+    "consumption": 29.116,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2019"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1580472000000,
+    "meterValue": 1529.0,
+    "consumption": 57.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1580472000000,
+    "meterValue": 1087.604,
+    "consumption": 75.23,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2020"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1582113600000,
+    "meterValue": 156.0,
+    "consumption": 8.0,
+    "cost": 32.97,
+    "unit": "m³",
+    "note": "Febrero 2020"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1582545600000,
+    "meterValue": 4564.0,
+    "consumption": 144.0,
+    "cost": 53.05,
+    "unit": "kWh",
+    "note": "Febrero 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1582977600000,
+    "meterValue": 1591.0,
+    "consumption": 62.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1582977600000,
+    "meterValue": 1101.845,
+    "consumption": 14.241,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1585656000000,
+    "meterValue": 1651.0,
+    "consumption": 60.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1585656000000,
+    "meterValue": 1105.792,
+    "consumption": 3.947,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2020"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1587729600000,
+    "meterValue": 4762.0,
+    "consumption": 198.0,
+    "cost": 62.82,
+    "unit": "kWh",
+    "note": "Abril 2020"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1587988800000,
+    "meterValue": 167.0,
+    "consumption": 11.0,
+    "cost": 31.34,
+    "unit": "m³",
+    "note": "Abril 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1588248000000,
+    "meterValue": 1701.0,
+    "consumption": 50.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1588248000000,
+    "meterValue": 1107.814,
+    "consumption": 2.022,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1590926400000,
+    "meterValue": 1754.0,
+    "consumption": 53.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1590926400000,
+    "meterValue": 1109.309,
+    "consumption": 1.495,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2020"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1592827200000,
+    "meterValue": 4984.0,
+    "consumption": 222.0,
+    "cost": 64.36,
+    "unit": "kWh",
+    "note": "Junio 2020"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1592913600000,
+    "meterValue": 182.0,
+    "consumption": 15.0,
+    "cost": 40.73,
+    "unit": "m³",
+    "note": "Junio 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1593518400000,
+    "meterValue": 1797.0,
+    "consumption": 43.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1593518400000,
+    "meterValue": 1111.885,
+    "consumption": 2.576,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1596196800000,
+    "meterValue": 1827.0,
+    "consumption": 30.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1596196800000,
+    "meterValue": 1116.203,
+    "consumption": 4.318,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2020"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1598270400000,
+    "meterValue": 5183.0,
+    "consumption": 199.0,
+    "cost": 62.96,
+    "unit": "kWh",
+    "note": "Agosto 2020"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1598356800000,
+    "meterValue": 193.0,
+    "consumption": 11.0,
+    "cost": 34.6,
+    "unit": "m³",
+    "note": "Agosto 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1598875200000,
+    "meterValue": 1842.0,
+    "consumption": 15.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1598875200000,
+    "meterValue": 1121.358,
+    "consumption": 5.155,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1601467200000,
+    "meterValue": 1877.0,
+    "consumption": 35.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1601467200000,
+    "meterValue": 1121.358,
+    "consumption": 0.0,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2020"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1603281600000,
+    "meterValue": 5394.0,
+    "consumption": 211.0,
+    "cost": 65.33,
+    "unit": "kWh",
+    "note": "Octubre 2020"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1603368000000,
+    "meterValue": 206.0,
+    "consumption": 13.0,
+    "cost": 37.08,
+    "unit": "m³",
+    "note": "Octubre 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1604145600000,
+    "meterValue": 1921.0,
+    "consumption": 44.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1604145600000,
+    "meterValue": 1122.254,
+    "consumption": 0.896,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1606478400000,
+    "meterValue": 1968.0,
+    "consumption": 47.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1606737600000,
+    "meterValue": 1125.534,
+    "consumption": 3.28,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2020"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1608638400000,
+    "meterValue": 5585.0,
+    "consumption": 191.0,
+    "cost": 60.55,
+    "unit": "kWh",
+    "note": "Diciembre 2020"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1608638400000,
+    "meterValue": 217.0,
+    "consumption": 11.0,
+    "cost": 34.6,
+    "unit": "m³",
+    "note": "Diciembre 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1609416000000,
+    "meterValue": 2026.0,
+    "consumption": 58.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2020"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1609416000000,
+    "meterValue": 1160.972,
+    "consumption": 35.438,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2020"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1612094400000,
+    "meterValue": 2088.0,
+    "consumption": 62.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1612094400000,
+    "meterValue": 1209.474,
+    "consumption": 48.502,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2021"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1613995200000,
+    "meterValue": 227.0,
+    "consumption": 10.0,
+    "cost": 33.96,
+    "unit": "m³",
+    "note": "Febrero 2021"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1614081600000,
+    "meterValue": 5764.0,
+    "consumption": 179.0,
+    "cost": 58.95,
+    "unit": "kWh",
+    "note": "Febrero 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1614513600000,
+    "meterValue": 2162.0,
+    "consumption": 74.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1614513600000,
+    "meterValue": 1215.709,
+    "consumption": 6.235,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1617192000000,
+    "meterValue": 2237.0,
+    "consumption": 75.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1617192000000,
+    "meterValue": 1221.719,
+    "consumption": 6.01,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2021"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1619092800000,
+    "meterValue": 238.0,
+    "consumption": 11.0,
+    "cost": 34.6,
+    "unit": "m³",
+    "note": "Abril 2021"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1619438400000,
+    "meterValue": 5958.0,
+    "consumption": 194.0,
+    "cost": 62.7,
+    "unit": "kWh",
+    "note": "Abril 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1619784000000,
+    "meterValue": 2290.0,
+    "consumption": 53.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1619784000000,
+    "meterValue": 1225.87,
+    "consumption": 4.151,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1622462400000,
+    "meterValue": 2338.0,
+    "consumption": 48.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1622462400000,
+    "meterValue": 1229.425,
+    "consumption": 3.555,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2021"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1622462400000,
+    "meterValue": 6085.0,
+    "consumption": 127.0,
+    "cost": 41.14,
+    "unit": "kWh",
+    "note": "Mayo 2021"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1624017600000,
+    "meterValue": 249.0,
+    "consumption": 11.0,
+    "cost": 34.6,
+    "unit": "m³",
+    "note": "Junio 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1625054400000,
+    "meterValue": 2373.0,
+    "consumption": 35.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1625054400000,
+    "meterValue": 1233.128,
+    "consumption": 3.703,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2021"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1626609600000,
+    "meterValue": 6248.0,
+    "consumption": 163.0,
+    "cost": 46.35,
+    "unit": "kWh",
+    "note": "Julio 2021"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1626696000000,
+    "meterValue": 7380.0,
+    "consumption": 199.0,
+    "cost": 55.71,
+    "unit": "kWh",
+    "note": "Julio 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1627732800000,
+    "meterValue": 2406.0,
+    "consumption": 33.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1627732800000,
+    "meterValue": 2990.0,
+    "consumption": 21.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1627732800000,
+    "meterValue": 1237.284,
+    "consumption": 4.156,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1627732800000,
+    "meterValue": 1520.289,
+    "consumption": 10.794,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2021"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1629201600000,
+    "meterValue": 259.0,
+    "consumption": 10.0,
+    "cost": 33.99,
+    "unit": "m³",
+    "note": "Agosto 2021"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1629720000000,
+    "meterValue": 321.0,
+    "consumption": 8.0,
+    "cost": 32.4,
+    "unit": "m³",
+    "note": "Agosto 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1630411200000,
+    "meterValue": 2424.0,
+    "consumption": 18.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1630411200000,
+    "meterValue": 3005.0,
+    "consumption": 15.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1630411200000,
+    "meterValue": 1241.415,
+    "consumption": 4.131,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1630411200000,
+    "meterValue": 1529.675,
+    "consumption": 9.386,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2021"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1631966400000,
+    "meterValue": 6436.0,
+    "consumption": 188.0,
+    "cost": 53.98,
+    "unit": "kWh",
+    "note": "Septiembre 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1633003200000,
+    "meterValue": 2463.0,
+    "consumption": 39.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1633003200000,
+    "meterValue": 1247.174,
+    "consumption": 5.759,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2021"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1634731200000,
+    "meterValue": 269.0,
+    "consumption": 10.0,
+    "cost": 34.0,
+    "unit": "m³",
+    "note": "Octubre 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1635681600000,
+    "meterValue": 2502.0,
+    "consumption": 39.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1635681600000,
+    "meterValue": 1249.575,
+    "consumption": 2.401,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2021"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1637409600000,
+    "meterValue": 6630.0,
+    "consumption": 194.0,
+    "cost": 42.44,
+    "unit": "kWh",
+    "note": "Noviembre 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1638273600000,
+    "meterValue": 2565.0,
+    "consumption": 63.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1638273600000,
+    "meterValue": 1266.317,
+    "consumption": 16.742,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2021"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1640001600000,
+    "meterValue": 281.0,
+    "consumption": 12.0,
+    "cost": 34.61,
+    "unit": "m³",
+    "note": "Diciembre 2021"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1640952000000,
+    "meterValue": 2634.0,
+    "consumption": 69.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2021"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1640952000000,
+    "meterValue": 1318.359,
+    "consumption": 52.042,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2021"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1643112000000,
+    "meterValue": 6826.0,
+    "consumption": 196.0,
+    "cost": 46.58,
+    "unit": "kWh",
+    "note": "Enero 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1643630400000,
+    "meterValue": 2718.0,
+    "consumption": 84.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1643630400000,
+    "meterValue": 1413.038,
+    "consumption": 94.679,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2022"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1645185600000,
+    "meterValue": 291.0,
+    "consumption": 10.0,
+    "cost": 34.3,
+    "unit": "m³",
+    "note": "Febrero 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1646049600000,
+    "meterValue": 2777.0,
+    "consumption": 59.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1646049600000,
+    "meterValue": 1452.796,
+    "consumption": 39.758,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2022"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1647691200000,
+    "meterValue": 7002.0,
+    "consumption": 176.0,
+    "cost": 47.95,
+    "unit": "kWh",
+    "note": "Marzo 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1648728000000,
+    "meterValue": 2844.0,
+    "consumption": 67.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1648728000000,
+    "meterValue": 1486.679,
+    "consumption": 33.883,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2022"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1650628800000,
+    "meterValue": 302.0,
+    "consumption": 11.0,
+    "cost": 34.37,
+    "unit": "m³",
+    "note": "Abril 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1651320000000,
+    "meterValue": 2897.0,
+    "consumption": 53.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1651320000000,
+    "meterValue": 1498.455,
+    "consumption": 11.776,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2022"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1652875200000,
+    "meterValue": 7181.0,
+    "consumption": 179.0,
+    "cost": 47.74,
+    "unit": "kWh",
+    "note": "Mayo 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1653998400000,
+    "meterValue": 2940.0,
+    "consumption": 43.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1653998400000,
+    "meterValue": 1502.455,
+    "consumption": 4.0,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2022"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1655726400000,
+    "meterValue": 313.0,
+    "consumption": 11.0,
+    "cost": 34.37,
+    "unit": "m³",
+    "note": "Junio 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1656590400000,
+    "meterValue": 2969.0,
+    "consumption": 29.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1656590400000,
+    "meterValue": 1509.495,
+    "consumption": 7.04,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2022"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1663502400000,
+    "meterValue": 7571.0,
+    "consumption": 191.0,
+    "cost": 70.48,
+    "unit": "kWh",
+    "note": "Septiembre 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1664539200000,
+    "meterValue": 3041.0,
+    "consumption": 36.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1664539200000,
+    "meterValue": 1533.547,
+    "consumption": 3.872,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2022"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1666612800000,
+    "meterValue": 333.0,
+    "consumption": 12.0,
+    "cost": 35.02,
+    "unit": "m³",
+    "note": "Octubre 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1667217600000,
+    "meterValue": 3082.0,
+    "consumption": 41.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1667217600000,
+    "meterValue": 1535.339,
+    "consumption": 1.792,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2022"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1669032000000,
+    "meterValue": 7784.0,
+    "consumption": 213.0,
+    "cost": 79.11,
+    "unit": "kWh",
+    "note": "Noviembre 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1669809600000,
+    "meterValue": 3136.0,
+    "consumption": 54.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1669809600000,
+    "meterValue": 1554.285,
+    "consumption": 18.946,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2022"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1671537600000,
+    "meterValue": 347.0,
+    "consumption": 14.0,
+    "cost": 39.38,
+    "unit": "m³",
+    "note": "Diciembre 2022"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1672488000000,
+    "meterValue": 3189.0,
+    "consumption": 53.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2022"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1672488000000,
+    "meterValue": 1647.583,
+    "consumption": 93.298,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2022"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1674302400000,
+    "meterValue": 7986.0,
+    "consumption": 202.0,
+    "cost": 74.77,
+    "unit": "kWh",
+    "note": "Enero 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1675166400000,
+    "meterValue": 3251.0,
+    "consumption": 62.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1675166400000,
+    "meterValue": 1820.978,
+    "consumption": 173.395,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2023"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1676980800000,
+    "meterValue": 359.0,
+    "consumption": 12.0,
+    "cost": 35.99,
+    "unit": "m³",
+    "note": "Febrero 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1677585600000,
+    "meterValue": 3302.0,
+    "consumption": 51.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1677585600000,
+    "meterValue": 1944.162,
+    "consumption": 123.184,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2023"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1679227200000,
+    "meterValue": 8159.0,
+    "consumption": 173.0,
+    "cost": 54.1,
+    "unit": "kWh",
+    "note": "Marzo 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1680264000000,
+    "meterValue": 3363.0,
+    "consumption": 61.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1680264000000,
+    "meterValue": 1984.174,
+    "consumption": 40.012,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2023"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1682337600000,
+    "meterValue": 372.0,
+    "consumption": 13.0,
+    "cost": 37.86,
+    "unit": "m³",
+    "note": "Abril 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1682856000000,
+    "meterValue": 3417.0,
+    "consumption": 54.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1682856000000,
+    "meterValue": 1986.766,
+    "consumption": 2.592,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2023"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1684497600000,
+    "meterValue": 8354.0,
+    "consumption": 195.0,
+    "cost": 56.84,
+    "unit": "kWh",
+    "note": "Mayo 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1685534400000,
+    "meterValue": 3468.0,
+    "consumption": 51.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1685534400000,
+    "meterValue": 1991.822,
+    "consumption": 5.056,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2023"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1687435200000,
+    "meterValue": 387.0,
+    "consumption": 15.0,
+    "cost": 41.56,
+    "unit": "m³",
+    "note": "Junio 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1688126400000,
+    "meterValue": 3507.0,
+    "consumption": 39.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1688126400000,
+    "meterValue": 1996.962,
+    "consumption": 5.14,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2023"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1689854400000,
+    "meterValue": 8554.0,
+    "consumption": 200.0,
+    "cost": 59.08,
+    "unit": "kWh",
+    "note": "Julio 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1690804800000,
+    "meterValue": 3540.0,
+    "consumption": 33.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1690804800000,
+    "meterValue": 2006.462,
+    "consumption": 9.5,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2023"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1692705600000,
+    "meterValue": 400.0,
+    "consumption": 13.0,
+    "cost": 37.86,
+    "unit": "m³",
+    "note": "Agosto 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1693483200000,
+    "meterValue": 3566.0,
+    "consumption": 26.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1693483200000,
+    "meterValue": 2061.182,
+    "consumption": 54.72,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2023"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1695211200000,
+    "meterValue": 8772.0,
+    "consumption": 218.0,
+    "cost": 60.91,
+    "unit": "kWh",
+    "note": "Septiembre 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1696075200000,
+    "meterValue": 3605.0,
+    "consumption": 39.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1696075200000,
+    "meterValue": 2066.059,
+    "consumption": 4.877,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2023"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1698148800000,
+    "meterValue": 414.0,
+    "consumption": 14.0,
+    "cost": 39.7,
+    "unit": "m³",
+    "note": "Octubre 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1698753600000,
+    "meterValue": 3645.0,
+    "consumption": 40.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1698753600000,
+    "meterValue": 2069.332,
+    "consumption": 3.273,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2023"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1700913600000,
+    "meterValue": 8983.0,
+    "consumption": 211.0,
+    "cost": 58.57,
+    "unit": "kWh",
+    "note": "Noviembre 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1701345600000,
+    "meterValue": 3696.0,
+    "consumption": 51.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1701345600000,
+    "meterValue": 2074.601,
+    "consumption": 5.269,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2023"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1702987200000,
+    "meterValue": 427.0,
+    "consumption": 13.0,
+    "cost": 37.86,
+    "unit": "m³",
+    "note": "Diciembre 2023"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1704024000000,
+    "meterValue": 3750.0,
+    "consumption": 54.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2023"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1704024000000,
+    "meterValue": 2118.444,
+    "consumption": 43.843,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2023"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1706270400000,
+    "meterValue": 9225.0,
+    "consumption": 242.0,
+    "cost": 69.39,
+    "unit": "kWh",
+    "note": "Enero 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1706702400000,
+    "meterValue": 3827.0,
+    "consumption": 77.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1706702400000,
+    "meterValue": 2194.433,
+    "consumption": 75.989,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2024"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1708516800000,
+    "meterValue": 441.0,
+    "consumption": 14.0,
+    "cost": 44.04,
+    "unit": "m³",
+    "note": "Febrero 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1709208000000,
+    "meterValue": 3885.0,
+    "consumption": 58.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1709208000000,
+    "meterValue": 2270.423,
+    "consumption": 75.99,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2024"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1711368000000,
+    "meterValue": 9452.0,
+    "consumption": 227.0,
+    "cost": 71.45,
+    "unit": "kWh",
+    "note": "Marzo 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1711886400000,
+    "meterValue": 3947.0,
+    "consumption": 62.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1711886400000,
+    "meterValue": 2279.022,
+    "consumption": 8.599,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2024"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1713873600000,
+    "meterValue": 454.0,
+    "consumption": 13.0,
+    "cost": 48.85,
+    "unit": "m³",
+    "note": "Abril 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1714478400000,
+    "meterValue": 4008.0,
+    "consumption": 61.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1714478400000,
+    "meterValue": 2287.622,
+    "consumption": 8.6,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2024"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1716897600000,
+    "meterValue": 9662.0,
+    "consumption": 210.0,
+    "cost": 70.39,
+    "unit": "kWh",
+    "note": "Mayo 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1717156800000,
+    "meterValue": 4068.0,
+    "consumption": 60.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1717156800000,
+    "meterValue": 2290.218,
+    "consumption": 2.596,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2024"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1718798400000,
+    "meterValue": 470.0,
+    "consumption": 16.0,
+    "cost": 55.61,
+    "unit": "m³",
+    "note": "Junio 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1719748800000,
+    "meterValue": 4119.0,
+    "consumption": 51.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1719748800000,
+    "meterValue": 2292.818,
+    "consumption": 2.6,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2024"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1721217600000,
+    "meterValue": 9865.0,
+    "consumption": 203.0,
+    "cost": 61.78,
+    "unit": "kWh",
+    "note": "Julio 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1722427200000,
+    "meterValue": 4165.0,
+    "consumption": 46.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1722427200000,
+    "meterValue": 2292.818,
+    "consumption": 0.0,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2024"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1724328000000,
+    "meterValue": 484.0,
+    "consumption": 14.0,
+    "cost": 51.2,
+    "unit": "m³",
+    "note": "Agosto 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1725105600000,
+    "meterValue": 4186.0,
+    "consumption": 21.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1725105600000,
+    "meterValue": 2453.503,
+    "consumption": 160.685,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2024"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1727179200000,
+    "meterValue": 10116.0,
+    "consumption": 251.0,
+    "cost": 72.6,
+    "unit": "kWh",
+    "note": "Septiembre 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1727697600000,
+    "meterValue": 4227.0,
+    "consumption": 41.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1727697600000,
+    "meterValue": 2492.172,
+    "consumption": 38.669,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2024"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1729771200000,
+    "meterValue": 500.0,
+    "consumption": 16.0,
+    "cost": 55.61,
+    "unit": "m³",
+    "note": "Octubre 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1730376000000,
+    "meterValue": 4276.0,
+    "consumption": 49.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1730376000000,
+    "meterValue": 2494.975,
+    "consumption": 2.803,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2024"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1732795200000,
+    "meterValue": 10368.0,
+    "consumption": 252.0,
+    "cost": 72.78,
+    "unit": "kWh",
+    "note": "Noviembre 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1732968000000,
+    "meterValue": 4334.0,
+    "consumption": 58.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1732968000000,
+    "meterValue": 2498.019,
+    "consumption": 3.044,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2024"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1734523200000,
+    "meterValue": 516.0,
+    "consumption": 16.0,
+    "cost": 55.61,
+    "unit": "m³",
+    "note": "Diciembre 2024"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1735646400000,
+    "meterValue": 4426.0,
+    "consumption": 92.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2024"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1735646400000,
+    "meterValue": 2574.556,
+    "consumption": 76.537,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2024"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1738065600000,
+    "meterValue": 10613.0,
+    "consumption": 245.0,
+    "cost": 82.45,
+    "unit": "kWh",
+    "note": "Enero 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1738324800000,
+    "meterValue": 4505.0,
+    "consumption": 79.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1738324800000,
+    "meterValue": 2737.621,
+    "consumption": 163.065,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2025"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1740139200000,
+    "meterValue": 530.0,
+    "consumption": 14.0,
+    "cost": 52.0,
+    "unit": "m³",
+    "note": "Febrero 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1740571200000,
+    "meterValue": 10726.0,
+    "consumption": 113.0,
+    "cost": 41.08,
+    "unit": "kWh",
+    "note": "Febrero 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1740744000000,
+    "meterValue": 4567.0,
+    "consumption": 62.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1740744000000,
+    "meterValue": 2810.339,
+    "consumption": 72.718,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1742817600000,
+    "meterValue": 10836.0,
+    "consumption": 110.0,
+    "cost": 47.59,
+    "unit": "kWh",
+    "note": "Marzo 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1743422400000,
+    "meterValue": 4600.0,
+    "consumption": 33.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1743422400000,
+    "meterValue": 2859.472,
+    "consumption": 49.133,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2025"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1745409600000,
+    "meterValue": 545.0,
+    "consumption": 15.0,
+    "cost": 54.98,
+    "unit": "m³",
+    "note": "Abril 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1745496000000,
+    "meterValue": 10946.0,
+    "consumption": 110.0,
+    "cost": 40.6,
+    "unit": "kWh",
+    "note": "Abril 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1746014400000,
+    "meterValue": 4614.0,
+    "consumption": 14.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1746014400000,
+    "meterValue": 2861.073,
+    "consumption": 1.601,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1748088000000,
+    "meterValue": 11047.0,
+    "consumption": 101.0,
+    "cost": 36.99,
+    "unit": "kWh",
+    "note": "Mayo 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1748692800000,
+    "meterValue": 4626.0,
+    "consumption": 12.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1748692800000,
+    "meterValue": 2862.408,
+    "consumption": 1.335,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Mayo 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1750593600000,
+    "meterValue": 11161.0,
+    "consumption": 114.0,
+    "cost": 41.36,
+    "unit": "kWh",
+    "note": "Junio 2025"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1750680000000,
+    "meterValue": 561.0,
+    "consumption": 16.0,
+    "cost": 58.48,
+    "unit": "m³",
+    "note": "Junio 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1751284800000,
+    "meterValue": 4633.0,
+    "consumption": 7.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1751284800000,
+    "meterValue": 2909.617,
+    "consumption": 47.209,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Junio 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1753272000000,
+    "meterValue": 11293.0,
+    "consumption": 132.0,
+    "cost": 45.16,
+    "unit": "kWh",
+    "note": "Julio 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1753963200000,
+    "meterValue": 4641.0,
+    "consumption": 8.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Julio 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1753963200000,
+    "meterValue": 3094.701,
+    "consumption": 185.084,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Julio 2025"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1755864000000,
+    "meterValue": 576.0,
+    "consumption": 15.0,
+    "cost": 56.22,
+    "unit": "m³",
+    "note": "Agosto 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1756209600000,
+    "meterValue": 11408.0,
+    "consumption": 115.0,
+    "cost": 42.29,
+    "unit": "kWh",
+    "note": "Agosto 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1756641600000,
+    "meterValue": 4646.0,
+    "consumption": 5.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Agosto 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1756641600000,
+    "meterValue": 3270.632,
+    "consumption": 175.931,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Agosto 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1758715200000,
+    "meterValue": 11517.0,
+    "consumption": 109.0,
+    "cost": 34.41,
+    "unit": "kWh",
+    "note": "Septiembre 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1759233600000,
+    "meterValue": 4659.0,
+    "consumption": 13.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Septiembre 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1759233600000,
+    "meterValue": 3318.594,
+    "consumption": 47.962,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Septiembre 2025"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1761307200000,
+    "meterValue": 591.0,
+    "consumption": 15.0,
+    "cost": 56.22,
+    "unit": "m³",
+    "note": "Octubre 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1761393600000,
+    "meterValue": 11632.0,
+    "consumption": 115.0,
+    "cost": 42.27,
+    "unit": "kWh",
+    "note": "Octubre 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1761912000000,
+    "meterValue": 4672.0,
+    "consumption": 13.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Octubre 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1761912000000,
+    "meterValue": 3322.028,
+    "consumption": 3.434,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Octubre 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1764072000000,
+    "meterValue": 11740.0,
+    "consumption": 108.0,
+    "cost": 40.34,
+    "unit": "kWh",
+    "note": "Noviembre 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1764504000000,
+    "meterValue": 4692.0,
+    "consumption": 20.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Noviembre 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1764504000000,
+    "meterValue": 3380.383,
+    "consumption": 58.355,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Noviembre 2025"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1765972800000,
+    "meterValue": 606.0,
+    "consumption": 15.0,
+    "cost": 56.22,
+    "unit": "m³",
+    "note": "Diciembre 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1766664000000,
+    "meterValue": 11852.0,
+    "consumption": 112.0,
+    "cost": 41.15,
+    "unit": "kWh",
+    "note": "Diciembre 2025"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1767182400000,
+    "meterValue": 4723.0,
+    "consumption": 31.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Diciembre 2025"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1767182400000,
+    "meterValue": 3506.253,
+    "consumption": 125.87,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Diciembre 2025"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1769515200000,
+    "meterValue": 11959.0,
+    "consumption": 107.0,
+    "cost": 42.23,
+    "unit": "kWh",
+    "note": "Enero 2026"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1769860800000,
+    "meterValue": 4750.0,
+    "consumption": 27.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Enero 2026"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1769860800000,
+    "meterValue": 3518.457,
+    "consumption": 12.204,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Enero 2026"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1771761600000,
+    "meterValue": 12063.0,
+    "consumption": 104.0,
+    "cost": 41.13,
+    "unit": "kWh",
+    "note": "Febrero 2026"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1771848000000,
+    "meterValue": 619.0,
+    "consumption": 13.0,
+    "cost": 53.19,
+    "unit": "m³",
+    "note": "Febrero 2026"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1772280000000,
+    "meterValue": 4775.0,
+    "consumption": 25.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Febrero 2026"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1772280000000,
+    "meterValue": 3529.929,
+    "consumption": 11.472,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Febrero 2026"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1774612800000,
+    "meterValue": 12154.0,
+    "consumption": 91.0,
+    "cost": 33.23,
+    "unit": "kWh",
+    "note": "Marzo 2026"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1774958400000,
+    "meterValue": 4802.0,
+    "consumption": 27.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Marzo 2026"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1774958400000,
+    "meterValue": 3589.962,
+    "consumption": 60.033,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Marzo 2026"
+  },
+  {
+    "meterType": "AGBAR",
+    "timestamp": 1777032000000,
+    "meterValue": 634.0,
+    "consumption": 15.0,
+    "cost": 59.4,
+    "unit": "m³",
+    "note": "Abril 2026"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1777118400000,
+    "meterValue": 12266.0,
+    "consumption": 112.0,
+    "cost": 41.44,
+    "unit": "kWh",
+    "note": "Abril 2026"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1777550400000,
+    "meterValue": 4822.0,
+    "consumption": 20.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Abril 2026"
+  },
+  {
+    "meterType": "CLIMATIZATION",
+    "timestamp": 1777550400000,
+    "meterValue": 3592.654,
+    "consumption": 2.692,
+    "cost": null,
+    "unit": "MWh",
+    "note": "Abril 2026"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1779451200000,
+    "meterValue": 12358.0,
+    "consumption": 92.0,
+    "cost": 34.24,
+    "unit": "kWh",
+    "note": "Mayo 2026"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1779969600000,
+    "meterValue": 4840.0,
+    "consumption": 18.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Mayo 2026"
+  },
+  {
+    "meterType": "ENDESA",
+    "timestamp": 1782216000000,
+    "meterValue": 12446.0,
+    "consumption": 88.0,
+    "cost": 36.95,
+    "unit": "kWh",
+    "note": "Junio 2026"
+  },
+  {
+    "meterType": "ACS",
+    "timestamp": 1782820800000,
+    "meterValue": 4851.0,
+    "consumption": 11.0,
+    "cost": null,
+    "unit": "kW",
+    "note": "Junio 2026"
+  }
+]

@@ -1,0 +1,110 @@
+ONEHOUSE v2.0.0-H09.1 TEST — ENTREGA 35
+=========================================
+
+BASE ESTABLE INALTERADA
+----------------------
+H08.2.2 / Entrega 34 ha sido designada por el usuario como base estable
+(4 ensayos de lectura, 35/35 GAs, ~5,9 s hasta caché, sin reintentos).
+No se cambia ni una línea del motor `UnifiedReceiverRunner.kt` ni del
+protocolo `KnxProtocol.kt`. El lector H sigue haciendo exactamente las
+35 solicitudes; lluvia 15/0/15 y viento 15/0/13 siguen SOLO EVENTOS.
+
+NOVEDAD EXPERIMENTAL H09.1
+--------------------------
+Monitor PASIVO Y MANUAL de solo dos direcciones de estado Cocina:
+  - 1/2/6  Luz Cocina
+  - 1/2/5  Fluorescente Cocina
+
+1. Tras completar Leer H con PASS, aparece el botón «Monitor Cocina».
+2. Abre un túnel KNX/IP UDP independiente y vinculado a la misma WiFi
+   local, durante 90 segundos como MÁXIMO. No funciona en segundo plano.
+3. El receptor NO envía GroupValueRead ni GroupValueWrite: solo CONNECT,
+   ACK del transporte entrante, KEEPALIVE cada 30 s y DISCONNECT.
+4. Acepta GroupValueWrite recibido, confirmado como booleano DPT 1.x
+   con valor 0/1 y GA dentro de la lista piloto. Se escribe directamente
+   en el repositorio central, que alimenta Inicio y Estancias/Cocina.
+5. Otras GAs, GroupValueResponse no solicitado, confirmaciones cEMI,
+   booleanos fuera de rango y duplicados NO actualizan la caché.
+6. El cambio no se presupone: si no se publica un telegrama de estado
+   en la GA piloto, la pantalla CONSERVA el estado leído. No inferir OFF.
+7. El monitor NO arranca automáticamente, no reintenta ni reconecta.
+8. Con el monitor abierto, Leer H, cambiar IP y mandos Cocina quedan
+   BLOQUEADOS. Se requiere cerrar el túnel antes de realizar otro paso.
+9. Al salir de la app (onStop), al pulsar «Detener H09» o al cumplir
+   90 s, solicita el cierre del túnel y espera respuesta hasta 600 ms.
+   Si se pierde WiFi, registra el error; NO garantiza la liberación
+   inmediata del canal en el gateway.
+10. Permite exportar «CSV Eventos»: eventos aceptados, tramas duplicadas,
+    anómalas, desconexión y ausencia de lecturas activas (0 GVR).
+
+QUÉ NO SE MODIFICA
+-----------------
+- Motor H08.2.2: 35 lecturas, 160 ms, ACK estricto, duración, cierre,
+  recuperación WiFi/UDP y CSV de lectura.
+- Dos mandos Cocina H07 controlados con una orden por lectura aprobada.
+- Automatizaciones, clima, persianas, escenas, lector antiguo, segundo
+  plano y sincronización permanente: desactivados.
+- applicationId: com.onehouse.app.h08 (app experimental separada de estable).
+- Icono naranja TEST.
+
+PROTOCOLO DE PRUEBA EN XIAOMI 14T PRO (WIFI LOCAL)
+------------------------------------------------
+A) Conserva el ZIP de Entrega 34 como referencia de recuperación. Cierra
+   InsideControl y otros túneles si fuera necesario. Instala H09.1 TEST.
+B) Abre la app y comprueba que la lectura H automática acaba en PASS
+   35/35; exporta «CSV» normal. Si falla, detén aquí la prueba.
+C) Antes de 5 minutos desde ese PASS pulsa «Monitor Cocina»; el panel
+   debe indicar H09.1 activo. NO pulses «Leer H» ni mandos de Cocina.
+D) Con una tecla/pulsador físico, cambia Luz Cocina (encender/apagar) y
+   espera a ver si cambia visualmente el estado en la app; repite con
+   Fluorescente. Si no hay evento, NO asumas fallo del receptor: puede
+   existir otra GA de transmisión. Exporta igualmente el CSV.
+E) Pulsa «Detener H09» o espera a que se cierre solo a los 90 s.
+   Comprueba que termina y muestra cierre=OK. Pulsa «CSV Eventos» y
+   comparte el fichero para analizar eventos, ACK y estado real.
+F) Después de cerrarse el monitor, pulsa «Leer H» una vez. Comprueba
+   35/35 y tiempo de caché <10 s. Exporta el CSV normal de regresión.
+G) Si un evento no se refleja en pantalla, anota: pulsador usado, hora,
+   estado físico observado y si había «WRITE_ACCEPTED» en el CSV.
+H) Si aparece EPERM/error WiFi/DISCONNECT_NO_CONFIRMADO, conserva el
+   CSV y no encadenes reintentos. Espera y revisa canales del gateway.
+
+CRITERIOS
+---------
+- Regresión H08: 35/35, sin ACK retransmitido y <10 s hasta caché.
+- H09: CONNECT_OK y DISCONNECT_OK; 0 GroupValueRead/Write emitidos;
+  ACK de tramas entrantes; sin ejecución fuera de primer plano.
+- Estados de 1/2/6 y 1/2/5 solo se actualizan ante GroupValueWrite
+  real con booleano válido. Confirmar fisicamente en la vivienda.
+- El experimento NO se declara estable hasta validar el comportamiento
+  en hardware real, con CSV y prueba de paso de primer/segundo plano.
+
+VERIFICACIONES REALIZADAS EN ESTA ENTREGA
+----------------------------------------
+- Integridad del proyecto y comparación binaria con el lector de E34.
+- Compilación de codec y monitor H09.1 como Kotlin JVM aislado: PASS.
+- Compilación del coordinador con stubs Android y coroutines: PASS.
+- Prueba con gateway UDP SIMULADO: dos escrituras de estado recibidas,
+  un duplicado filtrado, cero lecturas/comandos enviados y cierre OK.
+- Verificador estático de H09.1: PASS.
+- NO se pudo hacer compilación Android Studio completa ni prueba en
+  gateway KNX real ni Xiaomi 14T Pro. Estas pruebas siguen pendientes.
+
+ARCHIVOS MODIFICADOS O AÑADIDOS
+-------------------------------
+Nuevos: H091PassiveMonitorRunner.kt, H091MonitorCoordinator.kt,
+       LEEME_H09_1_ENTREGA35_Monitor_Pasivo_Cocina_TEST.txt,
+       tools/verificar_h091.py,
+       tools/test_h091_gateway_simulado.kt.
+Editados: H08Coordinator.kt, H082LightControlCoordinator.kt,
+         H08Toolbar.kt, MainActivity.kt, RoomDetailScreen.kt,
+         app/build.gradle.kts, res/values/strings.xml.
+Otros: proyectos de base y archivos legacy conservados.
+
+NOTA DE RECUPERACIÓN
+--------------------
+No reemplaza la app OneHouse estable; esta entrega conserva package ID
+experimental (com.onehouse.app.h08). Para volver a la entrega anterior,
+reinstala E34; Android puede bloquear bajar versionCode a 20804 sin
+primero desinstalar la app de pruebas (lo que BORRA sus preferencias).
+Anota IP/puerto y exporta CSV antes de reinstalar.

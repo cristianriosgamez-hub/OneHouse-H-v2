@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Roboto, system-ui, -apple-system, sans-serif;
+      --surface: #0b1e2e;
+      --surface-soft: #0e2537;
+      --border: rgba(101,160,205,.28);
+      --text: #f1f8ff;
+      --muted: #a8bfd2;
+      --blue: #2994ff;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--surface); color: var(--text); }
+    button, input { font: inherit; }
+    button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; cursor: pointer; }
+    button:focus-visible, input:focus-visible, a:focus-visible {
+      outline: 2px solid #8bcdff; outline-offset: 3px;
+    }
+    .radar { overflow: hidden; background: var(--surface); border-radius: 15px; }
+    .map-shell {
+      height: 298px; position: relative; isolation: isolate;
+      background: radial-gradient(circle at 70% 30%, #183852, #102334 70%);
+      border-bottom: 1px solid rgba(124,184,220,.18);
+    }
+    #map { position: absolute; inset: 0; z-index: 1; }
+    .leaflet-container { background: #112738 !important; }
+    /* La clase del TileLayer se aplica al contenedor, no a cada imagen.
+       Atenuación suave: mejora el contraste de lluvia sin invertir los nombres. */
+    .onehouse-base-tile .leaflet-tile {
+      filter: brightness(.88) saturate(.85);
+    }
+    .leaflet-control-attribution {
+      padding: 2px 5px !important; background: rgba(7,22,34,.78) !important;
+      color: #d2e2ee !important; font-size: 9px !important;
+    }
+    .leaflet-control-attribution a { color: #a5d7ff !important; }
+    .glass {
+      background: rgba(7,24,40,.89); border: 1px solid rgba(128,194,242,.30);
+      box-shadow: 0 5px 20px rgba(1,8,15,.22);
+      -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    }
+    .map-brand {
+      z-index: 520; position: absolute; top: 12px; left: 11px;
+      border-radius: 12px; padding: 9px 11px; pointer-events: none;
+    }
+    .map-brand .eyebrow {
+      display: flex; align-items: center; gap: 7px;
+      color: #d9eeff; font-size: 10px; font-weight: 750; letter-spacing: 1.15px;
+    }
+    .map-brand .sub { display: block; margin-top: 3px; color: #acc4d7; font-size: 10px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #5ccca8;
+      box-shadow: 0 0 0 3px rgba(92,204,168,.14); flex: 0 0 auto; }
+    .map-actions { z-index: 520; position: absolute; right: 11px; top: 12px;
+      display: flex; flex-direction: column; gap: 7px; }
+    .map-action { width: 43px; height: 43px; border-radius: 12px;
+      display: grid; place-items: center; color: #e8f6ff; font-size: 23px; line-height: 1; }
+    .map-action:active { background: rgba(29,103,154,.93); }
+    .map-caption { z-index: 520; position: absolute; left: 11px; bottom: 22px;
+      padding: 8px 10px; border-radius: 10px; display: flex; align-items: center;
+      max-width: calc(100% - 110px); pointer-events: none; }
+    .map-caption .caption-text { font-size: 10px; white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis; color: #daedfa; }
+    .map-caption .status-dot { margin-right: 8px; }
+    .map-caption.is-stale .status-dot { background: #efa955; box-shadow: 0 0 0 3px rgba(239,169,85,.15); }
+    .status-overlay { position: absolute; z-index: 630; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 11px; padding: 32px 18px 19px; text-align: center;
+      background: rgba(9,25,40,.96); }
+    .status-overlay[hidden], .retry[hidden] { display: none !important; }
+    .status-icon { font-size: 30px; line-height: 1; color: #72beff; }
+    .status-title { font-size: 16px; font-weight: 720; }
+    .status-body { font-size: 12px; line-height: 1.55; color: #bfd2df; max-width: 255px; }
+    .retry { min-height: 42px; background: #2389e8; border: 1px solid #59b2ff;
+      border-radius: 12px; padding: 10px 18px; margin-top: 3px; font-weight: 700;
+      color: #fff; font-size: 12px; }
+    .legend { height: 43px; padding: 9px 13px; display: flex; align-items: center;
+      justify-content: space-between; gap: 9px; background: #10293b;
+      border-bottom: 1px solid rgba(123,177,217,.15); }
+    .legend-title { color: #b8d0e2; font-size: 10px; font-weight: 620; white-space: nowrap; }
+    .legend-gradient { flex: 1; min-width: 45px; max-width: 142px;
+      height: 8px; border-radius: 7px;
+      background: linear-gradient(90deg,#61afff 0%,#52d29b 28%,#e3df59 55%,#ff9452 74%,#ec5584 100%);
+      opacity: .87; }
+    .legend-limits { display: flex; justify-content: space-between; gap: 10px;
+      color: #b8cddd; font-size: 10px; }
+    .timeline-area { padding: 11px 13px 12px; background: #0c2031; }
+    .timeline-heading { display: flex; justify-content: space-between; gap: 8px;
+      align-items: center; margin-bottom: 4px; }
+    .timeline-caption { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .timeline-title { color: #c5e0f3; letter-spacing: .55px; font-size: 10px;
+      font-weight: 700; }
+    .frame-relative { color: #95b3c9; font-size: 10px; }
+    .time-chip { font-size: 17px; font-weight: 750; font-variant-numeric: tabular-nums;
+      color: #f2f9ff; background: #15354b; border: 1px solid #275477;
+      border-radius: 11px; padding: 7px 10px; min-width: 67px; text-align: center; }
+    .timeline { display: block; width: 100%; height: 23px; margin: 5px 0 0;
+      accent-color: #2994ff; cursor: pointer; }
+    .timeline:disabled { opacity: .38; cursor: default; }
+    .timeline-ends { display: flex; align-items: center; justify-content: space-between;
+      gap: 5px; color: #92afc3; font-size: 10px; font-variant-numeric: tabular-nums; }
+    .timeline-ends > span { min-width: 0; }
+    .speed-toggle { min-width: 92px; min-height: 36px; flex: 0 0 auto;
+      border: 1px solid #335b79; background: #133047; border-radius: 10px;
+      color: #bfe1fb; font-size: 11px; font-weight: 650;
+      padding: 5px 8px; }
+    .speed-toggle:active { background: #205476; }
+    .speed-toggle:disabled { opacity: .4; }
+    .speed-toggle span { color: #f5faff; }
+    .map-caption.is-buffering .status-dot { background: #5daaf5; box-shadow: 0 0 0 3px rgba(93,170,245,.18); }
+    .map-caption.is-error .status-dot { background: #efa955; box-shadow: 0 0 0 3px rgba(239,169,85,.16); }
+    .playback { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+    .control { display: flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 43px; padding: 6px 9px; border-radius: 12px;
+      color: #eaf7ff; border: 1px solid #2a4e68; background: #16334a;
+      transition: background .15s ease, border-color .15s ease; }
+    .control:active:not(:disabled) { background: #23587d; }
+    .control:disabled { opacity: .35; cursor: default; }
+    .control.small { width: 44px; flex: 0 0 44px; font-size: 25px; }
+    .control.primary { flex: 1; font-size: 13px; font-weight: 700;
+      background: linear-gradient(100deg, #186fae, #278ef1); border-color: #3b9bf1;
+      box-shadow: 0 3px 12px rgba(24,111,174,.22); }
+    .control.primary:active:not(:disabled) { background: #257cc1; }
+    .control.refresh { width: 44px; flex: 0 0 44px; font-size: 23px; }
+    #play-symbol { font-size: 15px; }
+    .bottom { min-height: 33px; display: flex; gap: 9px; align-items: center;
+      justify-content: space-between; padding: 7px 13px;
+      background: #0a1a29; border-top: 1px solid rgba(127,173,211,.12); }
+    .bottom span { font-size: 10px; color: #91aebf; }
+    .bottom a { font-size: 10px; color: #8fcbff; text-decoration: none;
+      border-bottom: 1px solid rgba(143,203,255,.4); }
+    @media (max-width: 340px) {
+      .map-brand { padding: 7px 8px; }
+      .legend { padding-left: 8px; padding-right: 8px; gap: 5px; }
+      .legend-limits { gap: 5px; }
+      .timeline-area { padding-left: 9px; padding-right: 9px; }
+      .playback { gap: 5px; }
+      .control.small, .control.refresh { width: 39px; flex-basis: 39px; }
+      .speed-toggle { min-width: 76px; font-size: 10px; padding: 5px 6px; }
+      .timeline-ends { font-size: 9px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .control { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="radar" id="radar">
+  <div class="map-shell">
+    <div id="map" aria-label="Mapa de precipitaciones en Cataluña, con zoom y desplazamiento táctil"></div>
+    <div class="map-brand glass" aria-hidden="true">
+      <div class="eyebrow"><span class="status-dot"></span>CATALUÑA · RADAR</div>
+      <span class="sub">Precipitación observada</span>
+    </div>
+    <div class="map-actions" role="group" aria-label="Controles del mapa">
+      <button class="map-action glass" id="zoom-in" type="button" aria-label="Ampliar mapa">+</button>
+      <button class="map-action glass" id="zoom-out" type="button" aria-label="Reducir mapa">−</button>
+      <button class="map-action glass" id="center-map" type="button" aria-label="Centrar mapa en Cataluña">⌖</button>
+    </div>
+    <div class="map-caption glass" id="map-caption" aria-live="off">
+      <span class="status-dot"></span><span class="caption-text" id="map-caption-text">Consultando últimas observaciones…</span>
+    </div>
+    <div class="status-overlay" id="status" role="status" aria-live="polite">
+      <div class="status-icon" id="status-icon">◌</div>
+      <div class="status-title" id="status-title">Preparando el radar…</div>
+      <div class="status-body" id="status-body">Cargando el mapa y las imágenes de precipitación.</div>
+      <button type="button" class="retry" id="retry" hidden>Volver a intentar</button>
+    </div>
+  </div>
+  <div class="legend" aria-label="Intensidad orientativa de precipitación, de débil a fuerte">
+    <span class="legend-title">INTENSIDAD</span>
+    <span class="legend-limits">Débil</span>
+    <span class="legend-gradient" aria-hidden="true"></span>
+    <span class="legend-limits">Fuerte</span>
+  </div>
+  <div class="timeline-area">
+    <div class="timeline-heading">
+      <div class="timeline-caption">
+        <span class="timeline-title">EVOLUCIÓN DE LA LLUVIA</span>
+        <span class="frame-relative" id="frame-relative">Últimas 2 horas · sin pronóstico</span>
+      </div>
+      <span class="time-chip" id="frame-time" aria-label="Hora de observación">--:--</span>
+    </div>
+    <input id="timeline" class="timeline" type="range" min="0" max="0" value="0" step="1"
+      aria-label="Elegir imagen por hora del radar" disabled>
+    <div class="timeline-ends">
+      <span id="first-time" aria-label="Primera observación">--:--</span>
+      <button type="button" class="speed-toggle" id="speed" aria-label="Velocidad de reproducción: normal" disabled>
+        Velocidad <span id="speed-label">1×</span>
+      </button>
+      <span id="last-time" aria-label="Última observación">Más reciente · --:--</span>
+    </div>
+    <div class="playback" role="group" aria-label="Reproducción del historial">
+      <button type="button" class="control small" id="previous" aria-label="Imagen anterior" disabled>‹</button>
+      <button type="button" class="control primary" id="play" disabled>
+        <span id="play-symbol" aria-hidden="true">▶</span><span id="play-label">Reproducir</span>
+      </button>
+      <button type="button" class="control small" id="next" aria-label="Imagen siguiente" disabled>›</button>
+      <button type="button" class="control refresh" id="refresh" aria-label="Actualizar imágenes">↻</button>
+    </div>
+  </div>
+  <div class="bottom">
+    <span id="availability">Radar histórico · conexión a Internet</span>
+    <a href="https://www.rainviewer.com/" rel="noopener">Datos: RainViewer ↗</a>
+  </div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  'use strict';
+  // Entrega 03: buffering y cache LRU de 4 fotogramas, avance tras recibir imagen,
+  // control de velocidad y gestión explícita de actualizaciones/errores.
+  const API_URL = 'https://api.rainviewer.com/public/weather-maps.json';
+  const CENTER = [41.73, 1.72];
+  const ZOOM = 6;
+  const AUTO_REFRESH_MS = 6 * 60 * 1000;
+  const FRAME_MS = [1250, 680];
+  const MAX_CACHED_LAYERS = 4;
+  const FRAME_LOAD_TIMEOUT_MS = 8500;
+  const el = id => document.getElementById(id);
+  let map = null;
+  let frames = [];
+  let frameCache = new Map();
+  let activeEntry = null;
+  let activeIndex = -1;
+  let requestedIndex = -1;
+  let requestSerial = 0;
+  let loadTimeout = null;
+  let playTimer = null;
+  let refreshTimer = null;
+  let playing = false;
+  let speedIndex = 0;
+  let loading = false;
+  let isStale = false;
+
+  function fmtTime(seconds) {
+    try {
+      return new Intl.DateTimeFormat('es-ES', {
+        timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit', hour12: false
+      }).format(new Date(seconds * 1000));
+    } catch (_) { return '--:--'; }
+  }
+  function status(title, body, showRetry) {
+    el('status-title').textContent = title;
+    el('status-body').textContent = body;
+    el('status-icon').textContent = showRetry ? '⚠' : '◌';
+    el('retry').hidden = !showRetry;
+    el('status').hidden = false;
+  }
+  function hideStatus() { el('status').hidden = true; }
+  function setEnabled(enabled) {
+    ['play', 'previous', 'next'].forEach(id => {
+      el(id).disabled = !enabled || frames.length < 2;
+    });
+    el('timeline').disabled = !enabled;
+    el('speed').disabled = !enabled || frames.length < 2;
+  }
+  function caption(text, mode) {
+    el('map-caption-text').textContent = text;
+    el('map-caption').classList.toggle('is-stale', mode === 'stale');
+    el('map-caption').classList.toggle('is-buffering', mode === 'buffering');
+    el('map-caption').classList.toggle('is-error', mode === 'error');
+  }
+  function clearPlayTimer() {
+    if (playTimer !== null) { clearTimeout(playTimer); playTimer = null; }
+  }
+  function stop() {
+    playing = false;
+    clearPlayTimer();
+    el('play-symbol').textContent = '▶';
+    el('play-label').textContent = 'Reproducir';
+    el('play').setAttribute('aria-label', 'Reproducir animación de precipitaciones');
+  }
+  function scheduleNext() {
+    clearPlayTimer();
+    if (playing && frames.length > 1 && !document.hidden) {
+      playTimer = setTimeout(() => {
+        playTimer = null;
+        requestFrame((activeIndex + 1) % frames.length);
+      }, FRAME_MS[speedIndex]);
+    }
+  }
+  function togglePlay() {
+    if (playing) { stop(); return; }
+    if (frames.length < 2) { return; }
+    playing = true;
+    el('play-symbol').textContent = 'Ⅱ';
+    el('play-label').textContent = 'Pausar';
+    el('play').setAttribute('aria-label', 'Pausar animación de precipitaciones');
+    scheduleNext();
+  }
+  function updateObservationLabels(frame, selected) {
+    const stamp = fmtTime(frame.time);
+    const minutesOld = Math.max(0, Math.round((Date.now() / 1000 - frame.time) / 60));
+    const relative = minutesOld <= 1 ? 'Observación reciente' :
+      minutesOld < 60 ? 'Observación de hace ' + minutesOld + ' min' :
+      'Observación de hace ' + Math.floor(minutesOld / 60) + ' h';
+    el('frame-time').textContent = stamp;
+    el('frame-relative').textContent = relative + ' · sin pronóstico';
+    el('timeline').value = String(selected);
+    el('timeline').setAttribute('aria-valuetext', 'Imagen de las ' + stamp);
+    caption('Imagen ' + (selected + 1) + ' de ' + frames.length + ' · ' + stamp +
+      (isStale ? ' · sin actualizar' : ''), isStale ? 'stale' : 'normal');
+  }
+  function touchCache(key, entry) {
+    frameCache.delete(key);
+    frameCache.set(key, entry);
+    // LRU: máximo de cuatro capas en memoria y en el mapa.
+    while (frameCache.size > MAX_CACHED_LAYERS) {
+      let removed = false;
+      for (const [oldKey, oldEntry] of frameCache) {
+        if (oldEntry !== activeEntry && oldKey !== key) {
+          frameCache.delete(oldKey);
+          if (map && map.hasLayer(oldEntry.layer)) { map.removeLayer(oldEntry.layer); }
+          removed = true;
+          break;
+        }
+      }
+      if (!removed) { break; }
+    }
+  }
+  function getFrameLayer(index) {
+    const frame = frames[index];
+    const key = frame.time;
+    let entry = frameCache.get(key);
+    if (entry) { touchCache(key, entry); return entry; }
+    const layer = L.tileLayer(frame.url + '/512/{z}/{x}/{y}/2/1_1.png', {
+      tileSize: 256, opacity: 0, minZoom: 5, maxZoom: 9, maxNativeZoom: 7,
+      updateWhenIdle: true, keepBuffer: 1, attribution: 'Radar © RainViewer'
+    });
+    entry = { layer: layer, loaded: false, validTiles: 0, failedTiles: 0, time: key };
+    layer.on('tileload', () => { entry.validTiles++; });
+    layer.on('tileerror', () => { entry.failedTiles++; });
+    layer.on('load', () => {
+      entry.loaded = true;
+      if (requestedIndex >= 0 && frames[requestedIndex] &&
+          frames[requestedIndex].time === entry.time) {
+        activateFrame(requestedIndex, requestSerial);
+      }
+    });
+    layer.addTo(map);
+    touchCache(key, entry);
+    return entry;
+  }
+  function activateFrame(index, token) {
+    if (token !== requestSerial || !frames[index] || !map) { return; }
+    const entry = frameCache.get(frames[index].time);
+    if (!entry || !entry.loaded) { return; }
+    if (loadTimeout !== null) { clearTimeout(loadTimeout); loadTimeout = null; }
+    // Mantener la capa anterior hasta que la nueva esté cargada evita parpadeos.
+    entry.layer.setOpacity(0.82);
+    if (activeEntry && activeEntry !== entry) { activeEntry.layer.setOpacity(0); }
+    activeEntry = entry;
+    activeIndex = index;
+    requestedIndex = -1;
+    touchCache(entry.time, entry);
+    updateObservationLabels(frames[index], index);
+    hideStatus();
+    scheduleNext();
+  }
+  function requestFrame(index) {
+    if (!map || !frames.length) { return; }
+    const selected = Math.max(0, Math.min(Number(index) || 0, frames.length - 1));
+    requestSerial++;
+    const token = requestSerial;
+    requestedIndex = selected;
+    clearPlayTimer();
+    if (loadTimeout !== null) { clearTimeout(loadTimeout); loadTimeout = null; }
+    if (activeIndex === selected && activeEntry) {
+      requestedIndex = -1;
+      updateObservationLabels(frames[selected], selected);
+      scheduleNext();
+      return;
+    }
+    caption('Cargando imagen ' + (selected + 1) + ' de ' + frames.length + '…', 'buffering');
+    const entry = getFrameLayer(selected);
+    if (entry.loaded) { activateFrame(selected, token); return; }
+    loadTimeout = setTimeout(() => {
+      if (token !== requestSerial) { return; }
+      requestedIndex = -1;
+      caption('No se pudo cargar la imagen · inténtalo de nuevo', 'error');
+      // No repetir indefinidamente un fotograma fallido durante la animación.
+      // El usuario conserva la última imagen válida y puede reintentar.
+      if (playing) { stop(); }
+      if (activeIndex < 0) {
+        status('Imagen no disponible', 'No se han podido obtener los mapas del radar. Pulsa Reintentar.', true);
+      }
+    }, FRAME_LOAD_TIMEOUT_MS);
+  }
+  async function loadFrames() {
+    if (loading) { return; }
+    loading = true;
+    el('refresh').disabled = true;
+    try {
+      if (typeof L === 'undefined') { throw new Error('No se pudo cargar la biblioteca del mapa.'); }
+      if (!map) {
+        map = L.map('map', {
+          center: CENTER, zoom: ZOOM, minZoom: 5, maxZoom: 9,
+          zoomControl: false, attributionControl: false, scrollWheelZoom: false
+        });
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          className: 'onehouse-base-tile', maxZoom: 9, minZoom: 5,
+          updateWhenIdle: true, keepBuffer: 1,
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        L.control.attribution({ position: 'bottomright', prefix: false }).addTo(map);
+        map.on('dragstart', stop);
+        map.on('zoomstart', stop);
+      }
+      if (!frames.length) {
+        status('Cargando precipitaciones…', 'Consultando las observaciones meteorológicas más recientes.', false);
+      }
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000);
+      let response;
+      try { response = await fetch(API_URL, { cache: 'no-store', signal: controller.signal }); }
+      finally { clearTimeout(timeoutId); }
+      if (!response.ok) { throw new Error('El servicio meteorológico no responde.'); }
+      const data = await response.json();
+      if (!data.host || !/^https:\/\/([a-z0-9-]+\.)*rainviewer\.com$/i.test(data.host)) {
+        throw new Error('La respuesta del radar no es válida.');
+      }
+      const past = data.radar && Array.isArray(data.radar.past) ? data.radar.past : [];
+      const valid = past.filter(frame =>
+        Number.isSafeInteger(frame.time) && typeof frame.path === 'string' &&
+        /^\/v2\/radar\/[a-zA-Z0-9_-]{1,64}$/.test(frame.path)
+      );
+      if (!valid.length) { throw new Error('No hay imágenes de radar disponibles en este momento.'); }
+      const nextFrames = valid.slice(-13).map(frame => ({ time: frame.time, url: data.host + frame.path }));
+      const currentStamp = activeIndex >= 0 && frames[activeIndex] ? frames[activeIndex].time : null;
+      const previousStamps = frames.map(frame => frame.time).join(',');
+      const incomingStamps = nextFrames.map(frame => frame.time).join(',');
+      if (previousStamps !== incomingStamps) {
+        stop();
+        requestSerial++;
+        requestedIndex = -1;
+        if (loadTimeout !== null) { clearTimeout(loadTimeout); loadTimeout = null; }
+        // Conservar la capa actualmente visible incluso cuando cambia el
+        // catálogo: no dejar el mapa en blanco durante la actualización.
+        const allowed = new Set(nextFrames.map(frame => frame.time));
+        for (const [key, entry] of frameCache) {
+          if (!allowed.has(key) && entry !== activeEntry) {
+            if (map.hasLayer(entry.layer)) { map.removeLayer(entry.layer); }
+            frameCache.delete(key);
+          }
+        }
+        frames = nextFrames;
+        activeIndex = frames.findIndex(frame => frame.time === currentStamp);
+      }
+      el('timeline').max = String(frames.length - 1);
+      el('first-time').textContent = fmtTime(frames[0].time);
+      el('last-time').textContent = 'Más reciente · ' + fmtTime(frames[frames.length - 1].time);
+      el('availability').textContent = frames.length + ' imágenes · observación real';
+      isStale = false;
+      setEnabled(true);
+      if (activeIndex < 0 || !activeEntry) {
+        requestFrame(frames.length - 1);
+      } else {
+        // Persistir exactamente el fotograma seleccionado si sigue disponible.
+        updateObservationLabels(frames[activeIndex], activeIndex);
+      }
+      hideStatus();
+      setTimeout(() => { if (map) { map.invalidateSize(); } }, 100);
+    } catch (error) {
+      if (!frames.length) {
+        setEnabled(false);
+        const detail = error && error.message ? String(error.message) : 'No se pueden consultar las imágenes.';
+        status('Radar no disponible', detail + ' Comprueba Internet y pulsa Reintentar.', true);
+      } else {
+        isStale = true;
+        if (activeIndex >= 0) { updateObservationLabels(frames[activeIndex], activeIndex); }
+        else { caption('Última consulta · sin actualizar', 'stale'); }
+        el('availability').textContent = 'Sin actualización reciente';
+      }
+    } finally {
+      loading = false;
+      el('refresh').disabled = false;
+    }
+  }
+  el('play').addEventListener('click', togglePlay);
+  el('previous').addEventListener('click', () => { stop(); requestFrame(activeIndex - 1); });
+  el('next').addEventListener('click', () => { stop(); requestFrame(activeIndex + 1); });
+  el('timeline').addEventListener('input', event => { stop(); requestFrame(event.target.value); });
+  el('speed').addEventListener('click', () => {
+    speedIndex = (speedIndex + 1) % FRAME_MS.length;
+    el('speed-label').textContent = speedIndex ? '2×' : '1×';
+    el('speed').setAttribute('aria-label', 'Velocidad de reproducción: ' + (speedIndex ? 'rápida' : 'normal'));
+    if (playing && requestedIndex < 0) { scheduleNext(); }
+  });
+  el('refresh').addEventListener('click', loadFrames);
+  el('retry').addEventListener('click', loadFrames);
+  el('zoom-in').addEventListener('click', () => map && map.zoomIn());
+  el('zoom-out').addEventListener('click', () => map && map.zoomOut());
+  el('center-map').addEventListener('click', () => map && map.setView(CENTER, ZOOM));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { stop(); } });
+  window.addEventListener('pagehide', () => {
+    stop();
+    if (refreshTimer) { clearInterval(refreshTimer); refreshTimer = null; }
+    if (loadTimeout !== null) { clearTimeout(loadTimeout); loadTimeout = null; }
+  });
+  loadFrames();
+  refreshTimer = setInterval(() => { if (!document.hidden) { loadFrames(); } }, AUTO_REFRESH_MS);
+})();
+</script>
+</body>
+</html>
