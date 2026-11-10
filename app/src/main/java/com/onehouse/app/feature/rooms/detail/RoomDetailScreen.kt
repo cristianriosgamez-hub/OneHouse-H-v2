@@ -51,6 +51,7 @@ fun RoomDetailScreen(roomType: RoomType, onBack: () -> Unit) {
     val homeSnapshot by homeRepository.stateFlow.collectAsStateWithLifecycle(initialValue = homeRepository.snapshot())
     val roomState = remember(homeSnapshot, roomType) { HomeStateMapper.room(homeSnapshot, roomType) }
     val lightControlStatus by H082LightControlCoordinator.state.collectAsStateWithLifecycle()
+    val monitor by com.onehouse.app.feature.h08.H091MonitorCoordinator.state.collectAsStateWithLifecycle()
     val hReadStatus by com.onehouse.app.feature.h08.H08Coordinator.status.collectAsStateWithLifecycle()
     var confirmPilotLight by remember { mutableStateOf<Pair<H07LightControlRunner.Light, Boolean>?>(null) }
 
@@ -128,7 +129,7 @@ fun RoomDetailScreen(roomType: RoomType, onBack: () -> Unit) {
 
                 if (roomType == RoomType.KITCHEN && H08Safety.READ_ONLY) {
                     Text(
-                        "H09.1 TEST · Luz y Fluorescente de Cocina: eventos pasivos desde GA de estado; " +
+                        "H09.2 TEST · Luz y Fluorescente de Cocina: eventos pasivos desde GA de estado; " +
                             "los mandos requieren lectura H limpia y monitor detenido.",
                         color = Color(0xFFFFC778)
                     )
@@ -156,7 +157,7 @@ fun RoomDetailScreen(roomType: RoomType, onBack: () -> Unit) {
                         else -> null
                     } else null
                     val observedPilot = pilotLight?.let { homeSnapshot.booleanAt(it.statusGa) }
-                    val pilotReady = pilotLight != null && observedPilot != null &&
+                    val pilotReady = !monitor.running && !monitor.recovering && pilotLight != null && observedPilot != null &&
                         H082LightControlCoordinator.canControl(context, pilotLight, realLight?.device)
                     val enabled = if (H08Safety.READ_ONLY) {
                         observedPilot ?: realLight?.isOn ?: false

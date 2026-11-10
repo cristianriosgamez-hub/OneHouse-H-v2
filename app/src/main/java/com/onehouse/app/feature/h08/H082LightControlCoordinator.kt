@@ -43,7 +43,7 @@ object H082LightControlCoordinator {
         if (!isDeviceWhitelisted(device, light)) return false
         val read = H08Coordinator.status.value
         val control = mutableState.value
-        if (!read.lastRunSuccess || !read.success || read.running || control.busy || H091MonitorCoordinator.isBusy()) return false
+        if (!H091MonitorCoordinator.permitsReadId(read.lastRunId) || !read.lastRunSuccess || !read.success || read.running || control.busy || H091MonitorCoordinator.isBusy()) return false
         if (read.imported != H08Safety.EXPECTED_READS || read.lastRunId.isBlank()) return false
         if (read.lastRunId == control.consumedRunId) return false
         if (read.runFinishedAtEpochMillis <= 0 || System.currentTimeMillis() - read.runFinishedAtEpochMillis !in 0L..180_000L) return false
@@ -60,6 +60,7 @@ object H082LightControlCoordinator {
 
     /** Solo llamar después de una interacción del usuario y de confirmar el diálogo. */
     fun execute(context: Context, light: H07LightControlRunner.Light, device: ImportedKnxDevice?, on: Boolean): Boolean {
+        check(Looper.myLooper() == Looper.getMainLooper())
         if (!canControl(context, light, device)) {
             mutableState.value = mutableState.value.copy(message = "Mando bloqueado: requiere lectura H completa y reciente, GA de estado conocida y permiso sin consumir.")
             return false

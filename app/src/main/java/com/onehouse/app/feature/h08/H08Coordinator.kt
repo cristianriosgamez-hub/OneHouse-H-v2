@@ -202,6 +202,7 @@ object H08Coordinator {
     }
 
     fun startRead(): Boolean {
+        check(Looper.myLooper() == Looper.getMainLooper())
         val app = appContext ?: return false
         if (status.value.running || H082LightControlCoordinator.isBusy() || H091MonitorCoordinator.isBusy()) return false
         val waitMs = udpErrorCooldownUntilMs - System.currentTimeMillis()

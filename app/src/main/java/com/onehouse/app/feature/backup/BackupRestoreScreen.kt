@@ -141,7 +141,7 @@ fun BackupRestoreScreen(onBack: () -> Unit) {
                     Button(
                         enabled = !isBusy,
                         onClick = {
-                            createDocument.launch("OneHouse_backup_${System.currentTimeMillis()}.json")
+                            if (!com.onehouse.app.feature.h08.H091MonitorCoordinator.isBusy()) createDocument.launch("OneHouse_backup_${System.currentTimeMillis()}.json")
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) { Text("Exportar copia JSON") }
@@ -160,7 +160,7 @@ fun BackupRestoreScreen(onBack: () -> Unit) {
                     )
                     OutlinedButton(
                         enabled = !isBusy,
-                        onClick = { openDocument.launch(arrayOf("application/json", "text/plain")) },
+                        onClick = { if (!com.onehouse.app.feature.h08.H091MonitorCoordinator.isBusy()) openDocument.launch(arrayOf("application/json", "text/plain")) },
                         modifier = Modifier.fillMaxWidth()
                     ) { Text("Seleccionar archivo") }
                 }

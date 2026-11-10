@@ -203,8 +203,8 @@ fun KnxAddressEditorScreen(onBack: () -> Unit) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Text("Copia de seguridad", color = TextoPrincipal, fontWeight = FontWeight.Bold)
                     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedButton(onClick = { exportLauncher.launch("OneHouse_KNX.json") }, modifier = Modifier.weight(1f)) { Text("Exportar") }
-                        OutlinedButton(onClick = { importLauncher.launch(arrayOf("application/json", "text/plain")) }, modifier = Modifier.weight(1f)) { Text("Importar") }
+                        OutlinedButton(onClick = { if (!com.onehouse.app.feature.h08.H091MonitorCoordinator.isBusy()) exportLauncher.launch("OneHouse_KNX.json") }, modifier = Modifier.weight(1f)) { Text("Exportar") }
+                        OutlinedButton(onClick = { if (!com.onehouse.app.feature.h08.H091MonitorCoordinator.isBusy()) importLauncher.launch(arrayOf("application/json", "text/plain")) }, modifier = Modifier.weight(1f)) { Text("Importar") }
                     }
                     if (repository.hasAutomaticBackup()) {
                         OutlinedButton(onClick = {

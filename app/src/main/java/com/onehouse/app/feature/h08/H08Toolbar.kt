@@ -87,7 +87,7 @@ fun H08Toolbar() {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = "H09.1 TEST · H08.2.2 ESTABLE + EVENTOS COCINA",
+            text = "H09.2 TEST · H08.2.2 ESTABLE + EVENTOS COCINA",
             color = Color(0xFF90DBFF),
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.labelMedium
@@ -120,13 +120,13 @@ fun H08Toolbar() {
                     val id = state.lastRunId.substringAfterLast('-').ifBlank { "0" }
                     exporter.launch("OneHouse_H0822_LECTURA_${id}_$now.csv")
                 },
-                enabled = !state.running && state.lastRun != null
+                enabled = !monitor.running && !state.running && state.lastRun != null
             ) { Text("CSV") }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(7.dp)) {
             Button(
-                enabled = if (monitor.running) true else
-                    state.lastRunSuccess && state.imported == H08Safety.EXPECTED_READS &&
+                enabled = if (monitor.running) !monitor.stopping else
+                    H091MonitorCoordinator.permitsReadId(state.lastRunId) && state.lastRunSuccess && state.imported == H08Safety.EXPECTED_READS &&
                         !state.running && !controlState.busy && !H091MonitorCoordinator.isBusy(),
                 onClick = {
                     if (monitor.running) H091MonitorCoordinator.stop()
@@ -137,7 +137,7 @@ fun H08Toolbar() {
                 enabled = !monitor.running && monitor.snapshot != null,
                 onClick = {
                     val now = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())
-                    monitorExporter.launch("OneHouse_H091_COCINA_EVENTOS_$now.csv")
+                    monitorExporter.launch("OneHouse_H092_COCINA_EVENTOS_$now.csv")
                 }
             ) { Text("CSV Eventos") }
         }
@@ -169,7 +169,7 @@ fun H08Toolbar() {
                     style = MaterialTheme.typography.labelSmall
                 )
                 OutlinedButton(
-                    enabled = !controlState.busy && controlState.lastResult != null,
+                    enabled = !monitor.running && !controlState.busy && controlState.lastResult != null,
                     onClick = {
                         val now = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())
                         controlExporter.launch("OneHouse_H0822_COCINA_CONTROL_$now.csv")
@@ -204,7 +204,7 @@ fun H08Toolbar() {
     if (showConfig) {
         AlertDialog(
             onDismissRequest = { showConfig = false },
-            title = { Text("Gateway KNX/IP local · H09.1 TEST") },
+            title = { Text("Gateway KNX/IP local · H09.2 TEST") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("Solo WiFi local, NAT desactivado. Este ajuste es independiente de OneHouse estable.")

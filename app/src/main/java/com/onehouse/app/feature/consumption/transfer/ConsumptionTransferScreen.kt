@@ -113,7 +113,7 @@ fun ConsumptionTransferScreen(onBack: () -> Unit) {
 
                     Button(enabled = !busy && selectedTypes.isNotEmpty(), onClick = {
                         val stamp = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-                        exportLauncher.launch("OneHouse_Consumos_$stamp.xlsx")
+                        if (!com.onehouse.app.feature.h08.H091MonitorCoordinator.isBusy()) exportLauncher.launch("OneHouse_Consumos_$stamp.xlsx")
                     }, modifier = Modifier.fillMaxWidth()) { Text("Exportar seleccionados") }
                 }
             }
@@ -121,7 +121,7 @@ fun ConsumptionTransferScreen(onBack: () -> Unit) {
                 Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                     Text("Importar desde Excel", color = TextoPrincipal, fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
                     Text("Importa un Excel exportado por OneHouse. Las lecturas con la misma fecha y contador no se duplican ni sobrescriben.", color = TextoSecundario)
-                    OutlinedButton(enabled = !busy, onClick = { importLauncher.launch(arrayOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) }, modifier = Modifier.fillMaxWidth()) { Text("Seleccionar Excel") }
+                    OutlinedButton(enabled = !busy, onClick = { if (!com.onehouse.app.feature.h08.H091MonitorCoordinator.isBusy()) importLauncher.launch(arrayOf("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")) }, modifier = Modifier.fillMaxWidth()) { Text("Seleccionar Excel") }
                 }
             }
             if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())

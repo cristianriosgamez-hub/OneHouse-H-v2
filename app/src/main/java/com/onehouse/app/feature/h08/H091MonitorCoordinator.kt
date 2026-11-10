@@ -19,12 +19,14 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-/** Piloto EXPLÍCITO H09.1. No hay reinicio, polling de GAs ni servicio en segundo plano. */
+/** Piloto EXPLÍCITO H09.2. No hay reinicio, polling de GAs ni servicio en segundo plano. */
 object H091MonitorCoordinator {
     data class UiState(
         val running: Boolean = false,
         val connected: Boolean = false,
-        val message: String = "Monitor H09.1 inactivo: lectura H08 PASS antes de iniciar.",
+        val stopping: Boolean = false,
+        val recovering: Boolean = false,
+        val message: String = "Monitor H09.2 inactivo: lectura H08 PASS antes de iniciar.",
         val snapshot: H091PassiveMonitorRunner.Snapshot? = null,
         val readId: String = "",
         val endpoint: String = ""
@@ -35,7 +37,9 @@ object H091MonitorCoordinator {
     val state = mutable.asStateFlow()
 
     /** Incluye el intervalo entre solicitud de STOP y DISCONNECT_RESPONSE. */
-    fun isBusy(): Boolean = mutable.value.running || receiver.isRunning()
+    private var invalidReadId = ""
+    fun permitsReadId(id: String) = id != invalidReadId
+    fun isBusy(): Boolean = mutable.value.running || mutable.value.recovering || receiver.isRunning()
 
     private data class Route(val network: Network, val ipv4: Set<String>)
 
@@ -53,12 +57,13 @@ object H091MonitorCoordinator {
     }.getOrNull()
 
     fun start(context: Context): Boolean {
+        check(Looper.myLooper() == Looper.getMainLooper())
         val app = context.applicationContext
         if (isBusy()) return false
         val read = H08Coordinator.status.value
         if (!read.lastRunSuccess || !read.success || read.running ||
             read.imported != H08Safety.EXPECTED_READS ||
-            read.lastRunId.isBlank() || H082LightControlCoordinator.isBusy() ||
+            !permitsReadId(read.lastRunId) || read.lastRunId.isBlank() || H082LightControlCoordinator.isBusy() ||
             read.runFinishedAtEpochMillis <= 0L ||
             System.currentTimeMillis() - read.runFinishedAtEpochMillis !in 0L..300_000L) {
             mutable.value = mutable.value.copy(message = "Primero realiza una lectura H08 PASS reciente (máximo 5 minutos), sin mandos pendientes.")
@@ -79,7 +84,7 @@ object H091MonitorCoordinator {
         // El marcador running se establece ANTES de abrir el socket: ningún mando
         // ni nueva lectura pueden comenzar mientras se abre/cierra este túnel.
         mutable.value = UiState(
-            running = true, message = "H09.1: conectando receptor pasivo (0 GroupValueRead)...",
+            running = true, message = "H09.2: conectando receptor pasivo (0 GroupValueRead)...",
             readId = read.lastRunId, endpoint = endpoint
         )
         val started = receiver.start(
@@ -97,13 +102,13 @@ object H091MonitorCoordinator {
             },
             onSnapshot = { snapshot ->
                 handler.post {
-                    if (mutable.value.running) {
+                    if (mutable.value.running && !mutable.value.stopping) {
                         mutable.value = mutable.value.copy(
                             connected = snapshot.connected,
                             snapshot = snapshot,
                             message = if (snapshot.connected)
-                                "H09.1 activo: ${snapshot.acceptedWrites} eventos Cocina; 0 lecturas; límite 90 s."
-                                else "H09.1 conectando..."
+                                "H09.2 activo: ${snapshot.acceptedWrites} eventos Cocina; 0 lecturas; límite 90 s."
+                                else "H09.2 conectando..."
                         )
                     }
                 }
@@ -126,13 +131,20 @@ object H091MonitorCoordinator {
             onFinish = { snapshot ->
                 handler.post {
                     mutable.value = mutable.value.copy(
-                        running = false,
+                        running = false, stopping = false, recovering = snapshot.recoveryRequired,
                         connected = false,
                         snapshot = snapshot,
-                        message = "H09.1 finalizado: ${snapshot.stopReason}; " +
+                        message = "H09.2 finalizado: ${snapshot.stopReason}; " +
                             "eventos=${snapshot.acceptedWrites}; " +
-                            "cierre=${if (snapshot.disconnectedOk) "OK" else "NO_CONFIRMADO"}. Exporta CSV."
+                            "cierre=${snapshot.closeResult}. " +
+                            if (snapshot.recoveryRequired) "Recuperación: espera 30 s y realiza otra lectura H." else "Exporta CSV."
                     )
+                    if (snapshot.recoveryRequired || snapshot.stopReason.startsWith("ERROR")) invalidReadId = mutable.value.readId
+                    if (snapshot.recoveryRequired) {
+                        handler.postDelayed({
+                            mutable.value = mutable.value.copy(recovering = false, message = "Recuperación: comprueba el canal y realiza una nueva lectura H.")
+                        }, 30_000L)
+                    }
                 }
             }
         )
@@ -143,9 +155,9 @@ object H091MonitorCoordinator {
     }
 
     fun stop() {
-        if (!isBusy()) return
+        if (!mutable.value.running) return
         receiver.requestStop()
-        mutable.value = mutable.value.copy(message = "Deteniendo H09.1 y cerrando el túnel KNX/IP... (sin nuevas lecturas)")
+        mutable.value = mutable.value.copy(stopping = true, connected = false, message = "Deteniendo H09.2 y cerrando el túnel KNX/IP... (sin nuevas lecturas)")
     }
 
     private fun utc(timeMs: Long): String {
@@ -156,9 +168,9 @@ object H091MonitorCoordinator {
 
     fun exportCsv(): String {
         val s = state.value
-        val snap = s.snapshot ?: return "H09.1;sin_telemetria\n"
+        val snap = s.snapshot ?: return "H09.2;sin_telemetria\n"
         return buildString {
-            appendLine("ONEHOUSE_H091_ENTREGA35_MONITOR_PASIVO_COCINA_TEST")
+            appendLine("ONEHOUSE_H092_ENTREGA36_MONITOR_PASIVO_COCINA_TEST")
             appendLine("lectura_H08_origen;${s.readId}")
             appendLine("gateway;${s.endpoint}")
             appendLine("inicio_utc;${utc(snap.startedEpochMs)}")
@@ -168,8 +180,17 @@ object H091MonitorCoordinator {
             appendLine("tramas_duplicadas;${snap.duplicateFrames}")
             appendLine("tramas_anomalas;${snap.unexpectedFrames}")
             appendLine("udp_recibidos;${snap.receivedUdp}")
-            appendLine("GroupValueRead;0")
-            appendLine("GroupValueWrite_enviados;0")
+            appendLine("solicitudes_tunel_TX_medidas;${snap.outgoingTunnelRequests}")
+            appendLine("aplicados_cache;${snap.applied}")
+            appendLine("duplicados_cache;${snap.cacheDuplicates}")
+            appendLine("errores_aplicacion;${snap.applyErrors}")
+            appendLine("descartados;${snap.discarded}")
+            appendLine("registros_descartados;${snap.lostRecords}")
+            appendLine("ack_enviados;${snap.ackCount}")
+            appendLine("max_recepcion_a_ack_us_escucha;${snap.maxAckMicros}")
+            appendLine("connect;${snap.connectResult.replace(';', ',')}")
+            appendLine("primer_error;${snap.firstError.replace(';', ',').replace('\n',' ')}")
+            appendLine("disconnect;${snap.closeResult.replace(';', ',')}")
             appendLine("motivo_fin;${snap.stopReason.replace(';', ',').replace('\n', ' ')}")
             appendLine("disconnect_ok;${snap.disconnectedOk}")
             appendLine("validacion_fisica;PENDIENTE_USUARIO")

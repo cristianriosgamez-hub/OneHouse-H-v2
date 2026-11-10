@@ -4,6 +4,12 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class KnxStartupReadPolicyTest {
+    @Test fun hReaderExcludesBothEventOnlyAlarmsFromIts35Reads() {
+        val excluded = com.onehouse.app.feature.h08.H08Safety.EVENT_ONLY
+        assertEquals(setOf("15/0/13", "15/0/15"), excluded)
+        val catalog = com.onehouse.knxlab.knx.LabCatalog.addresses.map { it.address }
+        assertEquals(35, catalog.filterNot { it in excluded }.distinct().size)
+    }
     private fun targets(vararg addresses: String) = addresses.associateWith {
         KnxLoadTarget(it, setOf("Vivienda"), setOf(KnxLoadKind.SENSOR), setOf(it))
     }
@@ -67,6 +73,8 @@ class KnxStartupReadPolicyTest {
         KnxLoadProgressRepository.finish(emptyList(), mapOf("2/4/1" to state("2/4/1").copy(timestampMillis = 0)))
         assertEquals(0, KnxLoadProgressRepository.progress.value.percent)
         KnxLoadProgressRepository.syncReceived(mapOf("2/4/1" to state("2/4/1")))
+        assertEquals(50, KnxLoadProgressRepository.progress.value.percent)
+        KnxLoadProgressRepository.syncReceived(mapOf("2/4/1" to state("2/4/1"), "15/0/15" to state("15/0/15")))
         assertEquals(100, KnxLoadProgressRepository.progress.value.percent)
         assertTrue(KnxLoadProgressRepository.progress.value.noResponseAddresses.isEmpty())
         assertTrue(KnxLoadProgressRepository.progress.value.waitingEventAddresses.isEmpty())

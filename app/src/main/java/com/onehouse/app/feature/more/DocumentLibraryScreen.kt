@@ -153,7 +153,7 @@ fun DocumentLibraryScreen(
                 onDownload = {
                     status = null
                     documentToSave = doc.name
-                    createDocument.launch(doc.downloadName)
+                    if (!com.onehouse.app.feature.h08.H091MonitorCoordinator.isBusy()) createDocument.launch(doc.downloadName)
                 }
             )
         }

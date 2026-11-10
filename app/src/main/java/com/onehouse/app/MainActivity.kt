@@ -32,7 +32,7 @@ class MainActivity : FragmentActivity() {
         )
 
         H08Coordinator.initialize(applicationContext)
-        H08Coordinator.startOnLaunchIfConfigured()
+        if (savedInstanceState == null) H08Coordinator.startOnLaunchIfConfigured()
         setContent {
             OneHouseTheme {
                 Column {

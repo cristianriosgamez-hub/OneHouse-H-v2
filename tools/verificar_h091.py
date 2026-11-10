@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Auditoría estática de Entrega 35; no sustituye compilación Android/KNX real."""
+"""Comprobaciones estáticas de Entrega 36; no sustituye compilación Android/KNX real."""
 from pathlib import Path
 import hashlib
 r=Path(__file__).resolve().parents[1]
 s=r/'app/src/main/java/com/onehouse'
 read=(s/'knxlab/knx/UnifiedReceiverRunner.kt').read_bytes()
 codec=(s/'knxlab/knx/KnxProtocol.kt').read_bytes()
-monitor=(s/'knxlab/knx/H091PassiveMonitorRunner.kt').read_text()
-coord=(s/'app/feature/h08/H091MonitorCoordinator.kt').read_text()
-h08=(s/'app/feature/h08/H08Coordinator.kt').read_text()
-control=(s/'app/feature/h08/H082LightControlCoordinator.kt').read_text()
-ui=(s/'app/feature/h08/H08Toolbar.kt').read_text()
-app=(s/'app/MainActivity.kt').read_text()
-gradle=(r/'app/build.gradle.kts').read_text()
-manifest=(r/'app/src/main/AndroidManifest.xml').read_text()
+monitor=(s/'knxlab/knx/H091PassiveMonitorRunner.kt').read_text(encoding='utf-8')
+coord=(s/'app/feature/h08/H091MonitorCoordinator.kt').read_text(encoding='utf-8')
+h08=(s/'app/feature/h08/H08Coordinator.kt').read_text(encoding='utf-8')
+control=(s/'app/feature/h08/H082LightControlCoordinator.kt').read_text(encoding='utf-8')
+ui=(s/'app/feature/h08/H08Toolbar.kt').read_text(encoding='utf-8')
+app=(s/'app/MainActivity.kt').read_text(encoding='utf-8')
+gradle=(r/'app/build.gradle.kts').read_text(encoding='utf-8')
+manifest=(r/'app/src/main/AndroidManifest.xml').read_text(encoding='utf-8')
 checks={
     'Lector H08.2.2 IDENTICO a Entrega34':hashlib.sha256(read).hexdigest()=='d63f4c01a1f950560bea11690de3577b163fc51eb09fc98f846180012c4c82f8',
     'Codec KNX intacto desde E34':hashlib.sha256(codec).hexdigest()=='205a6d6eb384be6301acc3bee425cbe8b14d73a37cb76f95bd50d6afb3fb0eb7',
@@ -22,17 +22,17 @@ checks={
     'Sin GroupValueRead/Write en monitor': 'tunnelReadRequest(' not in monitor and 'tunnelWrite' not in monitor and 'connectionStateRequest(' in monitor,
     'Rechazo de tramas no GroupValueWrite': '!frame.isGroupWrite' in monitor,
     'Filtros de duplicados y secuencias': 'lastSeq == meta.sequence' in monitor and 'SEQUENCE_GAP' in monitor,
-    'Filtro booleano 0/1': 'raw != 0 && raw != 1' in monitor,
+    'Filtro booleano 0/1': 'raw !in 0..1' in monitor,
     'Mismo WiFi y ruta durante sesión': 'initialRoute.network.bindSocket(socket)' in coord and 'current.network != initialRoute.network' in coord,
     'Bloqueos lectura/control/IP': h08.count('H091MonitorCoordinator.isBusy()')>=2 and 'H091MonitorCoordinator.isBusy()' in control,
     'Fin primer plano': 'override fun onStop()' in app and 'H091MonitorCoordinator.stop()' in app,
     'Sólo iniciativa usuario': 'H091MonitorCoordinator.start(context)' in ui and 'H091MonitorCoordinator.start(' not in app,
-    'CSV Eventos separado': 'OneHouse_H091_COCINA_EVENTOS_' in ui and 'fun exportCsv()' in coord,
+    'CSV Eventos separado': 'OneHouse_H092_COCINA_EVENTOS_' in ui and 'fun exportCsv()' in coord,
     'GAs H08 respetadas': 'EXPECTED_READS = 35' in h08 and '15/0/13", "15/0/15' in h08,
     'Legacy / background desactivados': 'READ_ONLY: Boolean = true' in h08 and manifest.count('android:enabled="false"')>=4,
-    'ID experimental y versión nueva': 'applicationId = "com.onehouse.app.h08"' in gradle and 'versionCode = 20901' in gradle,
-    'Etiqueta H09.1': 'OneHouse H09.1 TEST' in (r/'app/src/main/res/values/strings.xml').read_text(),
-    'LEEME H09.1': (r/'LEEME_H09_1_ENTREGA35_Monitor_Pasivo_Cocina_TEST.txt').is_file(),
+    'ID experimental y versión nueva': 'applicationId = "com.onehouse.app.h08"' in gradle and 'versionCode = 20902' in gradle,
+    'Etiqueta H09.2': 'OneHouse H09.2 TEST' in (r/'app/src/main/res/values/strings.xml').read_text(encoding='utf-8'),
+    'LEEME H09.2': (r/'LEEME_H09_2_ENTREGA36_Correcciones_Auditoria_TEST.txt').is_file(),
 }
 for name,ok in checks.items(): print(('PASS' if ok else 'FAIL')+' '+name)
-assert all(checks.values())
+if not all(checks.values()): raise SystemExit(1)

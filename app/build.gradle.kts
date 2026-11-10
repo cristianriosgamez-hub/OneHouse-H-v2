@@ -16,8 +16,8 @@ android {
         applicationId = "com.onehouse.app.h08"
         minSdk = 29
         targetSdk = 36
-        versionCode = 20901
-        versionName = "2.0.0-H09.1-Test-MonitorCocina"
+        versionCode = 20902
+        versionName = "2.0.0-H09.2-Test-MonitorCocina"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

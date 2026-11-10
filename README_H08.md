@@ -1,4 +1,4 @@
-# OneHouse H09.1 TEST — Entrega 35
+# OneHouse H09.2 TEST — Entrega 36
 
 **Experimento de eventos KNX en Cocina** sobre la base validada H08.2.2 / Entrega 34.
 El monitor se activa manualmente **solo después de un PASS**, dura como máximo
@@ -6,7 +6,7 @@ El monitor se activa manualmente **solo después de un PASS**, dura como máximo
 ni GroupValueWrite y se detiene al salir a segundo plano. No interfiere
 con el lector H08.2.2 y dispone de un CSV independiente.
 
-Lee `LEEME_H09_1_ENTREGA35_Monitor_Pasivo_Cocina_TEST.txt` para instrucciones
+Lee `LEEME_H09_2_ENTREGA36_Correcciones_Auditoria_TEST.txt` para instrucciones
 de instalación y pruebas antes de dar esta fase por validada.
 
 ---

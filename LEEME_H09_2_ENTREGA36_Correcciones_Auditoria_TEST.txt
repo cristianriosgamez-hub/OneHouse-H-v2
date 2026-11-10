@@ -1,0 +1,114 @@
+ONEHOUSE H09.2 TEST / ENTREGA 36
+Base H08.2.2 (Entrega 34). Aplicación experimental com.onehouse.app.h08.
+Versión 2.0.0-H09.2-Test-MonitorCocina, versionCode 20902, variante debug.
+Calificación: candidata a ensayo controlado. Validación KNX física pendiente.
+
+CAMBIOS RESPECTO DE H09.1
+El monitor usa una barrera compartida por STOP y la aplicación a caché.
+STOP espera a la única aplicación ya admitida. Tras retornar, ningún elemento
+pendiente puede modificar la caché. Los ACK de transporte continúan durante el cierre.
+El consumidor procesa en orden hasta 64 muestras pendientes, fuera del hilo UDP.
+Con cola llena termina la sesión, registra el error y exige nueva lectura H.
+Una excepción del consumidor se registra como aplicación no confirmada. Un fallo
+posterior a publicar la caché podría haber tenido efecto parcial. No se reintenta.
+
+Solo se admiten indicaciones GroupValueWrite compactas de un bit en 1/2/6 y 1/2/5.
+El monitor reconoce una secuencia esperada o su duplicado inmediato. Descarta
+sin ACK un salto y conserva la referencia. El primer paquete fija la referencia.
+El endpoint de datos anunciado debe ser IPv4, UDP, de la misma IP que el control
+y con puerto válido. El endpoint de control conserva CONNECT, KEEPALIVE y cierre.
+Se requiere respuesta CONNECT completa con HPAI y CRD de túnel. NAT, otra IP
+de datos o respuestas de éxito abreviadas quedan fuera de este piloto.
+
+KEEPALIVE cada 30 s y plazo de respuesta de 4 s. Se atiende el cierre remoto.
+Si se solicita STOP con CONNECT enviado, se espera la aceptación tardía hasta
+600 ms, limitada además por el plazo original. Se intenta DISCONNECT una vez
+para un canal conocido. Si queda incierto, esperar al menos 30 s, comprobar
+la liberación en el gateway y realizar una nueva lectura H. No hay reapertura automática.
+La escucha tiene límite de 90 s; la limpieza de transporte y caché requiere tiempo adicional.
+
+DIAGNÓSTICO
+El CSV separa UDP recibidos, escrituras válidas, descartes, aplicados a caché,
+duplicados de caché, errores, ACK y máximo desde recepción local hasta envío de
+ACK en escucha. Las categorías no son todas excluyentes: una escritura válida
+puede descartarse por STOP. El contador TX mide solicitudes de túnel emitidas.
+Los 320 registros más recientes se complementan con número de registros perdidos
+y resúmenes de conexión, primer error y cierre. Un ACK no confirma aplicación,
+actualización visual ni actuación física. Exportar después de cerrar.
+
+ARCHIVOS
+Versión y entrada: app/build.gradle.kts, strings.xml, MainActivity.kt, README_H08.md
+Transporte: H091PassiveMonitorRunner.kt
+Coordinación e interfaz: H091MonitorCoordinator.kt, H08Coordinator.kt,
+H082LightControlCoordinator.kt, H08Toolbar.kt y RoomDetailScreen.kt
+Selectores: BackupRestoreScreen.kt, ConsumptionTransferScreen.kt,
+DocumentLibraryScreen.kt y KnxAddressEditorScreen.kt
+QA: KnxStartupReadPolicyTest.kt, tools/verificar_h091.py y
+tools/test_h091_gateway_simulado.kt. Se conservan los nombres H091 existentes.
+
+VERIFICACIÓN EN DEV
+Gradle :app:testDebugUnitTest y :app:assembleDebug: PASS. 29 pruebas, 0 fallos.
+La prueba heredada confundía la política genérica (dos respuestas para llegar
+al 100 %) con la política H. Solo se corrigió la prueba y se añadió cobertura
+del catálogo H de 35 lecturas y sus dos exclusiones.
+Gateway UDP JVM: PASS. Dos sockets de gateway en loopback, comprobación de
+canal, secuencia y contenido de ACK, duplicados, saltos, wrap, filtros cEMI,
+STOP con barrera, cierre remoto/incierto, respuesta tardía y expirada,
+pérdida de ruta inyectada, KEEPALIVE, excepción y duplicado del consumidor.
+Consumidor bloqueado: admite 64 en espera y detecta el siguiente desbordamiento.
+Ráfaga de 340 escrituras en grupos de diez: 342 datagramas recibidos, 340 ACK,
+340 aplicadas, 0 solicitudes de túnel emitidas, 365 registros de traza descartados.
+Ejemplo en este PC: 154 ms totales, 110 microsegundos máximos desde recepción
+local a envío de ACK. No incluye latencia previa en la cola UDP del sistema.
+Reproducir con el wrapper Gradle y con python tools/verificar_h091.py.
+Para el simulador JVM con kotlinc en PATH (PowerShell, raíz del proyecto):
+  $k = 'app/src/main/java/com/onehouse/knxlab/knx'
+  $jar = Join-Path $env:TEMP 'onehouse-h092-sim.jar'
+  kotlinc "$k/KnxProtocol.kt" "$k/H074ClimateCodec.kt" "$k/H077ClimateFanCodec.kt" "$k/H091PassiveMonitorRunner.kt" tools/test_h091_gateway_simulado.kt -include-runtime -d $jar
+  java -jar $jar
+En este PC se utilizó el compilador Kotlin integrado en la distribución Gradle.
+Verificador H09.2: PASS, 18/18 comprobaciones de integridad y configuración estática. Los verificadores
+históricos usan etiquetas, versiones y documentos de sus respectivas entregas.
+SHA-256 de referencia verificados antes y después:
+UnifiedReceiverRunner.kt  d63f4c01a1f950560bea11690de3577b163fc51eb09fc98f846180012c4c82f8
+KnxProtocol.kt            205a6d6eb384be6301acc3bee425cbe8b14d73a37cb76f95bd50d6afb3fb0eb7
+
+INSTALACIÓN Y ENSAYO EN XIAOMI 14T PRO
+1. Guardar fuera de Git los CSV y la configuración necesaria para volver a E34.
+   Conservar el ZIP/APK E34. Instalar app/build/outputs/apk/debug/app-debug.apk
+   sobre la aplicación experimental con la misma firma (adb install -r si se usa
+   USB). Confirmar etiqueta OneHouse H09.2 TEST. Si la firma difiere, detenerse.
+2. Conectar a WiFi local sin VPN, liberar un canal del gateway y preparar captura
+   independiente. Abrir la app. Exigir 35/35, una petición y un ACK por GA, cero
+   retransmisiones, cierre confirmado y tiempo hasta caché <10 s. Confirmar cero
+   GVR a 15/0/13 y 15/0/15. Exportar CSV H. Parar ante cualquier discrepancia.
+3. Iniciar el monitor dentro de 5 minutos del PASS. Desde pulsadores físicos,
+   alternar las dos luces, primero por separado y después seguidas. Registrar
+   hora, estado físico, GA y estado visible. Comprobar bloqueos de Leer H, IP,
+   mandos y exportación. El silencio no indica OFF. Nunca accionar desde la app
+   para producir las muestras de este ensayo pasivo.
+4. Dejar una sesión hasta 90 s. Comparar captura con UDP/ACK/estados aplicados
+   y confirmar cero solicitudes de túnel salientes del monitor, KEEPALIVE y
+   cierre confirmado. Exportar CSV Eventos. Un CSV truncado debe indicarlo.
+5. En sesiones separadas, detener, rotar y pasar a segundo plano durante escucha
+   y durante conexión. Verificar que no se aplican cambios posteriores a STOP,
+   ni se reanudan sesiones o lecturas involuntarias. Intentar abrir selectores.
+6. Probar pérdida de WiFi al final. Conservar traza, comprobar canal remoto y
+   respetar recuperación. No repetir conexiones ante cierre incierto. Tras
+   recuperar, repetir el paso 2 y comparar ambos CSV H. Comprobar lluvia y viento
+   excesivo solamente si se dispone de evento real seguro; dejar pendiente si no.
+7. Detener el ensayo ante estado de luz incorrecto, orden saliente, aplicación
+   posterior a STOP, error de cola/repositorio o fallo de cierre. Conservar CSV
+   y captura. La simulación no valida Android, HyperOS ni el bus de la vivienda.
+
+RIESGOS Y RECUPERACIÓN
+Persistencia lenta puede agotar la cola; STOP puede esperar a una aplicación
+en curso. No se ha medido la duración de esa espera en Xiaomi. Confirmar
+rotación, selectores, endpoint real, latencia, WiFi y liberación de canales.
+Los bloqueos de recuperación se mantienen en memoria del proceso; tras forzar
+su cierre, comprobar el canal remoto antes de abrir la aplicación de nuevo.
+Para volver a E34: detener el monitor, exportar CSV y esperar la liberación.
+Usar el APK E34 archivado o compilar el ZIP E34 por separado. Android puede
+rechazar bajar el versionCode. Si es imprescindible desinstalar, exportar
+primero los datos y retirar solo com.onehouse.app.h08; esto borra sus datos.
+Instalar E34, reintroducir la configuración y comprobar 35/35 y cierre.
