@@ -87,7 +87,7 @@ fun H08Toolbar() {
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         Text(
-            text = "H09.4 TEST · H08.2.2 ESTABLE + EVENTOS COCINA",
+            text = "H09.5 TEST · H08.2.2 ESTABLE + COCINA + COMEDOR",
             color = Color(0xFF90DBFF),
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.labelMedium
@@ -132,12 +132,12 @@ fun H08Toolbar() {
                     if (monitor.running) H091MonitorCoordinator.stop()
                     else H091MonitorCoordinator.start(context)
                 }
-            ) { Text(if (monitor.running) "Detener H09" else "Monitor Cocina") }
+            ) { Text(if (monitor.running) "Detener H09" else "Monitor Cocina + Comedor") }
             OutlinedButton(
                 enabled = !monitor.running && monitor.snapshot != null,
                 onClick = {
                     val now = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())
-                    monitorExporter.launch("OneHouse_H094_COCINA_EVENTOS_$now.csv")
+                    monitorExporter.launch("OneHouse_H095_COCINA_COMEDOR_EVENTOS_$now.csv")
                 }
             ) { Text("CSV Eventos") }
         }
@@ -204,7 +204,7 @@ fun H08Toolbar() {
     if (showConfig) {
         AlertDialog(
             onDismissRequest = { showConfig = false },
-            title = { Text("Gateway KNX/IP local · H09.4 TEST") },
+            title = { Text("Gateway KNX/IP local · H09.5 TEST") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("Solo WiFi local, NAT desactivado. Este ajuste es independiente de OneHouse estable.")

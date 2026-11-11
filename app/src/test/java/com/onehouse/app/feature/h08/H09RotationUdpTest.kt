@@ -59,7 +59,7 @@ class H09RotationUdpTest {
                     lifecycle.stopped(token, changingConfigurations = true)
                     // Both kitchen GAs and state delivery during the recreation gap.
                     send(byteArrayOf(6,16,4,32,0,21,4,37,sequence.toByte(),0,
-                        41,0,188.toByte(),224.toByte(),17,17,10,(5+sequence%2).toByte(),1,0,
+                        41,0,188.toByte(),224.toByte(),17,17,10,listOf(5,6,2)[sequence].toByte(),1,0,
                         (128+sequence%2).toByte()))
                     val (ack, _) = receive(0x0421)
                     assertArrayEquals(byteArrayOf(6,16,4,33,0,10,4,37,sequence.toByte(),0), ack)

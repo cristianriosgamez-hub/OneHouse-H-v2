@@ -12,7 +12,7 @@ import java.net.SocketTimeoutException
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * H09.3 / Entrega 37 (candidata; ver LEEME). Receptor PASIVO de dos GAs de Cocina durante <= 90 s.
+ * H09.5 / Entrega 39. Receptor PASIVO de tres GAs de Cocina y Comedor durante <= 90 s.
  *
  * No hace GroupValueRead, NO escribe GAs y NO comparte socket con H08/H07.
  * Su coordinador solo permite arrancar DESPUÉS de una lectura H completa y
@@ -22,11 +22,13 @@ import java.util.concurrent.atomic.AtomicBoolean
 class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Long = 30_000L, private val replyMs: Long = 4_000L, private val sequenceRecoveryMs: Long = 4_000L) {
     companion object {
         const val MAX_MONITOR_MS: Long = 90_000L
-        val PILOT_ADDRESSES = setOf("1/2/6", "1/2/5")
+        val PILOT_ADDRESSES = setOf("1/2/6", "1/2/5", "1/2/2")
         private const val MAX_EVENTS = 320
     }
 
-    data class Event(val atMs: Long, val kind: String, val address: String = "", val detail: String = "")
+    data class Event(val atMs: Long, val kind: String, val address: String = "", val detail: String = "") {
+        fun toCsvRow(): String = "$atMs;$kind;$address;$detail"
+    }
     data class Sample(
         val address: String,
         val value: Boolean,
@@ -334,14 +336,14 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
                                     data[offset + 7].toInt() != 0 || raw !in 0..1) {
                                     unexpected++
                                     discarded++
-                                    event("IGNORED_NON_BOOLEAN", frame.destination)
+                                    event("IGNORED_NON_BOOLEAN", frame.destination, "source=${frame.source},seq=${meta.sequence},format_DPT1_001=FAIL")
                                     publish()
                                     continue
                                 }
                                 val sample = Sample(frame.destination, raw == 1, frame.source, System.currentTimeMillis())
                                 writes++
                                 event("WRITE_ACCEPTED", frame.destination,
-                                    "value=$raw,source=${frame.source},seq=${meta.sequence}")
+                                    "type=WRITE,value=$raw,source=${frame.source},seq=${meta.sequence},format_DPT1_001=PASS")
                                 if (stopping()) { discarded++; event("STOP_DISCARD", sample.address) }
                                 else if (!queue.offer(sample to meta.sequence)) {
                                     discarded++

@@ -23,14 +23,14 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-/** Piloto EXPLÍCITO H09.4. No hay reinicio, polling de GAs ni servicio en segundo plano. */
+/** Piloto EXPLÍCITO H09.5 TEST. No hay reinicio, polling de GAs ni servicio en segundo plano. */
 object H091MonitorCoordinator {
     data class UiState(
         val running: Boolean = false,
         val connected: Boolean = false,
         val stopping: Boolean = false,
         val recovering: Boolean = false,
-        val message: String = "Monitor H09.4 inactivo: lectura H08 PASS antes de iniciar.",
+        val message: String = "Monitor H09.5 TEST inactivo: lectura H08 PASS antes de iniciar.",
         val snapshot: H091PassiveMonitorRunner.Snapshot? = null,
         val readId: String = "",
         val endpoint: String = ""
@@ -114,7 +114,7 @@ object H091MonitorCoordinator {
         // El marcador running se establece ANTES de abrir el socket: ningún mando
         // ni nueva lectura pueden comenzar mientras se abre/cierra este túnel.
         mutable.value = UiState(
-            running = true, message = "H09.4: conectando receptor pasivo (0 GroupValueRead)...",
+            running = true, message = "H09.5 TEST: conectando receptor pasivo (0 GroupValueRead)...",
             readId = read.lastRunId, endpoint = endpoint
         )
         val started = receiver.start(
@@ -137,9 +137,9 @@ object H091MonitorCoordinator {
                             connected = snapshot.connected,
                             snapshot = snapshot,
                             message = if (snapshot.connected)
-                                if (snapshot.sequenceRecovering) "H09.4: esperando secuencia pendiente; cierre si no se recupera."
-                                else "H09.4 activo: ${snapshot.acceptedWrites} eventos Cocina; 0 lecturas; límite 90 s."
-                                else "H09.4 conectando..."
+                                if (snapshot.sequenceRecovering) "H09.5 TEST: esperando secuencia pendiente; cierre si no se recupera."
+                                else "H09.5 TEST activo: ${snapshot.acceptedWrites} eventos Cocina + Comedor; 0 lecturas; límite 90 s."
+                                else "H09.5 TEST conectando..."
                         )
                     }
                 }
@@ -165,7 +165,7 @@ object H091MonitorCoordinator {
                         running = false, stopping = false, recovering = snapshot.recoveryRequired,
                         connected = false,
                         snapshot = snapshot,
-                        message = "H09.4 finalizado: ${snapshot.stopReason}; " +
+                        message = "H09.5 TEST finalizado: ${snapshot.stopReason}; " +
                             "eventos=${snapshot.acceptedWrites}; " +
                             "cierre=${snapshot.closeResult}. " +
                             if (snapshot.recoveryRequired) "Recuperación: espera 30 s y realiza otra lectura H." else if (snapshot.freshReadRequired) "Secuencia sin recuperar: realiza una nueva lectura H antes de otro monitor." else "Exporta CSV."
@@ -188,7 +188,7 @@ object H091MonitorCoordinator {
     fun stop() {
         if (!mutable.value.running) return
         receiver.requestStop()
-        mutable.value = mutable.value.copy(stopping = true, connected = false, message = "Deteniendo H09.4 y cerrando el túnel KNX/IP... (sin nuevas lecturas)")
+        mutable.value = mutable.value.copy(stopping = true, connected = false, message = "Deteniendo H09.5 TEST y cerrando el túnel KNX/IP... (sin nuevas lecturas)")
     }
 
     private fun utc(timeMs: Long): String {
@@ -199,9 +199,9 @@ object H091MonitorCoordinator {
 
     fun exportCsv(): String {
         val s = state.value
-        val snap = s.snapshot ?: return "H09.4;sin_telemetria\n"
+        val snap = s.snapshot ?: return "H09.5 TEST;sin_telemetria\n"
         return buildString {
-            appendLine("ONEHOUSE_H094_ENTREGA38_MONITOR_PASIVO_COCINA_TEST")
+            appendLine("ONEHOUSE_H095_ENTREGA39_COCINA_COMEDOR_TEST")
             appendLine("lectura_H08_origen;${s.readId}")
             appendLine("gateway;${s.endpoint}")
             appendLine("inicio_utc;${utc(snap.startedEpochMs)}")
@@ -230,12 +230,12 @@ object H091MonitorCoordinator {
             appendLine("motivo_fin;${snap.stopReason.replace(';', ',').replace('\n', ' ')}")
             appendLine("disconnect_ok;${snap.disconnectedOk}")
             appendLine("validacion_fisica;PENDIENTE_USUARIO")
-            appendLine("GA_piloto;1/2/6 (Luz Cocina),1/2/5 (Fluorescente Cocina)")
+            appendLine("GA_piloto;1/2/6 (Luz Cocina),1/2/5 (Fluorescente Cocina),1/2/2 (Luz Comedor)")
             appendLine("nota;El silencio no confirma OFF. Un dispositivo que no publica cambios en GA de estado no puede actualizarse por eventos.")
             appendLine()
             appendLine("offset_ms;evento;GA;detalle")
             snap.events.forEach { item ->
-                appendLine("${item.atMs};${item.kind};${item.address};${item.detail}")
+                appendLine(item.toCsvRow())
             }
         }
     }

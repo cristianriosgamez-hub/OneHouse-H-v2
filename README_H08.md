@@ -1,3 +1,13 @@
+# OneHouse H09.5 TEST — Entrega 39
+
+Monitor único Cocina + Comedor: `1/2/6`, `1/2/5`, `1/2/2`.
+ON/OFF de Comedor confirmado por el usuario mediante H09.5 DIAG.
+Validación física: 5/5 PASS comunicados por el usuario, Xiaomi 14T Pro, 11/11/2026.
+Incluye tres luces, rotación/navegación, Home y lecturas H08 inicial/final.
+CSV originales no analizados por Codex. Saltos reales, WiFi extrema y carreras
+Android siguen pendientes; alcance limitado a esas pruebas, sin monitor permanente.
+Consulta `LEEME_H09_5_ENTREGA39_Monitor_Cocina_Comedor_TEST.txt`.
+
 # OneHouse H09.4 TEST — Entrega 38
 
 Continuidad del monitor durante la recreación de Activity por rotación.

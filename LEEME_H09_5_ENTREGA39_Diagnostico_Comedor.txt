@@ -1,0 +1,98 @@
+ONEHOUSE H09.5 DIAG - PREPARACION ENTREGA 39
+DOCUMENTO HISTORICO: describe la variante DIAG anterior, no el codigo funcional
+actual. El usuario comunico ON=1 a 3,813 s y OFF=0 a 5,444 s desde 3.15.1,
+canal65, 9ACK, sin errores de secuencia y DISCONNECT_OK tras STOP manual.
+Fuente comunicada: CCOneHouse_H095_DIAG_EVENTOS_20261111_113751.csv.
+Ver LEEME_H09_5_ENTREGA39_Monitor_Cocina_Comedor_TEST.txt para estado actual.
+Base: H09.4 validada, commit 43c1aa1, dev local y origin/dev coincidentes.
+versionCode 20905; versionName 2.0.0-H09.5-Diag-Comedor.
+applicationId com.onehouse.app.h08. No es H09.5 funcional de Comedor.
+
+RECUPERACION DOCUMENTAL
+Los LEEME E35/E36/E37 estaban ausentes, sin cambios preparados ni archivos
+alternativos visibles. HEAD y origin/dev conservaban los mismos documentos.
+Se restauraron exclusivamente esos tres desde origin/dev. Sin diferencias
+de contenido restantes. Git no permite atribuir el borrado a un proceso.
+
+EVIDENCIA Y ALCANCE
+CSV H09.4 revisado: WRITE espontaneo 1/2/2 desde 3.15.1 a 7124 y 10207 ms,
+secuencias 5 y 8. No contenia valores de los descartes: ON/OFF fisico pendiente.
+Catalogo OneHouseFactoryKnxProject: Comedor/Comedor, estado 1/2/2, DPT1.001;
+no se utiliza ni cambia el mando 1/1/2. CSV original no incorporado a Git.
+
+CAMBIO MINIMO
+H091PassiveMonitorRunner: diagnostico despues del filtro de canal/secuencia y
+ACK existente, antes de lista piloto y cola. Lista de cache sigue solo 1/2/6 y
+1/2/5. Para 1/2/2 registra COMEDOR_DIAG_VALID o COMEDOR_DIAG_INVALID y descarta
+siempre antes de crear Sample. No modifica cache ni pantalla Comedor.
+CSV: GA, origen, WRITE/RESPONSE/L_DATA_CON/OTHER, valor 0/1 o INVALID,
+secuencia, format_DPT1_001=PASS/FAIL y cache=NO.
+Formato valido: L_Data.ind GroupValueWrite, APDU compacto de un bit, longitud
+exacta, primer byte APDU cero y valor estrictamente 0/1. El subtipo DPT no
+viaja en el telegrama: 1.001 procede del catalogo, no de deteccion en el bus.
+Tramas imposibles de analizar conservan el descarte generico; no se inventa GA.
+Duplicados, saltos y paquetes de cierre siguen el filtro H09.3; no generan
+una segunda observacion valida. Los diagnosticos cuentan como descartados,
+no como escrituras aceptadas/aplicadas. Memoria sigue limitada a 320 registros.
+No hay nuevas solicitudes activas, sockets, reconexiones ni lecturas.
+Rotacion, STOP, recuperacion 4 s, KEEPALIVE y DISCONNECT no se modifican.
+
+ARCHIVOS
+H091PassiveMonitorRunner.kt: observacion y serializador de fila CSV reutilizado.
+H091MonitorCoordinator.kt: etiqueta, encabezado CSV y uso del serializador.
+H08Toolbar.kt, RoomDetailScreen.kt, strings.xml: identificacion DIAG.
+app/build.gradle.kts: version experimental.
+H095DiagnosticUdpTest.kt: receptor real y UDP loopback durante 90 s.
+tools/verificar_h095_diag.py: comprobaciones estaticas de variante.
+README_H08.md y este documento.
+
+PROTECCION
+UnifiedReceiverRunner.kt SHA256
+d63f4c01a1f950560bea11690de3577b163fc51eb09fc98f846180012c4c82f8
+KnxProtocol.kt SHA256
+205a6d6eb384be6301acc3bee425cbe8b14d73a37cb76f95bd50d6afb3fb0eb7
+Ambos coinciden con la base. Sin cambios en H08Coordinator, catalogo de 35
+lecturas, intervalo160ms, lluvia/viento, MainActivity ni H09ActivityLifecycle.
+
+PRUEBAS
+Resultados locales 11/11/2026:
+- PASS Gradle :app:assembleDebug :app:testDebugUnitTest, BUILD SUCCESSFUL 1m48s.
+- PASS 46 pruebas JUnit, cero fallos (incluidas las 45 anteriores).
+- PASS UDP nuevo: 90 s reales, 2 KEEPALIVE, cierre correcto y cache solo Cocina.
+- PASS simulador UDP H09.3 completo: secuencias, duplicados, STOP, cierre,
+  endpoints, recuperacion y rafaga de 340 aplicaciones.
+- PASS verificador H09.5 DIAG: 36 comprobaciones estaticas, no pruebas fisicas.
+- PASS hashes protegidos, integridad de H08 y ciclo de vida, git diff --check.
+- NO VERIFICADO ON=1/OFF=0 fisico de Comedor; requiere CSV y observacion humana.
+Aviso de compilacion preexistente: condicion siempre verdadera RoomDetailScreen.
+Verificador corregido para esperar etiqueta DIAG, sin el sufijo TEST heredado.
+La prueba UDP nueva comprueba filas CSV reales del serializador compartido,
+ON/OFF, valor2 invalido, Response y TPCI no cero, cero aplicaciones Comedor,
+ambas luces Cocina, duplicado, una conexion, 90 s reales, dos KEEPALIVE,
+DISCONNECT y cero solicitudes de tunel salientes. No sustituye KNX fisico.
+
+GENERAR EVIDENCIA EN XIAOMI
+1. Android Studio, proyecto local dev, Run. Verificar OneHouse H09.5 DIAG.
+2. Lectura H08 35/35 y cierre confirmado. No cambiar configuracion ni GAs.
+3. Iniciar monitor Cocina; mantener la app visible durante la prueba.
+4. Con Luz Comedor apagada, encender fisicamente. Anotar el instante y ON.
+   Esperar 5 s, apagar fisicamente y anotar OFF. Repetir una vez, sin Leer H.
+   Comedor NO debe actualizarse en pantalla mediante este diagnostico.
+5. Si se desea, accionar Cocina para comprobar que sus eventos siguen aplicandose.
+6. Esperar fin de 90 s y DISCONNECT_OK. Pulsar CSV Eventos despues del cierre.
+   Guardar OneHouse_H095_DIAG_EVENTOS_...csv fuera del repositorio.
+7. Exigir COMEDOR_DIAG_VALID;1/2/2 con type=WRITE,value=1 para encendido y
+   value=0 para apagado, format_DPT1_001=PASS,cache=NO; correlacionar anotaciones.
+   Confirmar registros_descartados=0 para conservar todas las observaciones.
+8. Si aparece INVALID, falta un evento, cierre incierto o valor invertido,
+   conservar CSV y detener la ampliacion. El silencio no demuestra OFF.
+9. Repetir H35/35 tras cierre. No declarar PASS fisico hasta revisar resultados.
+
+LIMITES Y VUELTA ATRAS
+Limite 320 registros: puede perderse detalle antiguo, indicado en CSV. Elegir
+instantes tardios si el bus tiene mucho trafico, sin ampliar buffers ni sesiones.
+Recuperacion real de secuencias y condiciones WiFi extremas siguen pendientes.
+Gracia de recreacion H09.4 de 1 s conservada. No es monitor permanente.
+Para volver a H09.4 usar APK archivado o copia separada del commit 43c1aa1.
+Android puede rechazar downgrade; no desinstalar sin copia de los datos.
+Sin commits ni push. H08.2.2 / Entrega 34 sigue siendo la base estable.

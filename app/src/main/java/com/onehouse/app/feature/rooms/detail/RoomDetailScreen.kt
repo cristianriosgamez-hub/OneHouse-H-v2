@@ -127,9 +127,14 @@ fun RoomDetailScreen(roomType: RoomType, onBack: () -> Unit) {
                     }
                 }
 
+                if (roomType == RoomType.DINING_ROOM && H08Safety.READ_ONLY) {
+                    Text("H09.5 TEST · Monitor Cocina + Comedor: Luz comedor recibe eventos de estado.",
+                        color = Color(0xFFFFC778))
+                    Spacer(Modifier.height(8.dp))
+                }
                 if (roomType == RoomType.KITCHEN && H08Safety.READ_ONLY) {
                     Text(
-                        "H09.4 TEST · Luz y Fluorescente de Cocina: eventos pasivos desde GA de estado; " +
+                        "H09.5 TEST · Luz y Fluorescente de Cocina: eventos pasivos desde GA de estado; " +
                             "los mandos requieren lectura H limpia y monitor detenido.",
                         color = Color(0xFFFFC778)
                     )

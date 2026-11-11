@@ -1,0 +1,125 @@
+ONEHOUSE H09.5 TEST / ENTREGA 39
+Base H09.4 43c1aa1, rama dev. Publicacion autorizada solo en dev; sin merges.
+versionCode20905, versionName2.0.0-H09.5-Test-Cocina-Comedor.
+applicationId com.onehouse.app.h08 conservado. DIAG usaba20905 tambien.
+La sustitucion desde Run requiere misma firma; no desinstalar para resolver errores.
+
+EVIDENCIA PREVIA COMUNICADA POR EL USUARIO
+CCOneHouse_H095_DIAG_EVENTOS_20261111_113751.csv (no adjuntado en este paso):
+1/2/2 = 1 a3,813s, =0 a5,444s, origen3.15.1, GroupValueWrite espontaneo,
+formato diagnostico valido y ON/OFF fisico confirmado. Canal65,9ACK,
+cero errores de secuencia, DISCONNECT_OK por STOP manual antes de90s.
+No se acciono Cocina; su ausencia de eventos no indica fallo.
+No es validacion fisica de la nueva aplicacion funcional.
+
+CAMBIOS
+Lista blanca: Luz Cocina1/2/6, Fluorescente1/2/5, Luz Comedor1/2/2.
+Se elimina el descarte diagnostico incondicional de Comedor. Los tres estados
+pasan por el mismo filtro estricto GroupValueWrite/DPT1, cola64 y consumidor.
+No se modifica el transporte ACK/secuencias/recuperacion4s/KEEPALIVE/DISCONNECT.
+Una sesion, socket y temporizador90s. Sin lecturas/escrituras activas nuevas.
+El coordinador conserva KnxCentralEngine.stateRepository.record(telegram).
+RoomDetailScreen observa HomeStateMapper y cache central. El catalogo asigna
+Comedor/Comedor a estado1/2/2 y mando1/1/2; no cambia el mando ni su habilitacion.
+No se modifica catalogo ni configuracion guardada. Una personalizacion distinta
+en el telefono requiere revisar el mapeo; no se sobrescribe automaticamente.
+CSV conserva GA/origen/secuencia/tipo/valor y agrega formato DPT1.001 PASS/FAIL.
+WRITE_ACCEPTED y CACHE_APPLIED separados. Cabecera identifica las tres luces.
+La serializacion de filas creada en DIAG se reutiliza.
+El subtipo1.001 procede del catalogo: el bus contiene formato/valor, no ese ID.
+
+ARCHIVOS CAMBIADOS RESPECTO H09.4
+app/build.gradle.kts; app/src/main/res/values/strings.xml
+app/src/main/java/com/onehouse/knxlab/knx/H091PassiveMonitorRunner.kt
+app/src/main/java/com/onehouse/app/feature/h08/H091MonitorCoordinator.kt
+app/src/main/java/com/onehouse/app/feature/h08/H08Toolbar.kt
+app/src/main/java/com/onehouse/app/feature/rooms/detail/RoomDetailScreen.kt
+app/src/test/java/com/onehouse/app/feature/h08/H09RotationUdpTest.kt
+app/src/test/java/com/onehouse/app/feature/h08/H095PilotUdpTest.kt (evoluciona DIAG)
+app/src/test/java/com/onehouse/app/knx/H095LightMappingTest.kt
+tools/verificar_h095.py; README_H08.md; este LEEME.
+Se conserva el LEEME y verificador DIAG como historicos; ese verificador no
+corresponde a esta variante funcional. LEEME35/36/37 presentes y sin eliminaciones.
+
+PRUEBAS Y ESTADO
+EJECUCION FINAL NUEVA 11/11/2026:
+PASS Gradle :app:assembleDebug :app:testDebugUnitTest --rerun-tasks.
+BUILD SUCCESSFUL en2m7s,44 tareas ejecutadas. 47 tests,0 fallos,0 errores.
+Incluye simulador funcional H095PilotUdpTest durante90s, dos KEEPALIVE,
+seis aplicaciones de las tres luces, CSV, invalidos, duplicados y cierre.
+PASS regresion UDP H09.3 sobre receptor H09.5, incluida rafaga340 aplicaciones.
+PASS regresion de rotacion H09.4 con tres GA y pruebas de ciclo de vida.
+PASS verificador H09.5 33/33, git diff --check y SHA256 protegidos.
+Avisos preexistentes de APIs obsoletas, opcion AGP experimental y condicion
+siempre verdadera en RoomDetailScreen; sin errores de compilacion.
+APK generado H09.5 TEST,versionCode20905,applicationId conservado.
+No se incluyen APK,CSV,logs,credenciales ni configuraciones privadas en Git.
+
+Antecedentes de la fase de implementacion (no resultados finales):
+PASS ejecutado ahora: tools/verificar_h095.py 33/33, git diff --check y
+SHA256 de los dos archivos protegidos. Sin diff en H08Coordinator, catalogo,
+MainActivity, H09ActivityLifecycle ni LEEME35/36/37 respecto a HEAD43c1aa1.
+La ejecucion anterior de Codex quedo bloqueada por limite de uso. El usuario
+comunico posteriormente BUILD SUCCESSFUL en Android Studio. Los resultados
+de la nueva ejecucion final se registran mas abajo.
+Pruebas preparadas: ON/OFF de tres luces, invalidos, GA ajena, duplicados,
+KEEPALIVE30/60, cierre90, cero solicitudes activas, una conexion; rotacion con
+las tres GA y mapeo aislado a dispositivos. Regresion H09.3/H09.4 conservada.
+Integracion de repositorio Android y pantalla real requiere prueba en Xiaomi;
+la prueba de mapeo JVM no ejercita preferencias Android ni renderizado Compose.
+
+PROTEGIDOS - SHA256 ESPERADOS
+UnifiedReceiverRunner.kt
+d63f4c01a1f950560bea11690de3577b163fc51eb09fc98f846180012c4c82f8
+KnxProtocol.kt
+205a6d6eb384be6301acc3bee425cbe8b14d73a37cb76f95bd50d6afb3fb0eb7
+Sin cambios de35 lecturas,160ms,lluvia/viento,MainActivity ni H09ActivityLifecycle.
+
+PRUEBA FISICA SOLO TRAS VERIFICACION AUTOMATIZADA
+1. Compilar y ejecutar tests. Run sin desinstalar; confirmar H09.5 TEST.
+2. H35/35 y cierre correcto. Iniciar Monitor Cocina + Comedor.
+3. ON/OFF fisico de cada luz. Comprobar cada tarjeta en su estancia sin Leer H.
+4. Alternar las tres y accionar rapidamente; ninguna otra luz debe cambiar.
+5. Girar vertical/horizontal y navegar Cocina-Comedor: misma sesion y reloj.
+6. Dejar90s: dos KEEPALIVE y DISCONNECT_OK. Exportar CSV fuera de Git.
+7. En sesiones separadas probar STOP, Home y bloqueo, sin reconexion al volver.
+8. Nueva H35/35. Parar ante estado incorrecto, doble CONNECT o cierre incierto.
+
+RIESGOS Y VUELTA ATRAS
+Recuperacion ante salto real y WiFi extrema aun pendientes. Gracia rotacion1s
+conservada. CSV circular320 puede perder detalle; revisar registros_descartados.
+H08.2.2 sigue base estable; H09.5 es experimental, no monitor permanente.
+Volver con APK H09.4 archivado o copia separada43c1aa1. Downgrade puede ser
+rechazado; respaldar datos antes de cualquier desinstalacion, comprobar canal
+libre y repetir H35/35.
+
+VALIDACION FISICA FINAL - 11/11/2026 - XIAOMI 14T PRO
+Evidencia proporcionada por el usuario; CSV originales no analizados por Codex
+ni incorporados al repositorio. Gateway KNX real. Resultado 5/5 PASS.
+
+Prueba | Tiempo | Canal | Lecturas/eventos | ACK | KEEPALIVE | Cierre | Resultado
+Inicial H08 | cache5,777s | 67 | 35/35 | 35/35 | n/a | DISCONNECT_OK | PASS
+Cocina+Comedor | 90,068s | 68 | 6/6 aplicados | 28 | 2/2 | DISCONNECT_OK | PASS
+Rotacion+navegacion | 90,122s | 70 | 6/6 aplicados | 31 | 2/2 | DISCONNECT_OK | PASS
+Home | 26,907s | 72 | no indicado | 7 | no indicado | DISCONNECT_OK | PASS
+Final H08 | cache5,786s | 74 | 35/35 | 35/35 | n/a | DISCONNECT_OK | PASS
+
+Ambas lecturas: cero retransmisiones y errores UDP, CONNECT correcto.
+Ambos monitores completos: ON/OFF de las tres luces confirmado visualmente
+sin Leer H, sin errores/anomalias de secuencia. Rotacion y navegacion entre
+Cocina y Comedor mantienen una unica sesion activa. Home detiene; al regresar
+sigue detenido sin reinicio automatico, cero errores de secuencia.
+No se observaron regresiones H08 en esta bateria; alcance solo estas 5 pruebas.
+
+Referencias CSV en orden:
+ZZZOneHouse_H0822_LECTURA_2_20261111_133524.csv
+OneHouse_H095_COCINA_COMEDOR_EVENTOS_20261111_133859.csv
+OneHouse_H095_COCINA_COMEDOR_EVENTOS_20261111_134301.csv
+OneHouse_H095_COCINA_COMEDOR_EVENTOS_20261111_134718.csv
+OneHouse_H0822_LECTURA_2_20261111_134922.csv
+
+LIMITACIONES CONSERVADAS
+Recuperacion ante salto real no validada fisicamente. WiFi extrema y carreras
+Android requieren pruebas adicionales, incluida gracia de recreacion de1s.
+No se implementan monitor permanente ni funcionamiento en segundo plano.
+Otras luces/estancias no estan validadas. H08.2.2/E34 sigue como base estable.
