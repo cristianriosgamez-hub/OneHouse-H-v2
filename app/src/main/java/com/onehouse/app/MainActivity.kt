@@ -16,9 +16,15 @@ import androidx.compose.ui.Modifier
 
 class MainActivity : FragmentActivity() {
 
-    // H09.1 nunca mantiene el túnel al abandonar primer plano.
+    private val visibilityToken = Any()
+
+    override fun onStart() {
+        super.onStart()
+        H091MonitorCoordinator.activityLifecycle.started(visibilityToken)
+    }
+
     override fun onStop() {
-        H091MonitorCoordinator.stop()
+        H091MonitorCoordinator.activityLifecycle.stopped(visibilityToken, isChangingConfigurations)
         super.onStop()
     }
 
@@ -32,7 +38,10 @@ class MainActivity : FragmentActivity() {
         )
 
         H08Coordinator.initialize(applicationContext)
-        if (savedInstanceState == null) H08Coordinator.startOnLaunchIfConfigured()
+        H091MonitorCoordinator.observeScreenOff(applicationContext)
+        if (H091MonitorCoordinator.activityLifecycle.consumeInitialLaunch(savedInstanceState != null)) {
+            H08Coordinator.startOnLaunchIfConfigured()
+        }
         setContent {
             OneHouseTheme {
                 Column {

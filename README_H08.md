@@ -1,3 +1,20 @@
+# OneHouse H09.4 TEST — Entrega 38
+
+Continuidad del monitor durante la recreación de Activity por rotación.
+La salida real a segundo plano y el bloqueo de pantalla solicitan STOP.
+Recreación sin Activity visible durante más de un segundo: cierre de seguridad.
+Referencia física anterior: H09.3, 4/4 pruebas principales PASS comunicadas por el usuario.
+H09.4: 6/6 pruebas físicas principales PASS en Xiaomi 14T Pro el 11/11/2026,
+según resultados comunicados por el usuario; CSV originales no analizados por Codex.
+Validados en esa batería: lectura inicial/final 35/35, rotación, rotaciones repetidas,
+Home y bloqueo. Recuperación ante saltos reales y condiciones extremas WiFi pendientes.
+Alcance experimental limitado a esas pruebas; no es monitorización permanente
+ni validación de toda la funcionalidad KNX. H08.2.2 / Entrega 34 sigue como base estable.
+
+Consulta `LEEME_H09_4_ENTREGA38_Ciclo_Vida_Rotacion_TEST.txt`.
+
+---
+
 # OneHouse H09.3 TEST — Entrega 37
 
 Recuperación estricta de secuencias del monitor H09: espera acotada a 4 s,

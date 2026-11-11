@@ -1,0 +1,183 @@
+ONEHOUSE H09.4 TEST / ENTREGA 38
+versionCode 20904; versionName 2.0.0-H09.4-Test-MonitorCocina.
+applicationId com.onehouse.app.h08. Base local dev f68cf86 (Entrega 37).
+Referencia experimental validada en el alcance de las seis pruebas comunicadas.
+
+VALIDACION FISICA FINAL - 11/11/2026
+Dispositivo Xiaomi 14T Pro; gateway KNX real de la instalacion del usuario.
+Evidencia comunicada por el usuario. Codex no ha analizado los CSV originales;
+sus nombres se incluyen como referencias, sin incorporar los archivos a Git.
+
+Prueba | Tiempo | Canal | Lecturas/eventos | ACK | KEEPALIVE | Cierre | Resultado
+Inicial H08 | cache 5,819 s | 76 | 35/35 lecturas | 35/35 | n/a | DISCONNECT_OK | PASS
+Rotacion V-H-V | 90,118 s | 77 | 4/4 eventos | 22 | 2/2 | DISCONNECT_OK | PASS
+Giros repetidos | 90,116 s | 67 | 10/10 eventos | 41 | 2/2 | DISCONNECT_OK | PASS
+Home | 27,757 s | 70 | no indicado | 4 | no indicado | DISCONNECT_OK status 0 | PASS
+Bloqueo | 32,462 s | 73 | no indicado | 1 | correcto a 30 s | DISCONNECT_OK | PASS
+Final H08 | cache 5,807 s | 75 | 35/35 lecturas | 35/35 | n/a | DISCONNECT_OK | PASS
+
+Lecturas inicial/final: CONNECT correcto, cero retransmisiones y cero errores UDP.
+Rotacion: monitor continuo, una unica sesion y actualizacion visual ON/OFF.
+Giros repetidos: 6 cambios Luz y 4 Fluorescente, todos confirmados visualmente;
+una sesion sin reconexiones. Ambos ensayos sin anomalias de secuencia/KNX.
+Home y bloqueo: DETENIDO_USUARIO_O_SEGUNDO_PLANO, cero errores de secuencia,
+sin reconexiones registradas. Estado visual correcto tras desbloquear.
+No se observo regresion H08.2.2 en esta bateria. Resultado global 6/6 PASS.
+
+Referencias CSV, en el orden de las pruebas:
+BOneHouse_H0822_LECTURA_2_20261111_095417.csv
+OneHouse_H094_COCINA_EVENTOS_20261111_095651.csv
+AOneHouse_H094_COCINA_EVENTOS_20261111_100125.csv
+OneHouse_H094_COCINA_EVENTOS_20261111_101125.csv
+BBBOneHouse_H094_COCINA_EVENTOS_20261111_101443.csv
+OneHouse_H0822_LECTURA_2_20261111_102135.csv
+
+No valida toda la funcionalidad KNX ni funcionamiento en segundo plano o
+monitorizacion permanente. Recuperacion de saltos reales sigue SIN validacion
+fisica. No se han ensayado todas las perdidas WiFi/reconexion extremas.
+El plazo de recreacion de 1 s y sus carreras siguen siendo limitaciones.
+
+CAUSA EN EL CODIGO Y EVIDENCIA
+MainActivity.onStop() de E37 llamaba incondicionalmente al STOP del monitor.
+Android llama a onStop al recrear la Activity por cambio de configuracion,
+incluida la orientacion. El mecanismo explica una parada segura durante un giro.
+El usuario observo parada a 26,8 s, canal 74, DISCONNECT correcto y cero errores.
+Ese resultado no contiene una traza Android de callbacks; no permite demostrar
+el orden exacto del sistema en aquel ensayo.
+H091MonitorCoordinator es un objeto de proceso con un receptor y StateFlow.
+La barra observa ese StateFlow y Cocina observa el repositorio. La pantalla de
+login y la navegacion usan rememberSaveable. No se encontro un DisposableEffect
+que cierre H09. El cierre de KnxCommandExecutor al desmontar Cocina afecta a su
+operacion propia y no al receptor pasivo. La recreacion de Compose puede
+recuperar estado y seguir observando la misma sesion.
+Referencias consultadas
+https://developer.android.com/guide/topics/resources/runtime-changes
+https://developer.android.com/reference/android/app/Activity#isChangingConfigurations()
+
+CORRECCION ACOTADA
+MainActivity comunica visibilidad con un token independiente de la Activity.
+El coordinador conserva la politica H09ActivityLifecycle entre recreaciones.
+onStop con isChangingConfigurations=true permite el relevo, sin iniciar ni
+reiniciar el receptor. onStart de la Activity nueva cancela la espera.
+Un onStop normal con ninguna Activity visible solicita el STOP existente.
+Un receptor dinamico ACTION_SCREEN_OFF en contexto de aplicacion solicita STOP
+tambien si el bloqueo coincide con el hueco entre dos instancias. Se registra
+una sola vez por proceso; no retiene Activity ni requiere servicio o permiso nuevo.
+El STOP manual sigue usando directamente la barrera del receptor.
+Un callback antiguo de temporizador se invalida por generacion y no puede cerrar
+la sesion de una Activity nueva.
+Si no aparece sustituta en 1000 ms, se pide STOP por seguridad. Es una politica
+local conservadora, no un requisito temporal de Android. Un dispositivo muy
+lento puede detener una rotacion legitima; debe medirse en el Xiaomi.
+La gracia solo se aplica a recreacion por configuracion, no a Home/onStop normal.
+Si Home coincide exactamente con la recreacion sin Activity nueva, el cierre
+puede esperar esa gracia. El bloqueo de pantalla utiliza ademas SCREEN_OFF.
+La lectura de arranque se consume una vez por proceso y se omite al restaurar
+estado. Volver desde segundo plano o recrear otra Activity no abre una lectura
+automatica. Leer H manual sigue disponible segun las guardas de H09.3.
+
+PROTECCION DE KNX
+H091PassiveMonitorRunner.kt y el simulador H09.3 se conservan byte a byte.
+El receptor mantiene el reloj original, 90 s, secuencias, recuperacion 4 s,
+KEEPALIVE, cola, cache y DISCONNECT. La politica de ciclo de vida solo puede
+pedir STOP; no tiene una operacion para iniciar un socket.
+El catalogo y H08Coordinator permanecen iguales a E37, incluidas 35 lecturas,
+160 ms y sensores por eventos. Sin cambios de GA, mandos, permisos o manifest.
+SHA-256 esperados
+UnifiedReceiverRunner.kt d63f4c01a1f950560bea11690de3577b163fc51eb09fc98f846180012c4c82f8
+KnxProtocol.kt 205a6d6eb384be6301acc3bee425cbe8b14d73a37cb76f95bd50d6afb3fb0eb7
+
+ARCHIVOS DE ESTA ENTREGA
+app/src/main/java/com/onehouse/app/MainActivity.kt
+app/src/main/java/com/onehouse/app/feature/h08/H09ActivityLifecycle.kt (nuevo)
+app/src/main/java/com/onehouse/app/feature/h08/H091MonitorCoordinator.kt
+app/src/main/java/com/onehouse/app/feature/h08/H08Toolbar.kt (etiqueta/CSV)
+app/src/main/java/com/onehouse/app/feature/rooms/detail/RoomDetailScreen.kt (etiqueta)
+app/build.gradle.kts; app/src/main/res/values/strings.xml (version)
+app/src/test/java/com/onehouse/app/feature/h08/H09ActivityLifecycleTest.kt (nuevo)
+app/src/test/java/com/onehouse/app/feature/h08/H09RotationUdpTest.kt (nuevo)
+tools/verificar_h094.py (nuevo); README_H08.md; este LEEME.
+
+PRUEBAS
+H09ActivityLifecycleTest usa un reloj, planificador y sesion dobles, sin Android.
+Cubre actividad normal, tres rotaciones, eventos durante el relevo, KEEPALIVE,
+limite original de 90 s, STOP manual durante/despues de giro, Home, otra app,
+pantalla bloqueada, retorno sin arranque, proceso restaurado, relevo ausente,
+callback obsoleto, superposicion de Activity nueva/vieja y cierre concurrente.
+Los callbacks se serializan como en el hilo principal; la prueba no mide el
+orden que HyperOS entrega en un telefono real.
+H09RotationUdpTest usa el receptor real y un gateway UDP loopback. Simula
+tres relevos de Activity con eventos recibidos en el hueco y otro en KEEPALIVE.
+Exige un CONNECT, un DISCONNECT, tres aplicaciones, una fecha de inicio,
+cero solicitudes activas de tunel y ningun reinicio al volver.
+Simulador UDP H09.3 conserva sus pruebas negativas, incluida recuperacion 4 s.
+El verificador H09.4 comprueba integridad, version y enlace de ciclo de vida.
+Los verificadores historicos H09.3/H09.2 pueden fallar en version, etiqueta,
+CSV y llamada antigua onStop; no son el verificador de esta entrega.
+Resultados locales anteriores a la validacion fisica, del 11 de noviembre de 2026:
+- PASS :app:assembleDebug y :app:testDebugUnitTest (BUILD SUCCESSFUL).
+- PASS 45 pruebas JUnit, cero fallos/errores: 29 previas, 15 de politica
+  de ciclo de vida y una integracion con receptor real y UDP loopback.
+- PASS simulador UDP H09.3 completo, incluida rafaga de 340 eventos aplicados.
+- PASS tools/verificar_h094.py: 33 comprobaciones estaticas. Estas buscan
+  patrones e integridad; no sustituyen las pruebas de comportamiento.
+- PASS git diff --check; SHA-256 protegidos coinciden con los valores anteriores.
+- PASS sin diff del paquete knxlab/knx, H08Coordinator, manifest ni simulador
+  H09.3 respecto a HEAD f68cf86. Las 35 lecturas se conservan en el codigo.
+- En ese momento las pruebas fisicas estaban pendientes; la bateria comunicada
+  posteriormente figura al principio. Recuperacion real de secuencia aun pendiente.
+APK local: app/build/outputs/apk/debug/app-debug.apk, versionCode 20904.
+Las cuatro pruebas fisicas PASS de E37 son antecedentes, no ensayos de E38.
+Publicacion autorizada exclusivamente en dev tras verificaciones finales.
+No se permiten merges ni cambios en main.
+
+REVERIFICACION FINAL PARA PUBLICACION - 11/11/2026
+Ejecutada nuevamente tras documentar la validacion fisica:
+- PASS Gradle :app:assembleDebug :app:testDebugUnitTest --rerun-tasks.
+  BUILD SUCCESSFUL en 55 s, 44 tareas ejecutadas; 45 tests sin fallos ni errores.
+- PASS simulador UDP H09.3 completo; rafaga 340 ACK y 340 aplicaciones.
+- PASS verificador H09.4 33/33 y hashes protegidos.
+- PASS revision del diff e integridad del motor/protocolo frente a f68cf86.
+Compilacion con avisos de APIs obsoletas, opcion experimental AGP y condicion
+siempre verdadera preexistente en RoomDetailScreen; sin errores de compilacion.
+No se ha modificado codigo adicional para registrar los resultados fisicos.
+
+PRUEBA FISICA XIAOMI 14T PRO
+1. Conservar APK/codigo H09.3 y exportar datos necesarios fuera de Git.
+   Abrir proyecto local dev en Android Studio, sincronizar y pulsar Run.
+   Comprobar etiqueta OneHouse H09.4 TEST y versionCode 20904.
+2. WiFi local, sin VPN y canal libre. Leer H y exigir 35/35 lecturas y ACK,
+   cero retransmisiones, cierre confirmado y tiempo hasta cache <10 s.
+3. Abrir Cocina e iniciar monitor dentro de 5 minutos. Anotar hora/canal.
+   Girar vertical-horizontal a los 20 s y horizontal-vertical a los 40 s.
+   Repetir tres giros. Accionar las dos luces fisicamente durante los giros.
+   Verificar misma pantalla, misma sesion, estados ON/OFF correctos y contador
+   original. Comparar CSV y captura con un CONNECT y un DISCONNECT.
+4. En otra sesion girar cerca de KEEPALIVE (30/60 s) y a 88-89 s.
+   El giro no debe extender el limite de escucha de 90 s.
+5. Probar Detener inmediatamente despues de girar y durante el relevo.
+   Debe cerrar una vez, sin aplicar eventos posteriores a la barrera STOP.
+6. En sesiones distintas pulsar Home, abrir otra app y bloquear pantalla.
+   Confirmar cierre, volver y comprobar que no se conecta automaticamente.
+   Repetir giro seguido inmediatamente de bloqueo/Home. La gracia maxima de
+   relevo es 1 s; si la nueva Activity nunca aparece, debe cerrar.
+7. Despues de cierre confirmado repetir lectura H35/35 y exportar CSV.
+   Ante cierre incierto respetar recuperacion H09.3, esperar 30 s y comprobar
+   canal remoto antes de otra lectura. Detener ante doble CONNECT, estado
+   incorrecto, eventos tras STOP, cierre fallido o temporizador reiniciado.
+8. La recuperacion de secuencias solo tiene validacion automatizada. Un salto
+   real sigue pendiente; no inducirlo en la vivienda fuera de entorno controlado.
+
+LIMITES Y RECUPERACION
+Rotacion, Home y bloqueo tienen el alcance fisico comunicado anteriormente.
+Quedan pendientes latencias extremas, carreras en el hueco de recreacion,
+multiventana y combinaciones no ensayadas. Los dobles no validan esos casos fisicos.
+Los bloqueos del monitor siguen en memoria de proceso. Tras muerte del proceso
+comprobar canal remoto antes de reabrir. La barrera STOP puede esperar a la
+operacion de cache ya admitida, igual que H09.3.
+Si falla el ensayo, parar, exportar y conservar el CSV H094 y captura.
+Volver con APK H09.3 archivado o compilando f68cf86 en una copia separada.
+Android puede impedir el downgrade de 20904 a 20903 o exigir la misma firma.
+No desinstalar sin respaldar los datos experimentales; la desinstalacion borra
+com.onehouse.app.h08. Confirmar canal liberado y repetir H35/35 tras recuperar.
+H08.2.2 / Entrega 34 sigue siendo la base estable.

@@ -1,6 +1,10 @@
 package com.onehouse.app.feature.h08
 
 import android.content.Context
+import android.content.BroadcastReceiver
+import android.content.Intent
+import android.content.IntentFilter
+import androidx.core.content.ContextCompat
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
@@ -19,19 +23,45 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-/** Piloto EXPLÍCITO H09.3. No hay reinicio, polling de GAs ni servicio en segundo plano. */
+/** Piloto EXPLÍCITO H09.4. No hay reinicio, polling de GAs ni servicio en segundo plano. */
 object H091MonitorCoordinator {
     data class UiState(
         val running: Boolean = false,
         val connected: Boolean = false,
         val stopping: Boolean = false,
         val recovering: Boolean = false,
-        val message: String = "Monitor H09.3 inactivo: lectura H08 PASS antes de iniciar.",
+        val message: String = "Monitor H09.4 inactivo: lectura H08 PASS antes de iniciar.",
         val snapshot: H091PassiveMonitorRunner.Snapshot? = null,
         val readId: String = "",
         val endpoint: String = ""
     )
     private val handler = Handler(Looper.getMainLooper())
+    internal val activityLifecycle = H09ActivityLifecycle(
+        stopMonitor = { stop() },
+        schedule = { delay, action ->
+            val pending = Runnable { action() }
+            handler.postDelayed(pending, delay)
+            val cancel: () -> Unit = { handler.removeCallbacks(pending) }
+            cancel
+        }
+    )
+    private var screenReceiverRegistered = false
+
+    internal fun observeScreenOff(context: Context) {
+        check(Looper.myLooper() == Looper.getMainLooper())
+        if (screenReceiverRegistered) return
+        ContextCompat.registerReceiver(
+            context.applicationContext,
+            object : BroadcastReceiver() {
+                override fun onReceive(context: Context?, intent: Intent?) {
+                    if (intent?.action == Intent.ACTION_SCREEN_OFF) activityLifecycle.screenOff()
+                }
+            },
+            IntentFilter(Intent.ACTION_SCREEN_OFF),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+        screenReceiverRegistered = true
+    }
     private val receiver = H091PassiveMonitorRunner()
     private val mutable = MutableStateFlow(UiState())
     val state = mutable.asStateFlow()
@@ -84,7 +114,7 @@ object H091MonitorCoordinator {
         // El marcador running se establece ANTES de abrir el socket: ningún mando
         // ni nueva lectura pueden comenzar mientras se abre/cierra este túnel.
         mutable.value = UiState(
-            running = true, message = "H09.3: conectando receptor pasivo (0 GroupValueRead)...",
+            running = true, message = "H09.4: conectando receptor pasivo (0 GroupValueRead)...",
             readId = read.lastRunId, endpoint = endpoint
         )
         val started = receiver.start(
@@ -107,9 +137,9 @@ object H091MonitorCoordinator {
                             connected = snapshot.connected,
                             snapshot = snapshot,
                             message = if (snapshot.connected)
-                                if (snapshot.sequenceRecovering) "H09.3: esperando secuencia pendiente; cierre si no se recupera."
-                                else "H09.3 activo: ${snapshot.acceptedWrites} eventos Cocina; 0 lecturas; límite 90 s."
-                                else "H09.3 conectando..."
+                                if (snapshot.sequenceRecovering) "H09.4: esperando secuencia pendiente; cierre si no se recupera."
+                                else "H09.4 activo: ${snapshot.acceptedWrites} eventos Cocina; 0 lecturas; límite 90 s."
+                                else "H09.4 conectando..."
                         )
                     }
                 }
@@ -135,7 +165,7 @@ object H091MonitorCoordinator {
                         running = false, stopping = false, recovering = snapshot.recoveryRequired,
                         connected = false,
                         snapshot = snapshot,
-                        message = "H09.3 finalizado: ${snapshot.stopReason}; " +
+                        message = "H09.4 finalizado: ${snapshot.stopReason}; " +
                             "eventos=${snapshot.acceptedWrites}; " +
                             "cierre=${snapshot.closeResult}. " +
                             if (snapshot.recoveryRequired) "Recuperación: espera 30 s y realiza otra lectura H." else if (snapshot.freshReadRequired) "Secuencia sin recuperar: realiza una nueva lectura H antes de otro monitor." else "Exporta CSV."
@@ -158,7 +188,7 @@ object H091MonitorCoordinator {
     fun stop() {
         if (!mutable.value.running) return
         receiver.requestStop()
-        mutable.value = mutable.value.copy(stopping = true, connected = false, message = "Deteniendo H09.3 y cerrando el túnel KNX/IP... (sin nuevas lecturas)")
+        mutable.value = mutable.value.copy(stopping = true, connected = false, message = "Deteniendo H09.4 y cerrando el túnel KNX/IP... (sin nuevas lecturas)")
     }
 
     private fun utc(timeMs: Long): String {
@@ -169,9 +199,9 @@ object H091MonitorCoordinator {
 
     fun exportCsv(): String {
         val s = state.value
-        val snap = s.snapshot ?: return "H09.3;sin_telemetria\n"
+        val snap = s.snapshot ?: return "H09.4;sin_telemetria\n"
         return buildString {
-            appendLine("ONEHOUSE_H093_ENTREGA37_MONITOR_PASIVO_COCINA_TEST")
+            appendLine("ONEHOUSE_H094_ENTREGA38_MONITOR_PASIVO_COCINA_TEST")
             appendLine("lectura_H08_origen;${s.readId}")
             appendLine("gateway;${s.endpoint}")
             appendLine("inicio_utc;${utc(snap.startedEpochMs)}")
