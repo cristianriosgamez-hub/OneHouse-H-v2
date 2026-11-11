@@ -12,14 +12,14 @@ import java.net.SocketTimeoutException
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * H09.1 / Entrega 35. Receptor PASIVO de dos GAs de Cocina durante <= 90 s.
+ * H09.3 / Entrega 37 (candidata; ver LEEME). Receptor PASIVO de dos GAs de Cocina durante <= 90 s.
  *
  * No hace GroupValueRead, NO escribe GAs y NO comparte socket con H08/H07.
  * Su coordinador solo permite arrancar DESPUÉS de una lectura H completa y
  * bloquea las lecturas y mandos mientras el túnel piloto siga abierto.
  * El listener se inicia SOLO por acción explícita del usuario en primer plano.
  */
-class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Long = 30_000L, private val replyMs: Long = 4_000L) {
+class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Long = 30_000L, private val replyMs: Long = 4_000L, private val sequenceRecoveryMs: Long = 4_000L) {
     companion object {
         const val MAX_MONITOR_MS: Long = 90_000L
         val PILOT_ADDRESSES = setOf("1/2/6", "1/2/5")
@@ -48,7 +48,10 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
         val applied: Int, val cacheDuplicates: Int, val applyErrors: Int, val discarded: Int,
         val lostRecords: Int, val ackCount: Int, val maxAckMicros: Long, val outgoingTunnelRequests: Int,
         val connectResult: String, val firstError: String, val closeResult: String, val recoveryRequired: Boolean,
-        val disconnectedOk: Boolean = false
+        val disconnectedOk: Boolean = false,
+        val sequenceRecovering: Boolean = false, val freshReadRequired: Boolean = false,
+        val sequenceRecoveryStarts: Int = 0, val sequenceRecoverySuccesses: Int = 0,
+        val lastSequenceRecovery: String = "NONE"
     )
 
     private enum class Phase { RUNNING, STOPPING, CLOSED }
@@ -90,6 +93,11 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
             var unexpected = 0
             var udpReceived = 0
             var lastSeq: Int? = null
+            var recoveryDeadline: Long? = null
+            var recoveryStarted = 0L
+            var sequenceRecoveryStarts = 0
+            var sequenceRecoverySuccesses = 0
+            var lastSequenceRecovery = "NONE"
             var lastPublishMs = -1_000L
             var stopReason = "FINALIZADO"
             var closeOk = false
@@ -110,6 +118,9 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
             var control: InetSocketAddress? = null
             var dataPeer: InetSocketAddress? = null
             fun event(kind: String, address: String = "", detail: String = "") = synchronized(diagnostics) {
+                if (kind == "SEQUENCE_RECOVERY_START") sequenceRecoveryStarts++
+                if (kind == "SEQUENCE_RECOVERY_OK") sequenceRecoverySuccesses++
+                if (kind.startsWith("SEQUENCE_RECOVERY_")) lastSequenceRecovery = "$kind $detail"
                 if (kind.startsWith("CONNECT_")) connectResult = "$kind $detail"
                 if (kind.startsWith("DISCONNECT_")) closeResult = "$kind $detail"
                 if (firstError.isEmpty() && (kind.contains("ERROR") || kind.contains("REJECT") || kind.contains("NOT_CONFIRMED") || kind == "WIFI_ROUTE_LOST")) firstError = "$kind $detail"
@@ -121,7 +132,7 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
                 channel = channel, acceptedWrites = writes, duplicateFrames = duplicates,
                 unexpectedFrames = unexpected, receivedUdp = udpReceived,
                 stopReason = stopReason, events = events.toList(),
-                values = values.toMap(), applied = applied, cacheDuplicates = cacheDuplicates, applyErrors = applyErrors, discarded = discarded, lostRecords = lostRecords, ackCount = ackCount, maxAckMicros = maxAckMicros, outgoingTunnelRequests = outgoingTunnelRequests, connectResult = connectResult, closeResult = closeResult, firstError = firstError, recoveryRequired = connectSent && !closeOk, disconnectedOk = closeOk
+                values = values.toMap(), applied = applied, cacheDuplicates = cacheDuplicates, applyErrors = applyErrors, discarded = discarded, lostRecords = lostRecords, ackCount = ackCount, maxAckMicros = maxAckMicros, outgoingTunnelRequests = outgoingTunnelRequests, connectResult = connectResult, closeResult = closeResult, firstError = firstError, recoveryRequired = connectSent && !closeOk, disconnectedOk = closeOk, sequenceRecovering = running && recoveryDeadline != null, freshReadRequired = recoveryDeadline != null, sequenceRecoveryStarts = sequenceRecoveryStarts, sequenceRecoverySuccesses = sequenceRecoverySuccesses, lastSequenceRecovery = lastSequenceRecovery
             ) }
             // Only the consumer touches the Android repository. A full queue ends the pilot
             // explicitly instead of hiding lost state or blocking the next transport ACK.
@@ -147,7 +158,7 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
                         }
                     }
                 }
-            }, "OneHouse-H092-Cache").apply { isDaemon = true; start() }
+            }, "OneHouse-H093-Cache").apply { isDaemon = true; start() }
             fun publish(force: Boolean = false) {
                 if (force || elapsed() - lastPublishMs >= 200L) {
                     lastPublishMs = elapsed()
@@ -178,11 +189,71 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
                     udpReceived++
                     rxAt = System.nanoTime()
                     val bytes = p.data.copyOf(p.length)
-                    val expected = if (KnxProtocol.service(bytes, bytes.size) == KnxProtocol.TUNNELLING_REQ) dataPeer else control
-                    if (p.socketAddress == expected) bytes else { discarded++; null }
+                    val expected = if (KnxProtocol.service(bytes, bytes.size) in setOf(KnxProtocol.TUNNELLING_REQ, KnxProtocol.TUNNELLING_ACK)) dataPeer else control
+                    if (p.socketAddress == expected) bytes else {
+                        discarded++
+                        event("ENDPOINT_DISCARD", detail = "peer=${p.socketAddress},expected=$expected,service=${KnxProtocol.service(bytes, bytes.size)}")
+                        null
+                    }
                 } catch (_: SocketTimeoutException) { null }
             }
+            fun checkSequenceDeadline() {
+                if (recoveryDeadline?.let { elapsed() >= it } == true) {
+                    event("SEQUENCE_RECOVERY_FAILED", detail = "expected=${lastSeq?.let { (it + 1) and 255 } ?: 0},reason=TIMEOUT,new_H_required=true")
+                    error("SEQUENCE_RECOVERY_TIMEOUT; nueva lectura H obligatoria")
+                }
+            }
+            // UDP tunneling starts at sequence 0. Only expected or previous may be ACKed.
+            // See LEEME: Calimero reference explicitly labels skipped-sequence resync non-spec.
+            fun tunnel(data: ByteArray, closing: Boolean = false): KnxProtocol.TunnelMeta? {
+                val meta = KnxProtocol.incomingMeta(data, data.size)
+                if (meta == null || meta.channel != channel) {
+                    unexpected++; discarded++
+                    event("INVALID_TUNNEL", detail = "channel=${meta?.channel},session=$channel,ack=NONE")
+                    return null
+                }
+                val expected = lastSeq?.let { (it + 1) and 255 } ?: 0
+                val frame = KnxProtocol.parseBusFrame(data, data.size)
+                val type = when {
+                    frame?.messageCode == 0x2e -> "L_DATA_CON"
+                    frame?.isGroupWrite == true -> "WRITE"
+                    frame?.isGroupResponse == true -> "RESPONSE"
+                    else -> "OTHER"
+                }
+                val detail = "channel=${meta.channel},expected=$expected,received=${meta.sequence},source=${frame?.source ?: "?"},type=$type,closing=$closing"
+                event("TUNNEL_RX", frame?.destination ?: "", detail)
+                if (meta.sequence != expected && meta.sequence != lastSeq) {
+                    unexpected++; discarded++
+                    event("SEQUENCE_GAP", frame?.destination ?: "", "$detail,ack=NONE")
+                    if (!closing && recoveryDeadline == null) {
+                        recoveryStarted = elapsed()
+                        recoveryDeadline = recoveryStarted + sequenceRecoveryMs
+                        event("SEQUENCE_RECOVERY_START", detail = "expected=$expected,timeout_ms=$sequenceRecoveryMs")
+                    }
+                    return null
+                }
+                val ack = KnxProtocol.tunnelAck(meta.channel, meta.sequence)
+                if (closing) udp!!.send(DatagramPacket(ack, ack.size, dataPeer))
+                else send(ack, "ACK_INCOMING", dataPeer)
+                ackCount++
+                if (!closing) maxAckMicros = maxOf(maxAckMicros, (System.nanoTime() - rxAt) / 1000)
+                event("ACK_TX", detail = "channel=${meta.channel},seq=${meta.sequence},status=0,closing=$closing")
+                if (lastSeq == meta.sequence) {
+                    duplicates++; discarded++
+                    event("DUPLICATE_TUNNEL", frame?.destination ?: "", "$detail,ack=0")
+                    return null
+                }
+                lastSeq = meta.sequence
+                // Closing cannot turn a failed/aborted recovery into a successful session.
+                if (!closing && recoveryDeadline != null) {
+                    event("SEQUENCE_RECOVERY_OK", detail = "received=$expected,wait_ms=${elapsed() - recoveryStarted},next=${(expected + 1) and 255}")
+                    recoveryDeadline = null
+                }
+                if (closing) { discarded++; return null }
+                return meta
+            }
             try {
+                require(sequenceRecoveryMs > 0) { "Plazo de recuperación inválido" }
                 require(port in 1..65535) { "Puerto KNX/IP inválido" }
                 val address = InetAddress.getByName(host) as? Inet4Address
                     ?: error("La IP debe ser IPv4")
@@ -235,6 +306,7 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
                     var nextKeepaliveMs = elapsed() + keepaliveMs
                     while (!stopping() && elapsed() < MAX_MONITOR_MS) {
                         consumerFailure.get()?.let { throw it }
+                        checkSequenceDeadline()
                         route("MONITOR")
                         check(pendingUntil?.let { elapsed() >= it } != true) { "KEEPALIVE sin respuesta" }
                         if (pendingUntil == null && elapsed() >= nextKeepaliveMs) {
@@ -244,39 +316,15 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
                             nextKeepaliveMs = elapsed() + keepaliveMs
                         }
                         val data = receive(100) ?: continue
+                        if (!stopping()) checkSequenceDeadline()
                         when (KnxProtocol.service(data, data.size)) {
                             KnxProtocol.TUNNELLING_REQ -> {
-                                val meta = KnxProtocol.incomingMeta(data, data.size)
-                                if (meta == null || meta.channel != channel) {
-                                    unexpected++
-                                    discarded++
-                                    event("INVALID_TUNNEL")
-                                    continue
-                                }
-                                // Los duplicados se reconocen sin repetir la aplicación. Un salto conserva el último número válido.
-                                val expected = lastSeq?.let { (it + 1) and 255 }
-                                val gap = expected != null && meta.sequence != expected && meta.sequence != lastSeq
-                                if (gap) {
-                                    unexpected++
-                                    discarded++
-                                    event("SEQUENCE_GAP", detail = "esperado=$expected,recibido=${meta.sequence}")
-                                    continue
-                                }
-                                val ack = KnxProtocol.tunnelAck(meta.channel, meta.sequence)
-                                send(ack, "ACK_INCOMING", dataPeer)
-                                ackCount++
-                                maxAckMicros = maxOf(maxAckMicros, (System.nanoTime() - rxAt) / 1000)
-                                if (lastSeq == meta.sequence) {
-                                    duplicates++
-                                    discarded++
-                                    event("DUPLICATE_TUNNEL", detail = "seq=${meta.sequence}")
-                                    publish()
-                                    continue
-                                }
-                                lastSeq = meta.sequence
+                                val meta = tunnel(data, closing = stopping())
+                                if (meta == null) { publish(); continue }
                                 val frame = KnxProtocol.parseBusFrame(data, data.size)
                                 if (frame == null || !frame.isGroupWrite || frame.destination !in PILOT_ADDRESSES) {
                                     discarded++
+                                    event("CEMI_DISCARD", frame?.destination ?: "", "seq=${meta.sequence},reason=NON_PILOT_WRITE")
                                     continue
                                 }
                                 // Sólo DPT1, un bit 0/1 confirmado mediante GroupValueWrite.
@@ -300,6 +348,11 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
                                     error("Cola de caché llena (64); repita lectura H")
                                 }
                                 publish()
+                            }
+                            KnxProtocol.TUNNELLING_ACK -> {
+                                discarded++
+                                val ack = KnxProtocol.parseGatewayAck(data, data.size)
+                                event("UNSOLICITED_TUNNEL_ACK", detail = "channel=${ack?.channel},seq=${ack?.sequence},status=${ack?.status},pending_TX=0")
                             }
                             KnxProtocol.CONNECTIONSTATE_RES -> {
                                 if (pendingUntil == null || data.size != 8 || (data[6].toInt() and 255) != channel ||
@@ -331,6 +384,7 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
                     val ip = local
                     val id = channel
                     phase.compareAndSet(Phase.RUNNING, Phase.STOPPING)
+                    if (recoveryDeadline != null) event("SEQUENCE_RECOVERY_END", detail = "result=UNRESOLVED,expected=${lastSeq?.let { (it + 1) and 255 } ?: 0},reason=$stopReason,new_H_required=true")
                     workerDone.set(true)
                     if (!closeOk && sock != null && !sock.isClosed && ip != null && id != null) {
                         event("DISCONNECT_TX", detail = "canal=$id")
@@ -352,15 +406,8 @@ class H091PassiveMonitorRunner internal constructor(private val keepaliveMs: Lon
                                     detail = "status=${reply.status}")
                                 break
                             }
-                            val meta = KnxProtocol.incomingMeta(bytes, bytes.size)
-                            if (packet.socketAddress == dataPeer && meta != null && meta.channel == id) {
-                                val ack = KnxProtocol.tunnelAck(id, meta.sequence)
-                                val next = lastSeq?.let { (it + 1) and 255 }
-                                if (next != null && meta.sequence != next && meta.sequence != lastSeq) { discarded++; continue }
-                                lastSeq = meta.sequence
-                                sock.send(DatagramPacket(ack, ack.size, dataPeer))
-                                discarded++
-                                ackCount++
+                            if (packet.socketAddress == dataPeer && KnxProtocol.service(bytes, bytes.size) == KnxProtocol.TUNNELLING_REQ) {
+                                tunnel(bytes, closing = true)
                             }
                         }
                         if (!closeOk) event("DISCONNECT_NOT_CONFIRMED")

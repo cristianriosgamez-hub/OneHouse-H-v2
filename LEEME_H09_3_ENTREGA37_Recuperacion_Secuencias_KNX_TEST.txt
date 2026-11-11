@@ -1,0 +1,219 @@
+ONEHOUSE H09.3 / ENTREGA 37 — INVESTIGACION Y CORRECCION LOCAL
+Estado: referencia experimental con 4/4 pruebas principales fisicas PASS comunicadas
+por el usuario. La recuperacion de secuencias sigue pendiente de validacion fisica.
+La base estable de referencia sigue siendo H08.2.2 / Entrega 34.
+OneHouse H09.3 TEST, versionCode20903, versionName2.0.0-H09.3-Test-MonitorCocina.
+applicationId experimental conservado: com.onehouse.app.h08.
+Rama dev, repositorio cristianriosgamez-hub/OneHouse-H-v2.
+Base clonada: 7202f83a89793127ef03361a7434f9a9b060e278.
+No se ha utilizado el repositorio antiguo OneHouse.
+Commit y push autorizados expresamente por el usuario solo a dev.
+Sin merges ni modificaciones de main.
+
+VALIDACION FISICA H09.3 COMUNICADA POR EL USUARIO (registrada 2026-11-11)
+Resultados proporcionados por el usuario en esta conversacion; no se incorporan
+CSV ni capturas de la vivienda. Alcance de los cuatro ensayos principales:
+1. Lectura inicial H08: PASS. 35/35 lecturas y ACK, cache en 6,764 s,
+   cero retransmisiones y DISCONNECT_OK.
+2. Monitor Cocina con cambios fisicos: PASS. 90,096 s, 8/8 eventos aplicados,
+   ON/OFF confirmado visualmente en la app, 23 ACK, cero errores de secuencia,
+   KEEPALIVE 2/2 y DISCONNECT_OK.
+3. Monitor Cocina en reposo: PASS. 90,116 s, 12 ACK, cero anomalias de secuencia,
+   cero duplicados, KEEPALIVE 2/2 y DISCONNECT_OK.
+4. Lectura final H08: PASS. 35/35 lecturas y ACK, cache en 5,992 s,
+   cero retransmisiones y DISCONNECT_OK.
+No se reprodujo un salto de secuencia real. La recuperacion especifica y el
+cierre por plazo de recuperacion cuentan con pruebas simuladas, pero NO estan
+validados fisicamente. Quedan pendientes los escenarios fisicos no descritos
+en estos cuatro ensayos, incluidos fallos de WiFi y ciclo de vida Android.
+
+VERIFICACION LOCAL WINDOWS PREVIA A PUBLICACION
+Codigo y pruebas coincidentes con el parche de Entrega 37 ya verificado localmente.
+Gradle assembleDebug PASS; testDebugUnitTest PASS (29 pruebas, 0 fallos).
+Simulador UDP H09.3 PASS; verificador estatico H09.3 PASS (28 comprobaciones).
+Esta actualizacion de validacion fisica modifica documentacion exclusivamente.
+Los resultados cloud que siguen corresponden a la fase anterior de desarrollo.
+
+EVIDENCIA HISTORICA DE LOS TRES CSV H09.2 (no incorporados a Git)
+A: AAAAOneHouse_H092_COCINA_EVENTOS_20261110_190039.csv.
+CONNECT canal 72 a 27ms. WRITE 1/2/5 ON seq1 a 10719ms y OFF seq3 a
+15750ms, CACHE_APPLIED a 10726/15752ms. Duplicado seq3 a 15757ms.
+Primer SEQUENCE_GAP a 19481ms: esperado4, recibido5. Recibidos posteriores:
+6,6,7,7,9,9,10,10,11,11,14,14. Los 13 registros conservan esperado4.
+KEEPALIVE TX/OK: 30097/30814ms y 60181/60219ms. DISCONNECT OK 90123ms.
+22 UDP, 5 ACK, 2 escrituras validas/aplicadas, 16 descartes, 0 errores cache,
+0 solicitudes de tunel TX. Una sesion viva no garantiza sincronizacion de datos.
+B: OneHouse_H092_COCINA_EVENTOS_20261110_192802.csv. Canal77, STOP manual,
+18860ms, 3 UDP, 1 ACK, 0 escrituras, 0 duplicados y 0 anomalias.
+C: OneHouse_H092_COCINA_EVENTOS_20261110_192940.csv. Canal78, 90078ms,
+10 UDP, 6 ACK, 0 escrituras, duplicados seq1/seq2 a 33559/53548ms,
+0 anomalias. KEEPALIVE correctos y DISCONNECT confirmado.
+Los nombres no coinciden con inicio_utc. Se usan offsets, no los nombres,
+para ordenar eventos. B inicia 18:25:39.953Z, C 18:28:08.477Z, A 17:59:03.548Z.
+
+CAUSA DEMOSTRADA Y LIMITES
+En H09.2, lastSeq solo avanza para la esperada o el primer paquete. Tras un
+salto se conserva indefinidamente y se descarta sin ACK. No existe plazo de
+recuperacion; por ello puede permanecer conectado sin actualizar estados.
+El contador incluye TODOS los TUNNELLING_REQUEST admitidos antes de filtrar
+cEMI/GA. Un telegrama ajeno, Response o confirmacion consume secuencia aunque
+no pueda modificar Cocina. KEEPALIVE no modifica lastSeq. Los ACK entrantes
+no son datos del bus y no deben avanzar la secuencia receptora.
+La causa de la ausencia de seq4 NO esta demostrada. Los CSV no registran cada
+paquete, ACK, endpoint, cEMI ni descarte. No permiten distinguir perdida UDP,
+filtrado, gateway, confirmacion, ACK no recibido o temporizacion. Las repeticiones
+son compatibles con retransmisiones legitimas; no prueban un error de pulsador.
+El primer salto precede al primer KEEPALIVE. No se atribuye causalidad a este.
+Si el socket UDP esta conectado al mismo endpoint control/datos, el SO filtra
+otros peers antes de la aplicacion: el CSV no puede observar esos paquetes.
+
+JUSTIFICACION DEL TRATAMIENTO UDP
+Referencia publica contrastada: Calimero KNXnetIPTunnel.handleServiceType,
+https://github.com/calimero-project/calimero-core/blob/master/src/io/calimero/knxnetip/KNXnetIPTunnel.java
+y ConnectionBase (seqRcv inicialmente0, incremento modulo256).
+Su tratamiento UDP reconoce esperado o anterior inmediato, ACK de exito solo
+a ambos y descarta otros sin ACK. El workaround opcional de saltar una secuencia
+esta marcado explicitamente "not part of the knxnet/ip tunneling spec".
+Esta es una referencia de implementacion, no una certificacion KNX ni una
+captura del gateway de la vivienda. No se introduce ese workaround ni un supuesto
+estado E_SEQUENCE_NUMBER: se conserva el descarte sin ACK de secuencias invalidas.
+El plazo local de 4000ms es una politica de terminacion del monitor, no una orden
+al gateway ni un mecanismo KNX de resincronizacion. No negocia secuencias.
+
+COMPORTAMIENTO NUEVO
+Se espera 0 al abrir cada canal; no se adopta arbitrariamente la primera secuencia.
+Se acepta solamente la esperada modulo256. Se envia ACK canal/seq/status0 y
+se avanza antes del filtro de aplicacion. Solo Write DPT1 de las dos GA piloto
+puede entrar en la cola de cache. Un duplicado inmediato recibe ACK0 sin aplicarse.
+Otro numero se descarta sin ACK ni cache, sin modificar esperado. Inicia un plazo
+absoluto monotónico de 4s que nuevos saltos o duplicados NO prolongan.
+La recuperacion solo ocurre si llega exactamente la esperada antes del plazo.
+No hay buffer de adelantadas: para procesarlas despues deben ser retransmitidas
+cuando les corresponda. Ejemplo 1,2,3,5,4,5: primer5 descartado; 4 y segundo5
+admitidos. No se inventa el estado que contenia un paquete ausente.
+Si vence el plazo: SEQUENCE_RECOVERY_TIMEOUT, fin de escucha y un DISCONNECT.
+Si STOP, cierre remoto o limite90s interrumpen la espera, queda sin recuperar.
+Siempre se invalida la lectura H de origen si la secuencia queda sin resolver,
+incluso con DISCONNECT confirmado. Se exige otra lectura H antes de otro monitor.
+Con cierre incierto se conserva ademas la recuperacion H09.2 de 30s y comprobacion
+manual del canal. No hay reconexiones automaticas ni GroupValueRead/Write H09.
+La misma regla de secuencia y ACK se aplica durante DISCONNECT, sin cache.
+Una llegada durante cierre no convierte el fallo previo en recuperacion exitosa.
+
+CSV H09 (memoria limitada a 320 eventos, contador de registros perdidos)
+TUNNEL_RX: canal, esperado, recibido, origen/GA si analizables, tipo y fase.
+SEQUENCE_GAP: decision ack=NONE. ACK_TX: canal, seq, status y fase.
+DUPLICATE_TUNNEL: transporte reconocido, sin aplicacion nueva.
+CEMI_DISCARD / INVALID_TUNNEL / ENDPOINT_DISCARD: razon del filtro.
+UNSOLICITED_TUNNEL_ACK: ACK sin solicitud TX pendiente; nunca actualiza cache.
+SEQUENCE_RECOVERY_START / OK / FAILED / END y motivo de cierre.
+Resumen retenido: recuperaciones iniciadas/completadas, ultima recuperacion,
+nueva_lectura_H_obligatoria, ACK, descartes, validos y aplicados. El resumen de
+recuperacion permanece aunque la traza circular pierda sus eventos originales.
+No se vuelca payload completo ni se modifica la auditoria H08.
+
+PRUEBAS Y RESULTADOS
+Verificacion final 2026-11-11, entorno cloud Linux/JDK21/Gradle9.5.0:
+Prueba                                                   Resultado
+:app:assembleDebug                                       PASS
+:app:testDebugUnitTest (29,0 fallos,0 omitidas)            PASS
+Simulador UDP completo (loopback, control/datos distintos) PASS
+Secuencia1,2,3,4,5                                       PASS
+Salto1,2,3,5,6,7 y perdida persistente                    PASS
+Esperada tardia seguida de retransmision                 PASS
+Duplicados / retransmision por ACK no observado          PASS
+Tramas atrasadas sin aplicacion                          PASS
+Cruce254,255,0,1 y cruce con duplicado255                 PASS
+GA ajenas / confirmacion / Response / reposo             PASS
+KEEPALIVE durante anomalia                               PASS
+STOP durante recuperacion y llegada durante cierre       PASS
+DISCONNECT tras fallo; nueva H incluso con cierre OK     PASS
+Plazo absoluto (saltos/duplicados no lo renuevan)         PASS
+Inicio distinto0, canal/endpoint/formato invalidos        PASS
+ACK no solicitado sin mutacion                          PASS
+DPT, excepcion cache, cola64 y protecciones H09.2         PASS
+Rafaga340 / ambas luces consecutivas / memoria acotada   PASS
+Verificador tools/verificar_h093.py (28/28)               PASS
+Integridad SHA-256 de ambos archivos protegidos          PASS
+KNX real / Xiaomi / liberacion real del gateway          NO VERIFICADO
+
+Mediciones ACK/aplicacion/descarte por escenarios nuevos (incluyen cebado0
+no piloto; para wrap, el cebado recorre0..253, sin escrituras de tunel TX):
+correcta:6/5/1; esperada tardia:7/6/2; duplicados:6/3/3; atrasada:5/4/2;
+wrap:258/4/254; wrap duplicado:259/4/255; perdida:4/3/4;
+STOP con esperada durante cierre:5/3/5. Los invalidos producen cero aplicaciones
+nuevas; en perdida/STOP se conservan las3 validas anteriores al salto.
+Reposo:6ACK,0validos,0aplicados,2duplicados,6descartes.
+KEEPALIVE/anomalia:2ACK,0aplicados; inicial distinta0:0ACK,0aplicados.
+Cada ACK se compara con bytes independientes: cabecera0421, longitud10,
+canal37, secuencia exacta y estado0. Los invalidos se comprueban sin ACK.
+El simulador no pierde un ACK en una red real: ignora el primero y vuelve a
+emitir la misma solicitud; verifica re-ACK sin segunda aplicacion.
+Rafaga final:342UDP,340ACK,340aplicados,0solicitudes de tunel TX,320registros
+retenidos,1045registros antiguos descartados,194us maximo RXlocal-a-ACK,
+121ms totales en esta ejecucion. No mide latencia anterior a la recepcion local.
+Plazo inyectado650ms: cierre observado709ms (poll100ms + procesamiento).
+Se ensaya tambien el plazo de produccion4000ms hasta DISCONNECT confirmado.
+Todas las sesiones del simulador comprueban solicitudes de tunel TX=0.
+No hay fallo automatizado pendiente ni riesgo alto identificado en estos escenarios;
+la causa original de seq4 sigue pendiente de captura y validacion en gateway real.
+
+Logs locales de esta sesion (fuera de Git):
+/workspace/work/h093-gradle-final.log
+/workspace/work/h093-udp-final.log
+/workspace/work/h093-static.log
+La primera compilacion requirio instalar Gradle/SDK en /workspace/work,
+configurar el proxy/CA del entorno para Java y redirigir ANDROID_USER_HOME.
+No se alteraron dependencias, SDK requerido ni repositorios Gradle del proyecto.
+Compilacion final: BUILD SUCCESSFUL,17s. Advertencias de deprecacion existentes,
+sin errores. APK local: app/build/outputs/apk/debug/app-debug.apk.
+La firma debug es la de este entorno: comprobar compatibilidad antes de instalar.
+Reproducir simulador: bash tools/test_h093_udp.sh desde la raiz; requiere kotlinc
+o H093_GRADLE_HOME apuntando a Gradle9.5.0 (compilador Kotlin2.3.20 incluido).
+Windows: puede usarse el comando kotlinc del LEEME H09.2 sobre los mismos archivos.
+Estatica: python tools/verificar_h093.py (version preparada solamente tras checks).
+Gradle: bash gradlew :app:assembleDebug :app:testDebugUnitTest.
+
+INTEGRIDAD BASE H08.2.2
+SHA-256 iniciales coincidentes con Entrega36:
+UnifiedReceiverRunner.kt d63f4c01a1f950560bea11690de3577b163fc51eb09fc98f846180012c4c82f8
+KnxProtocol.kt 205a6d6eb384be6301acc3bee425cbe8b14d73a37cb76f95bd50d6afb3fb0eb7
+No modificar estos archivos ni el catalogo de 35 lecturas/intervalo160ms,
+mandos, lluvia/viento ni los CSV H08. Verificacion final: ambos hashes identicos a los iniciales y a Entrega34.
+
+PROCEDIMIENTO FISICO (solo tras superar verificaciones Android)
+1. Conservar APK/ZIP H09.2 y Entrega34, configuracion y CSV fuera de Git.
+   Mantener applicationId experimental com.onehouse.app.h08. Comprobar firma
+   antes de instalar una actualizacion; no reemplazar OneHouse estable.
+2. WiFi local sin VPN y canal libre. Lectura H completa 35/35, cero reintentos,
+   ACK estrictos y cierre confirmado, comparar duracion y estados con E36.
+3. Abrir monitor manualmente dentro de5min. Alternar ambas luces desde pulsadores,
+   individualmente y seguidas. Anotar estado fisico y visible con hora. Dejar90s.
+   No producir eventos desde mandos de la app. Exportar CSV tras cierre.
+4. Repetir en reposo; comparar cEMI/GA y ACK de los duplicados con una captura
+   independiente KNXnet/IP. Los duplicados de transporte no deben aplicar cache.
+5. Si hay salto, comprobar esperado/recibido, ausencia de ACK del invalido,
+   recuperacion solo al llegar la esperada o cierre tras4s. Si falla, comprobar
+   que otro monitor queda bloqueado hasta nueva H. No inducir fallos en la red
+   de la vivienda sin un entorno controlado independiente.
+6. STOP/segundo plano/rotacion durante escucha y espera: sin cambios posteriores
+   a la barrera STOP. Confirmar KEEPALIVE y liberacion de canal. Ante cierre
+   incierto, esperar30s, verificar gateway y repetir H antes de continuar.
+7. Detener ante estado incorrecto, trafico activo H09, error de cola/cache,
+   aplicacion tras STOP o cierre fallido. Guardar CSV y captura independiente.
+
+RIESGOS Y VUELTA ATRAS
+Los cuatro ensayos fisicos H09.3 anteriores validan el funcionamiento observado.
+La recuperacion ante un salto real y los fallos de WiFi/ciclo de vida permanecen
+pendientes de prueba fisica. La politica cierra una sesion si no puede mantener el orden; no garantiza
+continuidad frente a un gateway que omita permanentemente numeros. El inicio0
+es mas estricto que H09.2; confirmar la primera trama del gateway en captura.
+La traza adicional puede rotar antes; resumen y contadores informan perdidas.
+Los datos ya guardados pueden quedar desactualizados tras cierre: nueva H.
+Cola64, barrera STOP, DPT, cache y KEEPALIVE H09.2 se conservan y se prueban en JVM;
+no equivalen a validacion fisica. No hay garantia de persistencia de bloqueos tras
+matar el proceso: comprobar canal remoto antes de abrir otra sesion.
+Para volver a H09.2/E34: detener, exportar, comprobar canal liberado y usar el APK
+archivado o compilar copia separada del codigo correspondiente. Android puede
+rechazar downgrade del versionCode. Antes de cualquier desinstalacion, respaldar
+los datos: desinstalar com.onehouse.app.h08 los borra. Repetir H35/35 y cierre.

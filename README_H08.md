@@ -1,3 +1,16 @@
+# OneHouse H09.3 TEST — Entrega 37
+
+Recuperación estricta de secuencias del monitor H09: espera acotada a 4 s,
+recuperación solo al recibir la secuencia pendiente y cierre controlado si falla.
+Sin reconexiones automáticas ni solicitudes de túnel salientes del monitor.
+Referencia experimental con 4/4 pruebas físicas principales PASS comunicadas por el usuario.
+Recuperación ante un salto de secuencia real pendiente de validación física.
+H08.2.2 / Entrega 34 sigue siendo la base estable.
+
+Consulta `LEEME_H09_3_ENTREGA37_Recuperacion_Secuencias_KNX_TEST.txt`.
+
+---
+
 # OneHouse H09.2 TEST — Entrega 36
 
 **Experimento de eventos KNX en Cocina** sobre la base validada H08.2.2 / Entrega 34.

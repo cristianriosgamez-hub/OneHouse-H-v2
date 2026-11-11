@@ -19,14 +19,14 @@ import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
-/** Piloto EXPLÍCITO H09.2. No hay reinicio, polling de GAs ni servicio en segundo plano. */
+/** Piloto EXPLÍCITO H09.3. No hay reinicio, polling de GAs ni servicio en segundo plano. */
 object H091MonitorCoordinator {
     data class UiState(
         val running: Boolean = false,
         val connected: Boolean = false,
         val stopping: Boolean = false,
         val recovering: Boolean = false,
-        val message: String = "Monitor H09.2 inactivo: lectura H08 PASS antes de iniciar.",
+        val message: String = "Monitor H09.3 inactivo: lectura H08 PASS antes de iniciar.",
         val snapshot: H091PassiveMonitorRunner.Snapshot? = null,
         val readId: String = "",
         val endpoint: String = ""
@@ -84,7 +84,7 @@ object H091MonitorCoordinator {
         // El marcador running se establece ANTES de abrir el socket: ningún mando
         // ni nueva lectura pueden comenzar mientras se abre/cierra este túnel.
         mutable.value = UiState(
-            running = true, message = "H09.2: conectando receptor pasivo (0 GroupValueRead)...",
+            running = true, message = "H09.3: conectando receptor pasivo (0 GroupValueRead)...",
             readId = read.lastRunId, endpoint = endpoint
         )
         val started = receiver.start(
@@ -107,8 +107,9 @@ object H091MonitorCoordinator {
                             connected = snapshot.connected,
                             snapshot = snapshot,
                             message = if (snapshot.connected)
-                                "H09.2 activo: ${snapshot.acceptedWrites} eventos Cocina; 0 lecturas; límite 90 s."
-                                else "H09.2 conectando..."
+                                if (snapshot.sequenceRecovering) "H09.3: esperando secuencia pendiente; cierre si no se recupera."
+                                else "H09.3 activo: ${snapshot.acceptedWrites} eventos Cocina; 0 lecturas; límite 90 s."
+                                else "H09.3 conectando..."
                         )
                     }
                 }
@@ -134,12 +135,12 @@ object H091MonitorCoordinator {
                         running = false, stopping = false, recovering = snapshot.recoveryRequired,
                         connected = false,
                         snapshot = snapshot,
-                        message = "H09.2 finalizado: ${snapshot.stopReason}; " +
+                        message = "H09.3 finalizado: ${snapshot.stopReason}; " +
                             "eventos=${snapshot.acceptedWrites}; " +
                             "cierre=${snapshot.closeResult}. " +
-                            if (snapshot.recoveryRequired) "Recuperación: espera 30 s y realiza otra lectura H." else "Exporta CSV."
+                            if (snapshot.recoveryRequired) "Recuperación: espera 30 s y realiza otra lectura H." else if (snapshot.freshReadRequired) "Secuencia sin recuperar: realiza una nueva lectura H antes de otro monitor." else "Exporta CSV."
                     )
-                    if (snapshot.recoveryRequired || snapshot.stopReason.startsWith("ERROR")) invalidReadId = mutable.value.readId
+                    if (snapshot.recoveryRequired || snapshot.freshReadRequired || snapshot.stopReason.startsWith("ERROR")) invalidReadId = mutable.value.readId
                     if (snapshot.recoveryRequired) {
                         handler.postDelayed({
                             mutable.value = mutable.value.copy(recovering = false, message = "Recuperación: comprueba el canal y realiza una nueva lectura H.")
@@ -157,7 +158,7 @@ object H091MonitorCoordinator {
     fun stop() {
         if (!mutable.value.running) return
         receiver.requestStop()
-        mutable.value = mutable.value.copy(stopping = true, connected = false, message = "Deteniendo H09.2 y cerrando el túnel KNX/IP... (sin nuevas lecturas)")
+        mutable.value = mutable.value.copy(stopping = true, connected = false, message = "Deteniendo H09.3 y cerrando el túnel KNX/IP... (sin nuevas lecturas)")
     }
 
     private fun utc(timeMs: Long): String {
@@ -168,9 +169,9 @@ object H091MonitorCoordinator {
 
     fun exportCsv(): String {
         val s = state.value
-        val snap = s.snapshot ?: return "H09.2;sin_telemetria\n"
+        val snap = s.snapshot ?: return "H09.3;sin_telemetria\n"
         return buildString {
-            appendLine("ONEHOUSE_H092_ENTREGA36_MONITOR_PASIVO_COCINA_TEST")
+            appendLine("ONEHOUSE_H093_ENTREGA37_MONITOR_PASIVO_COCINA_TEST")
             appendLine("lectura_H08_origen;${s.readId}")
             appendLine("gateway;${s.endpoint}")
             appendLine("inicio_utc;${utc(snap.startedEpochMs)}")
@@ -186,6 +187,11 @@ object H091MonitorCoordinator {
             appendLine("errores_aplicacion;${snap.applyErrors}")
             appendLine("descartados;${snap.discarded}")
             appendLine("registros_descartados;${snap.lostRecords}")
+            appendLine("nueva_lectura_H_obligatoria;${snap.freshReadRequired}")
+            appendLine("recuperaciones_iniciadas;${snap.sequenceRecoveryStarts}")
+            appendLine("recuperaciones_completadas;${snap.sequenceRecoverySuccesses}")
+            appendLine("ultima_recuperacion;${snap.lastSequenceRecovery.replace(';', ',').replace('\n', ' ')}")
+            appendLine("recuperando_secuencia;${snap.sequenceRecovering}")
             appendLine("ack_enviados;${snap.ackCount}")
             appendLine("max_recepcion_a_ack_us_escucha;${snap.maxAckMicros}")
             appendLine("connect;${snap.connectResult.replace(';', ',')}")

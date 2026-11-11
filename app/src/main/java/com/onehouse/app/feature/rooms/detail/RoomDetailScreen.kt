@@ -129,7 +129,7 @@ fun RoomDetailScreen(roomType: RoomType, onBack: () -> Unit) {
 
                 if (roomType == RoomType.KITCHEN && H08Safety.READ_ONLY) {
                     Text(
-                        "H09.2 TEST · Luz y Fluorescente de Cocina: eventos pasivos desde GA de estado; " +
+                        "H09.3 TEST · Luz y Fluorescente de Cocina: eventos pasivos desde GA de estado; " +
                             "los mandos requieren lectura H limpia y monitor detenido.",
                         color = Color(0xFFFFC778)
                     )
